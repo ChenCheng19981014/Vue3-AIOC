@@ -88,7 +88,7 @@ onMounted(() => {
     readerExcel();
 
 
-    function fillArrays(data) {
+    function fillArrays(data: any[]) {
         const maxLength = Math.max(...data.map(arr => arr.length)); // 找到最长的数组长度
         return data.map(arr => {
             const diff = maxLength - arr.length; // 计算需要填充的数量
