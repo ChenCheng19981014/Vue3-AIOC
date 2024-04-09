@@ -18,6 +18,11 @@
 import { ref, onMounted, watch } from "vue";
 import * as XLSX from "xlsx";
 import axios from "axios";
+import { excelDataMap } from "@/constant/excel.js";
+import {storeExcelData} from '@/store/modules/excel'
+
+// 表格仓库 信息
+const { updataExcelData } = storeExcelData();
 
 // excel数据
 const excellist = ref<string[]>([]);
@@ -63,56 +68,44 @@ const readerExcel = async () => {
 
     excellist.value = fillArrays(arr);
 
+    // console.log('表格数据:', [...excellist.value]);
 };
 
-// 获取指定数据
-const getSpecifyData = (row: number, col: number) => {
-    if (excellist.value[row] && excellist.value[row][col]) {
-        return excellist.value[row][col];
-    } else {
-        return null; // 或者返回你想要的默认值
+// 根据 position 获取对应值
+const getValueByPosition = (position: number[]) => {
+    const [row, col] = position;
+    return [...excellist.value][row][col];
+};
+
+// get 获取 数据
+const loadExcelNumDate = () => {
+
+    for (const category in excelDataMap) {
+        const categoryData = excelDataMap[category];
+        for (const timeFrame in categoryData) {
+            const timeFrameData = categoryData[timeFrame];
+            for (const key in timeFrameData) {
+                const { position } = timeFrameData[key];
+                // 获取值并更新 dataMap
+                excelDataMap[category][timeFrame][key].value = getValueByPosition(position);
+            }
+        }
     }
+
+    //更新 本地存储值
+    updataExcelData(excelDataMap)
+
+    console.log('表格数据:', excelDataMap,updataExcelData);
 }
 
-
 watch(excellist, () => {
-
-    const msg = getSpecifyData(4, 3);
-
-    console.log('msg:', msg);
-
+    // 获取 excel 数据
+    loadExcelNumDate()
 })
 
 onMounted(() => {
     // 读 excel 
     readerExcel();
-
-
-    function fillArrays(data) {
-        const maxLength = Math.max(...data.map(arr => arr.length)); // 找到最长的数组长度
-        return data.map(arr => {
-            const diff = maxLength - arr.length; // 计算需要填充的数量
-            if (diff > 0) {
-                // 填充 null
-                return arr.concat(Array(diff).fill(null));
-            } else {
-                return arr;
-            }
-        });
-    }
-
-    // 你的数据
-    const data = [
-        ['AIOC数据模版'],
-        [],
-        ['1-综合态势数据内容'],
-        ['板块标题', '描述字段', '时间维度', '数值', '单位'],
-        ['能耗统计', '电能耗', '日', '22,350 ', '（kWh）', '同比', '下降', '25.00 '],
-        // 其他数组
-    ];
-
-    const filledData = fillArrays(data);
-    console.log(filledData);
 
 });
 </script>
