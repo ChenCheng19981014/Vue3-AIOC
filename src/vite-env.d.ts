@@ -12,6 +12,7 @@ declare module "*.bmp";
 declare module "*.tiff";
 
 declare module "@/store/*";
+declare module "@/views/*";
 declare module "@/constant/*";
 
 declare module "*.vue" {
