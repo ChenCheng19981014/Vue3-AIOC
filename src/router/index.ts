@@ -5,16 +5,22 @@ const routes = [
   {
     path: "/",
     name: "app",
-    redirect: "/outFactory", // 重定向
+    // redirect: "/outFactory", // 重定向
+    redirect: {
+      name: "outFactory",
+      params: { mode: "overview" },
+      query: { mode: "overview" },
+    },
   },
   {
-    path: "/outFactory",
+    path: `/outFactory/:mode`,
     name: "outFactory",
     component: () => import("@/views/outFactory/index.vue"),
     meta: {
       title: "首页",
       keepAlive: true, //设置页面是否需要使用缓存
     },
+    props: true,
   },
   {
     path: "/:pathMatch(.*)*",
