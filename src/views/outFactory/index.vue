@@ -206,7 +206,5 @@ const loadExcelNumDate = () => {
                 {{ key }}
             </button>
         </div>
-
-        <!-- <div class="tips">测试文字...</div> -->
     </div>
 </template>
