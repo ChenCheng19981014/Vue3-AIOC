@@ -7,7 +7,6 @@
     background-color: #333;
 
     @include tips
-  
 }
 </style>
   
@@ -19,7 +18,7 @@ import { ref } from 'vue';
 <template>
     <div class='outFactory-overview-left'>
 
-    综合态势 左侧
+        综合态势 左侧
 
     </div>
 </template>

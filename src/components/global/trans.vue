@@ -80,7 +80,7 @@ const props = defineProps({
   showIndex: Number,
   slotNumber: {
     type: Number,
-    default: 2,
+    default: 0,
   },
   direction: {
     type: String,
@@ -88,33 +88,49 @@ const props = defineProps({
   },
 });
 
+//  显示第几个  显示的方向  插槽的个数
 const { showIndex, direction, slotNumber } = toRefs(props);
 
 // 进行防抖处理 再次进入
 const debouncedFn = useDebounceFn(() => {
   initState.value = "in";
-  currentTab.value = showIndex.value;
+  currentTab.value = showIndex.value as number;
 }, 1000);
 
 // 监听显示
 watch(
-  () => showIndex.value,
+  () => props,
   (newValue, oldValue) => {
     initState.value = "out";
     debouncedFn();
-    console.log(`count 变化了：${oldValue} -> ${newValue}`);
-  }
+    // console.log(`count 变化了：${oldValue} -> ${newValue}`);
+  },
+  { deep: true }
 );
 
-// console.log("showIndex:", slotNumber.value, showIndex.value);
+// 监听显示
+watch(
+  () => props.showIndex,
+  () => {
+    // 初始化 先设置当前tab 然后再进入
+    currentTab.value = props.showIndex as number;
+    // 做动画
+    debouncedFn();
+  },
+  { immediate: true, deep: true, once: true }
+);
+
 
 </script>
 
 <template>
+
   <div :class="` trans-${props.direction}-${initState}  `" class="trans">
 
     <template v-for="(_, index) in slotNumber">
+
       <slot :name="'slot-' + index" v-if="currentTab === index" :key="index"></slot>
+      
     </template>
 
   </div>

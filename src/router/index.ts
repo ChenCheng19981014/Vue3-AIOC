@@ -5,27 +5,27 @@ const routes = [
   {
     path: "/",
     name: "app",
-    // redirect: "/outFactory", // 重定向
-    redirect: {
-      name: "outFactory",
-      params: { mode: "overview" },
-      query: { mode: "overview" },
-    },
+    // redirect: "/outFactory/mode?overview", // 重定向
+    redirect: "/outFactory/overview", // 重定向
+    // redirect: {
+    //   name: "outFactory",
+    //   query: { mode: "overview" },
+    // },
   },
   {
     path: `/outFactory/:mode`,
     name: "outFactory",
     component: () => import("@/views/outFactory/index.vue"),
+    props: true,
     meta: {
       title: "首页",
       keepAlive: true, //设置页面是否需要使用缓存
     },
-    props: true,
   },
   {
     path: "/:pathMatch(.*)*",
     name: "any",
-    redirect: "/image",
+    redirect: "/outFactory",
   },
 ];
 

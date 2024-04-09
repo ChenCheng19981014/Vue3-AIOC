@@ -7,17 +7,22 @@
     @include center;
 
     .tips {
-        @include tips
+        @include tips;
     }
 
     .btn {
         position: fixed;
+        display: flex;
+        justify-content: space-between;
+        width: 500px;
         top: 90%;
         left: 50%;
         transform: translate(-50%, -50%);
         z-index: 5;
 
         >button {
+            width: 120px;
+            height: 50px;
             color: black;
         }
     }
@@ -28,6 +33,8 @@
 import { ref, onMounted, watch, reactive } from "vue";
 import * as XLSX from "xlsx";
 import axios from "axios";
+import { useRoute, useRouter } from "vue-router";
+
 import { excelDataMap } from "@/constant/excel.js";
 import { storeExcelData } from "@/store/modules/excel";
 
@@ -40,27 +47,70 @@ import SafeRight from "@/views/outFactory/components/safe/right/index.vue";
 import EnergyLeft from "@/views/outFactory/components/energy/left/index.vue";
 import EnergyRight from "@/views/outFactory/components/energy/right/index.vue";
 
-
 import DeviceLeft from "@/views/outFactory/components/device/left/index.vue";
 import DeviceRight from "@/views/outFactory/components/device/right/index.vue";
 
 
+// 假设 getRouterIndex 函数返回一个包含 index 属性的对象
+interface RouterIndex {
+    index: number;
+}
+
+const route = useRoute(); // 查值
+const router = useRouter(); // 跳转 功能
+
+// console.log('route:', route, route.query);
+
 // 表格仓库 信息
 const { updataExcelData } = storeExcelData();
-
-// 默认选中那个
-const tabState = ref(0);
 
 // excel数据
 const excellist = ref<string[]>([]);
 
 // tabs 选项
 const tabInfo = reactive({
-    综合态势: {},
-    安防管理: {},
-    能源管理: {},
-    设备管理: {},
+    综合态势: {
+        mode: "overview",
+    },
+    安防管理: {
+        mode: "safe",
+    },
+    能源管理: {
+        mode: "energy",
+    },
+    设备管理: {
+        mode: "device",
+    },
 });
+
+// 当前的 模块
+const mode = route.params.mode as string;
+
+// 获取 路由 对应的索引
+const getRouterIndex = (mode: string) => {
+    let foundObject = null; // 初始时没有找到任何对象
+    // 遍历 tabInfo 的键值对及其索引
+    Object.entries(tabInfo).forEach(([key, value], index) => {
+        // 如果当前键值对中的 mode 值等于要查找的 modeToFind
+        if (value.mode === mode) {
+            // 保存找到的对象及其索引
+            foundObject = { key, value, index };
+            // 找到后停止循环
+            return;
+        }
+    });
+    return foundObject;
+};
+
+// 获取 当前的索引
+const routerIndex = getRouterIndex(mode) as unknown as RouterIndex; // 使用类型断言确定返回类型
+
+// 默认选中那个
+const tabState = ref(0);
+
+tabState.value = routerIndex.index; // 现在可以安全地访问 index 属性
+
+console.log( 'tabState.value :',tabState.value  );
 
 onMounted(() => {
     // 读 excel
@@ -74,11 +124,14 @@ watch(excellist, () => {
 
 /**
  *  @Author: cc
- *  @description:  切换 tabs 
+ *  @description:  切换 tabs
  */
 const changeTab = (name: string, val: object, index: number) => {
-    tabState.value = index;
-    // console.log("name:", name, index);
+    const { mode } = val as { [key: string]: string };
+    tabState.value = index; // 设置显示 索引
+    // console.log("模块:", name, "\n索引：", index, "\n值:", val, "\nmode:", mode);
+    // 更新当前的模块
+    router.replace({ params: { mode } });
 };
 
 // 数组 填充
@@ -145,10 +198,30 @@ const loadExcelNumDate = () => {
 
     //更新 本地存储值
     updataExcelData(excelDataMap);
-    console.log("表格数据:", excelDataMap);
+    // console.log("表格数据:", excelDataMap);
 };
 
+// 监听 路由 变化 设置显示面板
+watch(
+    () => router.currentRoute.value.path,
+    (toPath) => {
+        // 模 式
+        const { mode } = route.params;
 
+        const foundObject = getRouterIndex(mode);
+
+        const { key, value, index } = foundObject;
+
+        // 通过路由 parmas进行判断 设置索引
+        tabState.value = index;
+
+        // 显示 对应的 左右侧模块
+        changeTab(key, value, index);
+
+        // console.log("跳转路由", toPath, '\n模式', mode, '\n索引:', index);
+    },
+    { deep: true }
+);
 </script>
 
 <template>
