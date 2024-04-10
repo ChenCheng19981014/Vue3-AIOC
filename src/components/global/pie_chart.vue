@@ -8,22 +8,11 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 
-const chartData = [{
-		value: 203,
-		name: '华东'
-	}, {
-		value: 187,
-		name: '华南'
-	}, {
-		value: 165,
-		name: '华中'
-	}, {
-		value: 193,
-		name: '华西'
-	}, {
-		value: 205,
-		name: '华北'
-	}]
+const chartData = [
+    { value: 4248, name: '电费' }, 
+    { value: 3000, name: '水费' }, 
+    { value: 2000, name: '煤气费' }, 
+]
 
 let options = ref({})
 // 定义一个总合变量
@@ -75,7 +64,6 @@ for (let i = 0; i < chartData.length; i++) {
 }
 
 options.value = {
-    backgroundColor: '#000',
     // backgroundColor: {
     //     image: bgPatternImgbgPatternImg,
     //     repeat: 'repeat',
@@ -154,8 +142,8 @@ options.value = {
 		// 				percent = ((params.value / total) * 100).toFixed(1);
 		// 				return '{white|' + params.name + '}\n{hr|}\n{yellow|' + params.value + '}\n{blue|' + percent + '%}';
 		// 			},
-        formatter: (name) => {
-            const item = chartData.find((i) => {
+        formatter: (name: string) => {
+            const item: any = chartData.find((i) => {
                 return i.name === name;
             });
             const p = ((item.value / sum) * 100).toFixed(0);

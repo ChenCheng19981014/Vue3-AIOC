@@ -1,38 +1,49 @@
 <!-- 带年月日的背景 -->
 <template>
-    <div class="common">
+    <div class="bgTime">
         <div class="title">
             <div class="text">{{ props.tips }}</div>
             <div class="time">
-                <div class="day">日</div>
-                <div class="month">月</div>
-                <div class="year">年</div>
+                <div class="day" :class="{ active: activeTab === 'day' }" @click="toggleTab('day')">日</div>
+                <div class="month" :class="{ active: activeTab === 'month' }" @click="toggleTab('month')">月</div>
+                <div class="year" :class="{ active: activeTab === 'year' }" @click="toggleTab('year')">年</div>
             </div>
         </div>
         <slot></slot>
+        <!-- <div class="content">
+            <div v-if="activeTab === 'day'">显示日数据</div>
+            <div v-else-if="activeTab === 'month'">显示月数据</div>
+            <div v-else>显示年数据</div>
+        </div> -->
     </div>
 </template>
 
 <script setup lang="ts">
+import { ref } from 'vue';
+
+let activeTab = ref('day')
+// 修改数据
+const toggleTab = (tab: string) => {
+  activeTab.value = tab;
+};
+
 const props = defineProps({
     tips: String
 })
 </script>
 
 <style scoped lang="scss">
-.common {
+.bgTime {
     width: 100%;
     height: 100%;
-    // background: pink;
-    // background-image: url();
-    background-size: 100% 100%;
-    background-image: no-repeat;
     display: flex;
     justify-content: flex-start;
     flex-direction: column;
     align-items: center;
     .title { 
-        // background: yellow;
+        background-image: url("@/assets/images/bg_title.png");
+        background-size: 100% 100%;
+        background-repeat: no-repeat;
         width: 100%;
         height: 38px;
         display: flex;
@@ -67,6 +78,13 @@ const props = defineProps({
                 border-radius: 4px;
                 border: 1px solid var(--color-basic-white-white-10, rgba(255, 255, 255, 0.10));
                 background: var(--color-basic-white-white-10, rgba(255, 255, 255, 0.10));
+                cursor: pointer;
+            }
+            .active {
+                border-radius: 4px;
+                border: 1px solid var(--color-basic-white-white-50, rgba(255, 255, 255, 0.50));
+                background: var(--color-basic-blue-blue-2-50, rgba(0, 102, 255, 0.50));
+                box-shadow: 0px 0px 8px 4px #06F inset;
             }
         }
     }

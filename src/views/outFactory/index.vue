@@ -110,7 +110,7 @@ const tabState = ref(0);
 
 tabState.value = routerIndex.index; // 现在可以安全地访问 index 属性
 
-console.log( 'tabState.value :',tabState.value  );
+// console.log( 'tabState.value :',tabState.value  );
 
 onMounted(() => {
     // 读 excel

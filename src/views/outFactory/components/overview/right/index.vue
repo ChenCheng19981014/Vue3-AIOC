@@ -12,17 +12,14 @@
     .monitor {
         width: 100%;
         height: 130px;
-        background: red;
     }
     .summarize {
         width: 100%;
         height: 296px;
-        background: green;
     }
     .alarm {
         width: 100%;
         height: 456px;
-        background: blue;
     }
 }
 </style>
@@ -33,8 +30,14 @@
   
 <template>
     <div class='outFactory-overview-right'>
-        <div class="monitor">监控</div>
-        <div class="summarize">概括</div>
-        <div class="alarm">告警</div>
+        <div class="monitor">
+            <bg_common :tips="'视频监控'"></bg_common>
+        </div>
+        <div class="summarize">
+            <bg_common :tips="'设备概括'"></bg_common>
+        </div>
+        <div class="alarm">
+            <bg_common :tips="'综合告警'"></bg_common>
+        </div>
     </div>
 </template>

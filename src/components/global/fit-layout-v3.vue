@@ -59,7 +59,7 @@
     top: 0;
     z-index: 1;
     background-size: 100% 100%;
-    background-image: url("@/assets/img/cover.png");
+    background-image: url("@/assets/images/bg_cover.png");
     pointer-events: none;
   }
 }
@@ -73,7 +73,7 @@
       <div class="tops" :style="`height:${heights}px`"></div>
       <div class="bottoms" :style="`height:${heights}px`"></div>
       <div class="fit-layout" :style="getStyle">
-        <div class="cover"></div>
+      <div class="cover"></div>
         <slot></slot>
       </div>
     </div>
