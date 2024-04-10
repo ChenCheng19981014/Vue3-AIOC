@@ -130,7 +130,7 @@ watch(
     <template v-for="(_, index) in slotNumber">
 
       <slot :name="'slot-' + index" v-if="currentTab === index" :key="index"></slot>
-      
+
     </template>
 
   </div>
