@@ -35,7 +35,7 @@ const props = defineProps({
             text-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25), 0px 0px 4px rgba(6, 130, 231, 0.55);
 
             /* 标题/1级标题-20 */
-            font-family: PangMenZhengDao;
+            font-family: pm1;
             font-size: 20px;
             font-style: normal;
             font-weight: 400;

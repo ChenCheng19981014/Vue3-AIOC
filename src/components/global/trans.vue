@@ -52,12 +52,12 @@
 }
 
 .trans-left-in {
-  left: 20px;
+  left: 32px;
   animation: slide-left-in 1s ease-out forwards;
 }
 
 .trans-right-in {
-  right: 20px;
+  right: 32px;
   animation: slide-right-in 1s ease-out forwards;
 }
 

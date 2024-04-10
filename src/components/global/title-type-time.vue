@@ -10,11 +10,6 @@
             </div>
         </div>
         <slot></slot>
-        <!-- <div class="content">
-            <div v-if="activeTab === 'day'">显示日数据</div>
-            <div v-else-if="activeTab === 'month'">显示月数据</div>
-            <div v-else>显示年数据</div>
-        </div> -->
     </div>
 </template>
 
@@ -51,7 +46,7 @@ const props = defineProps({
         align-items: center;
         .text {
             text-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25), 0px 0px 4px rgba(6, 130, 231, 0.55);
-            font-family: PangMenZhengDao;
+            font-family: pm1;
             font-size: 20px;
             font-style: normal;
             font-weight: 400;
