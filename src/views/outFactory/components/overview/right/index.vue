@@ -31,13 +31,13 @@
 <template>
     <div class='outFactory-overview-right'>
         <div class="monitor">
-            <bg_common :tips="'视频监控'"></bg_common>
+            <title-type-common :tips="'视频监控'"></title-type-common>
         </div>
         <div class="summarize">
-            <bg_common :tips="'设备概括'"></bg_common>
+            <title-type-common :tips="'设备概括'"></title-type-common>
         </div>
         <div class="alarm">
-            <bg_common :tips="'综合告警'"></bg_common>
+            <title-type-common :tips="'综合告警'"></title-type-common>
         </div>
     </div>
 </template>

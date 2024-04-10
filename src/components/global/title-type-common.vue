@@ -1,4 +1,4 @@
-<!-- 普通背景 -->
+<!-- 普通title -->
 <template>
     <div class="common">
         <div class="title">

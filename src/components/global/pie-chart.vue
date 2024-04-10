@@ -2,6 +2,7 @@
 <template>
     <div class="pie_chart">
         <chart-base-v3 :options="options"></chart-base-v3>
+        <slot></slot>
     </div>
 </template>
 
@@ -11,8 +12,18 @@ import { ref } from 'vue'
 const chartData = [
     { value: 4248, name: '电费' }, 
     { value: 3000, name: '水费' }, 
-    { value: 2000, name: '煤气费' }, 
+    { value: 1000, name: '煤气费' }, 
+    { value: 1000, name: '火费' }, 
 ]
+// 改变legend的top值
+const chageTop = () => {
+    if (chartData.length == 4) {
+        return '23%'
+    }
+    if (chartData.length == 3) {
+        return '32%'
+    }
+}
 
 let options = ref({})
 // 定义一个总合变量
@@ -24,8 +35,8 @@ for (var i = 0; i < chartData.length; i++) {
 const colorList = ['#00ffff','#006ced','#00ff8a','#ffb22d','#fa7eed'];
 const sum = chartData.reduce((per, cur) => per + cur.value, 0);
 const gap = (1 * sum) / 100;
-const pieData1 = [];
-const pieData2 = [];
+const pieData1: any[] = [];
+const pieData2: any[] = [];
 const gapData = {
     name: '',
     value: gap,
@@ -43,7 +54,7 @@ for (let i = 0; i < chartData.length; i++) {
             shadowOffsetY: 0,
             shadowOffsetX: 0,
             borderColor: '#2a2a34',
-            borderWidth: 2,
+            borderWidth: 0.1,
         },
     });
     pieData1.push(gapData);
@@ -51,7 +62,7 @@ for (let i = 0; i < chartData.length; i++) {
     pieData2.push({
         ...chartData[i],
         itemStyle: {
-            borderRadius: 10,
+            borderRadius: 100,
             color: colorList[i],
             opacity: 0.1,
             shadowColor: '#000',
@@ -64,102 +75,62 @@ for (let i = 0; i < chartData.length; i++) {
 }
 
 options.value = {
-    // backgroundColor: {
-    //     image: bgPatternImgbgPatternImg,
-    //     repeat: 'repeat',
-    // },
-    title: [{
-        text: dataNum,
-        x: '50%',
-        y: '43%',
-        textAlign: 'center',
-        textStyle: {
-            fontSize: '40',
-            fontWeight: '500',
-            color: '#98b5d2',
-            textAlign: 'center',
-            textShadowColor: '#000',
-                textShadowBlur: '1',
-                textShadowOffsetX: 2,
-                textShadowOffsetY: 2,
-        },
-    }, {
-        text: '消防报警',
-        left: '50%',
-        top: '52%',
-        textAlign: 'center',
-        textStyle: {
-            fontSize: '18',
-            fontWeight: '400',
-            color: '#5c5a68',
-            textAlign: 'center',
-            textShadowColor: '#000',
-                textShadowBlur: '1',
-                textShadowOffsetX: 1,
-                textShadowOffsetY: 1,
-        },
-    }, ],
     legend: {
-        left: '10%',
-        top: '35%',
+        right: '3%',
+        top: chageTop(),
         align: 'left',
         itemGap: 18,
-        itemWidth: 20,
-        itemHeight: 20,
-        shadowBlur: 10,
+        itemWidth: 12,
+        itemHeight: 12,
+        width: 300,
+        height: 400,
+        shadowBlur: 0,
         shadowOffsetY: 0,
         shadowOffsetX: 0,
         borderColor: '#2a2a34',
-        borderWidth: 2,
+        borderWidth: 0,
+        orient: 'horizontal',
         textStyle: {
             color: '#D8DDE3',
             rich: {
                 name: {
-                    verticalAlign: 'right',
                     align: 'left',
-                    fontSize: 18,
+                    fontSize: 14,
                     color: '#D8DDE3',
+                    fontWeight: 500,
+                    width: 80,
                 },
                 val: {
-                    verticalAlign: 'right',
                     align: 'left',
-                    fontSize: 18,
-                    color: '#D8DDE3',
+                    fontSize: 20,
+                    fontWight: 700,
+                    color: '#fff',
+                    width: 100,
+
                 },
                 percent: {
-                    padding: [0, 0, 0, 10],
                     color: '#D8DDE3',
-                    fontSize: 18,
+                    fontSize: 20,
+                    fontWight: 700,
                 },
             },
         },
-        // formatter: function(params, callback) {
-		// 				var total = 0; //总数量
-		// 				var percent = 0; //占比
-		// 				chartData.forEach(function(value, index, array) {
-		// 					total += value.value;
-		// 				});
-		// 				percent = ((params.value / total) * 100).toFixed(1);
-		// 				return '{white|' + params.name + '}\n{hr|}\n{yellow|' + params.value + '}\n{blue|' + percent + '%}';
-		// 			},
         formatter: (name: string) => {
             const item: any = chartData.find((i) => {
                 return i.name === name;
             });
             const p = ((item.value / sum) * 100).toFixed(0);
-            return '{name|' + name + '}' + '{val|' + item.value + '}' + '{percent|' + p + '}' + ' %';
+            return '{name|' + name + '}' + '{val|' + item.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '}' + '{percent|' + p + '}' + ' %';
         },
     },
-
     color: colorList,
-
     series: [
         {
             type: 'pie',
             z: 3,
             roundCap: true,
-            radius: ['44%', '51%'],
-            center: ['50%', '50%'],
+            radius: ['55%', '65%'],
+            center: ['20%', '54%'],
             label: {
                 show: false,
             },
@@ -171,8 +142,8 @@ options.value = {
         {
             type: 'pie',
             z: 2,
-            radius: ['40%', '55%'],
-            center: ['50%', '50%'],
+            radius: ['55%', '60%'],
+            center: ['20%', '54%'],
             label: {
                 show: false,
             },
