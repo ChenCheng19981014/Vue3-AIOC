@@ -1,9 +1,9 @@
 <!-- 区域消耗 -->
 <template>
     <div class="quyu">
-        <bg_time :tips="'区域消耗'">
+        <title-type-time :tips="'区域消耗'">
             
-        </bg_time>
+        </title-type-time>
     </div>
 </template>
 
