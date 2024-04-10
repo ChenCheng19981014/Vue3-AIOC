@@ -7,7 +7,7 @@
   @include center;
 
 
-  .header{
+  .header {
     position: absolute;
     top: 0;
     z-index: 2;
@@ -39,24 +39,18 @@
       letter-spacing: 1.6px;
       font-family: "pm1";
       padding: 4px 16px;
-      background: var(
-        --green-60,
-        linear-gradient(
-          180deg,
-          rgba(255, 255, 255, 0.6) 60.42%,
-          rgba(0, 255, 133, 0.6) 125%
-        )
-      );
+      background: var(--green-60,
+          linear-gradient(180deg,
+            rgba(255, 255, 255, 0.6) 60.42%,
+            rgba(0, 255, 133, 0.6) 125%));
       background-clip: text;
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
 
     .active {
-      background: var(
-        --green,
-        linear-gradient(180deg, #fff 60.42%, #00ff85 125%)
-      );
+      background: var(--green,
+          linear-gradient(180deg, #fff 60.42%, #00ff85 125%));
       background-clip: text;
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
@@ -206,11 +200,11 @@ const readerExcel = async () => {
   // const response = await axios.get("./excel/AIOC.xlsx", {
   //   responseType: "arraybuffer",
   // });
-  const response = await axios.get("./excel/测试.xls", {
+  const response = await axios.get("./excel/AIOC数据表单（无公式）.xlsx", {
     responseType: "arraybuffer",
   });
   const data = new Uint8Array(response.data);
-  const workbook = XLSX.read(data, { type: "array" }); // 使用 'array' 类型解析
+  const workbook = XLSX.read(data, { type: "array", codepage: 936, }); // 使用 'array' 类型解析
   const wsname = workbook.SheetNames[0]; //取第一张表，wb.SheetNames[0]是获取Sheets中第一个Sheet的名字
   const arr = [];
   //生成json表格内容，wb.Sheets[Sheet名]获取第一个Sheet的数据
@@ -225,7 +219,8 @@ const readerExcel = async () => {
   }
 
   excellist.value = fillArrays(arr);
-  // console.log("第一个表名：", wsname, "\n读取结果", [...excellist.value]);
+
+  console.log("第一个表名：", wsname, "\n读取结果", [...excellist.value]);
 };
 
 // 根据 position 获取对应值
@@ -258,6 +253,7 @@ const loadExcelNumDate = () => {
 watch(
   () => router.currentRoute.value.path,
   (toPath: string) => {
+
     // 模 式
     const { mode } = route.params;
 
@@ -282,7 +278,7 @@ watch(
   <div class="outFactory">
 
     <!-- 全局顶部 -->
-    <global-header class="header"/>
+    <global-header class="header" />
 
     <!-- 左弹窗 -->
     <trans :showIndex="tabState" direction="left" :slotNumber="4">
@@ -334,14 +330,12 @@ watch(
     <OutFactoryBottom class="outFactory-bottom">
       <!-- 测试 btn -->
       <div @pointerdown="(e: any) => e.stopPropagation()" class="btn">
-        <div
-          :class="{ button: true, active: _ === tabState }"
-          v-for="(val, key, _) in tabInfo"
-          @click="changeTab(key, val, _)"
-        >
+        <div :class="{ button: true, active: _ === tabState }" v-for="(val, key, _) in tabInfo"
+          @click="changeTab(key, val, _)">
           {{ key }}
         </div>
       </div>
     </OutFactoryBottom>
   </div>
 </template>
+
