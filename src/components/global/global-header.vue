@@ -12,7 +12,6 @@
   .global-title {
     font-family: "pm1";
     text-align: center;
-    // text-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25), 0px 0px 4px rgba(6, 130, 231, 0.55);
     font-size: 34px;
     font-style: normal;
     font-weight: 400;
@@ -45,10 +44,15 @@
 
     .day {
       font-size: 16px;
+      color: rgba(255, 255, 255, 0.90);
+      font-style: normal;
+      font-weight: 400;
+      line-height: normal;
       margin-right: 16px;
     }
 
     .week {
+      font-family: "PingFang SC";
       font-size: 14px;
     }
   }

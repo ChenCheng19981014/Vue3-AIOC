@@ -38,24 +38,18 @@
       letter-spacing: 1.6px;
       font-family: "pm1";
       padding: 4px 16px;
-      background: var(
-        --green-60,
-        linear-gradient(
-          180deg,
-          rgba(255, 255, 255, 0.6) 60.42%,
-          rgba(0, 255, 133, 0.6) 125%
-        )
-      );
+      background: var(--green-60,
+          linear-gradient(180deg,
+            rgba(255, 255, 255, 0.6) 60.42%,
+            rgba(0, 255, 133, 0.6) 125%));
       background-clip: text;
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
 
     .active {
-      background: var(
-        --green,
-        linear-gradient(180deg, #fff 60.42%, #00ff85 125%)
-      );
+      background: var(--green,
+          linear-gradient(180deg, #fff 60.42%, #00ff85 125%));
       background-clip: text;
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
@@ -103,11 +97,13 @@ import EnergyRight from "@/views/outFactory/components/energy/right/index.vue";
 import DeviceLeft from "@/views/outFactory/components/device/left/index.vue";
 import DeviceRight from "@/views/outFactory/components/device/right/index.vue";
 
+import Scene from "@/components/scene/index.vue";
+
 // 假设 getRouterIndex 函数返回一个包含 index 属性的对象
 interface RouterIndex {
   index: number;
 }
-
+const loadingEnd = ref(false);
 const route = useRoute(); // 查值
 const router = useRouter(); // 跳转 功能
 
@@ -275,11 +271,19 @@ watch(
   },
   { deep: true }
 );
+
+// 加载完毕
+const loadOver = () => {
+  loadingEnd.value = true;
+};
 </script>
 
 <template>
   <!-- 外场 总组件 -->
   <div class="outFactory">
+    <!-- loading -->
+    <load v-show="!loadingEnd"/>
+
     <!-- 全局顶部 -->
     <global-header class="header" />
 
@@ -305,6 +309,9 @@ watch(
         <DeviceLeft />
       </template>
     </trans>
+
+    <!-- 场景 -->
+    <Scene @loadOver="loadOver" />
 
     <!-- 右弹窗 -->
     <trans :showIndex="tabState" direction="right" :slotNumber="4">
@@ -333,11 +340,8 @@ watch(
     <OutFactoryBottom class="outFactory-bottom">
       <!-- 测试 btn -->
       <div @pointerdown="(e: any) => e.stopPropagation()" class="btn">
-        <div
-          :class="{ button: true, active: _ === tabState }"
-          v-for="(val, key, _) in tabInfo"
-          @click="changeTab(key, val, _)"
-        >
+        <div :class="{ button: true, active: _ === tabState }" v-for="(val, key, _) in tabInfo"
+          @click="changeTab(key, val, _)">
           {{ key }}
         </div>
       </div>
