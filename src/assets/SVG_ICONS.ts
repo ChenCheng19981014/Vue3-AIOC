@@ -8,6 +8,8 @@ import 设备 from "./svg/设备.svg?url";
 import doing from "./svg/doing.svg?url";
 import standby from "./svg/standby.svg?url";
 import warning from "./svg/warning.svg?url";
+import online from "./svg/online.svg?url";
+import offline from "./svg/offline.svg?url";
 
 export default {
   // 圆形 灯珠
@@ -17,8 +19,10 @@ export default {
     运行,
     摄像头,
     设备,
+    online,
     doing,
     standby,
     warning,
+    offline,
   },
 };

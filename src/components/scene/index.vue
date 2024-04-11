@@ -1,13 +1,10 @@
 <template>
   <div class="scene" ref="scene" onselectstart="return false;" v-show="true">
-    <div
-      @pointerdown="
-        (e) => {
-          e.stopPropagation();
-        }
-      "
-      class="btn"
-    ></div>
+    <div @pointerdown="
+      (e) => {
+        e.stopPropagation();
+      }
+    " class="btn"></div>
   </div>
 </template>
 
@@ -15,11 +12,9 @@
 import { RunScene } from "run-scene-v2";
 import Change from "./Change";
 import { ref, onMounted, defineEmits } from "vue";
-import getHangIndextore from "@/store/modules/hang.js";
 const emit = defineEmits(["loadOver"]);
 const scene = ref(null);
 let sceneInstance = null;
-let getHangstore = getHangIndextore();
 
 // 加载场景
 const loadScene = () => {
@@ -37,31 +32,16 @@ const loadScene = () => {
       },
     },
   }).load({
-    // path: "./assets/s.lt",
-    // path: "https://3d-editor-2-1303915342.cos.ap-shanghai.myqcloud.com/202401231638577170091001202448.lt",
-    // path: "http://192.168.3.8:8080/file?path=project/linkpoint/&key=202403081423076470111001202413",
-    path: "https://3d-editor-2-1303915342.cos.ap-shanghai.myqcloud.com/202403081423076470111001202413.lt",
+    path: "https://3d-editor-2-1303915342.cos.ap-shanghai.myqcloud.com/202402271211440188261001202465.lt",
     dom: scene.value,
   });
 
   sceneInstance.on("loaded", () => {
-    // 宽高
-    const { width, height } = document
-      .querySelector(".fit-layout")
-      .getBoundingClientRect();
-    // 自适应
-    // scene.setSize(width, height);
-    sceneInstance.setSize(2560, 1360);
 
-    getHangstore.isShow = false;
-
-    Change(sceneInstance);
-
-    getHangstore.isShow = true;
+    sceneInstance.setSize(1920, 1080);
 
     // 场景加载完毕回调
     emit("loadOver");
-
     // console.log("加载完毕");
   });
 };

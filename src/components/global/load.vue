@@ -24,7 +24,7 @@ import { ref } from "vue"
   width: 100%;
   height: 100%;
   position: absolute;
-  z-index: 3;
+  z-index: 999;
   display: flex;
   justify-content: center;
   align-items: center;
