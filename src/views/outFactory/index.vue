@@ -282,7 +282,7 @@ const loadOver = () => {
   <!-- 外场 总组件 -->
   <div class="outFactory">
     <!-- loading -->
-    <load v-show="!loadingEnd"/>
+    <!-- <load v-show="!loadingEnd"/> -->
 
     <!-- 全局顶部 -->
     <global-header class="header" />

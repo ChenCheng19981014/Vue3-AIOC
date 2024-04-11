@@ -24,7 +24,16 @@
             align-items: flex-start;
             align-self: stretch;
             height: 152px;
-            background-color: rgba(0,0,0,0.5);
+            position: relative;
+            .image {
+                position: absolute;
+                top: 56px;
+                left: 72px;
+                img {
+                    width: 48px;
+                    height: 48px;
+                }
+            }
         }
     }
 }
@@ -47,7 +56,17 @@ const { summarizeInfo } = toRefs(props);
                 <!-- 监控 组件 -->
                 <machine-states-list :listInfo="summarizeInfo" class="list" />
 
-                <div class="ec"></div>
+                <div class="ec">
+                    <pie-chart 
+                        :position="['20%', '38%']"
+                        :legendPositiony = "'-4%'"
+                        :legendPositionx = "'0%'"
+                    >
+                    <div class="image">
+                        <img src="@/assets/images/设备概括.png" alt="无图">
+                    </div>
+                    </pie-chart>
+                </div>
             </div>
         </title-type-common>
     </div>

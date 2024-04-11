@@ -22,7 +22,7 @@
     position: relative;
     .image {
     position: absolute;
-    top: 110px;
+    top: 116px;
     left: 70px;
         img {
             width: 40.25px;
