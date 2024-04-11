@@ -104,6 +104,7 @@ options.value = {
                     align: 'left',
                     fontSize: 20,
                     fontWight: 700,
+                    fontFamily: 'ding', // 设置字体
                     color: '#fff',
                     width: 100,
 
@@ -111,6 +112,7 @@ options.value = {
                 percent: {
                     color: '#D8DDE3',
                     fontSize: 20,
+                    fontFamily: 'ding', // 设置字体
                     fontWight: 700,
                 },
             },

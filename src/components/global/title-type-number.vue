@@ -47,7 +47,7 @@ const props = defineProps({
         }
         .number {
             color: var(--color-text-text-100, #FFF);
-            font-family: D-DIN;
+            font-family: "ding";
             font-size: 24px;
             font-style: normal;
             font-weight: 700;
