@@ -28,6 +28,7 @@ let tablelist = reactive({
         { name: { field: "区域A" }, type: { field: "水 m³" }, value: { field: "425"}, money: { field: "4,100" } },
         { name: { field: "区域A" }, type: { field: "水 m³" }, value: { field: "425"}, money: { field: "4,100" } },
         { name: { field: "区域A" }, type: { field: "水 m³" }, value: { field: "425"}, money: { field: "4,100" } },
+        { name: { field: "区域A" }, type: { field: "水 m³" }, value: { field: "425"}, money: { field: "4,100" } },
         { name: { field: "最后" }, type: { field: "水 m³" }, value: { field: "425"}, money: { field: "4,100" } },
     ]
 })
