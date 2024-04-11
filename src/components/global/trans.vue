@@ -88,6 +88,7 @@ const props = defineProps({
   },
 });
 
+
 //  显示第几个  显示的方向  插槽的个数
 const { showIndex, direction, slotNumber } = toRefs(props);
 

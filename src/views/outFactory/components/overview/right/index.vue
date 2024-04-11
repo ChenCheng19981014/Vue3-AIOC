@@ -1,43 +1,43 @@
-<style scoped lang='scss'>
+<style scoped lang="scss">
 @import "@/design/hooks.scss";
 
 .outFactory-overview-right {
-    width: 430px;
-    height: 940px;
-    background-color: #333;
-    @include tips;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    .monitor {
-        width: 100%;
-        height: 130px;
-    }
-    .summarize {
-        width: 100%;
-        height: 296px;
-    }
-    .alarm {
-        width: 100%;
-        height: 456px;
-    }
+  width: 430px;
+  height: 940px;
+  @include tips;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  .monitor {
+    width: 100%;
+    height: 130px;
+  }
+  .summarize {
+    width: 100%;
+    height: 296px;
+  }
+  .alarm {
+    width: 100%;
+    height: 456px;
+  }
 }
 </style>
-  
-<script setup lang='ts'>
 
+<script setup lang="ts">
+import OutFactoryMonitor from "@/views/outFactory/components/overview/right/components/monitor.vue";
 </script>
-  
+
 <template>
-    <div class='outFactory-overview-right'>
-        <div class="monitor">
-            <title-type-common :tips="'视频监控'"></title-type-common>
-        </div>
-        <div class="summarize">
-            <title-type-common :tips="'设备概括'"></title-type-common>
-        </div>
-        <div class="alarm">
-            <title-type-common :tips="'综合告警'"></title-type-common>
-        </div>
+  <div class="outFactory-overview-right">
+    <!-- 视频监控 -->
+    <div class="monitor">
+      <OutFactoryMonitor />
     </div>
+    <div class="summarize">
+      <title-type-common :tips="'设备概括'"></title-type-common>
+    </div>
+    <div class="alarm">
+      <title-type-common :tips="'综合告警'"></title-type-common>
+    </div>
+  </div>
 </template>
