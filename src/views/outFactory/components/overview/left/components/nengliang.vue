@@ -1,13 +1,13 @@
 <!-- 能耗统计 -->
 <template>
     <div class="nengliang">
-        <title-type-time :tips="'能耗统计'" >
+        <title-type-time :tips="'能耗统计'" @delivery-date="handleDate">
             <div class="nengliang-content">
-                <div class="nengliang-item" v-for="(item, index) in data" :key="index">
+                <div class="nengliang-item" v-for="(item, index) in filteredData" :key="index">
                     <div class="left">
                         <img :src="item.imgUrl" :alt="item.name">
                         <div class="designation">{{ item.name }}</div>
-                        <div class="record">{{ item.num }}<span>{{ index === 0 ? '(kWh)' : '(m³)' }}</span></div>
+                        <div class="record">{{ item.num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") }}<span>{{ index === 0 ? '(kWh)' : '(m³)' }}</span></div>
                     </div>
                     <div class="percentage">
                         同比
@@ -21,7 +21,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive } from 'vue';
+import { ref, reactive, computed } from 'vue';
 
 const arrow = reactive({ 
     upArrow: "/src/assets/images/上箭头.png", 
@@ -29,11 +29,44 @@ const arrow = reactive({
 })
 
 // 模拟数据
-let data = ref([
-    { imgUrl: "/src/assets/images/电能耗.png", name: "电能耗", num: "22000022", percentage: "20" },
-    { imgUrl: "/src/assets/images/水能耗.png", name: "水能耗", num: "2222", percentage: "20" },
-    { imgUrl: "/src/assets/images/气能耗.png", name: "气能耗", num: "2222", percentage: "20" },
-])
+let totalData = reactive({
+    day: [
+        { imgUrl: "/src/assets/images/电能耗.png", name: "电能耗", num: "22000022", percentage: "20" },
+        { imgUrl: "/src/assets/images/水能耗.png", name: "水能耗", num: "2222", percentage: "20" },
+        { imgUrl: "/src/assets/images/气能耗.png", name: "气能耗", num: "2222", percentage: "20" },
+    ],
+    month: [
+        { imgUrl: "/src/assets/images/电能耗.png", name: "电能耗", num: "0022", percentage: "20" },
+        { imgUrl: "/src/assets/images/水能耗.png", name: "水能耗", num: "2222", percentage: "20" },
+        { imgUrl: "/src/assets/images/气能耗.png", name: "气能耗", num: "2222", percentage: "20" },
+    ],
+    year: [
+        { imgUrl: "/src/assets/images/电能耗.png", name: "电能耗", num: "22000022", percentage: "20" },
+        { imgUrl: "/src/assets/images/水能耗.png", name: "水能耗", num: "22212122", percentage: "20" },
+        { imgUrl: "/src/assets/images/气能耗.png", name: "气能耗", num: "2222", percentage: "20" },
+    ],
+})
+
+// 传递过来的时间单位，默认是日
+let timeUnit = ref('day');
+// 处理子组件传递过来的时间
+const handleDate = (time: string) => {
+    timeUnit.value = time;
+}
+
+// 计算属性，根据传递的字符串动态过滤数据
+const filteredData = computed(() => {
+  switch (timeUnit.value) {
+    case 'day':
+      return totalData.day;
+    case 'month':
+      return totalData.month;
+    case 'year':
+      return totalData.year;
+    default:
+      return [];
+  }
+});
 </script>
 
 <style scoped lang="scss">
@@ -81,7 +114,7 @@ let data = ref([
                     color: var(--color-text-text-100, #FFF);
 
                     /* 特殊数字/数字1-28b */
-                    font-family: D-DIN;
+                    font-family: "ding";
                     font-size: 28px;
                     font-style: normal;
                     font-weight: 700;
@@ -93,6 +126,7 @@ let data = ref([
                         font-style: normal;
                         font-weight: 500;
                         line-height: normal;
+                        padding-left: 8px;
                     }
                 }
             }
@@ -113,7 +147,7 @@ let data = ref([
                 }
                 span {
                     color: var(--color-text-text-100, #FFF);
-                    font-family: D-DIN;
+                    font-family: "ding";
                     font-size: 18px;
                     font-style: normal;
                     font-weight: 700;
