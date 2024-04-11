@@ -6,7 +6,7 @@ import svgLoader from "vite-svg-loader";
 export default defineConfig({
   plugins: [vue(), svgLoader()],
   //项目部署的基础路径
-  base: "/",
+  base: "./",
   //静态资源服务的文件夹
   publicDir: "public",
   resolve: {
@@ -18,7 +18,7 @@ export default defineConfig({
     //解决程序包中package.json配置中的exports 字段
     conditions: [],
     //解析package.json中字段的优先级
-    mainFields: ["module", "jsnext:main", "jsnext"],
+    mainFields: ["browser", "module", "jsnext:main", "jsnext"],
     //导入时想要省略的扩展名列表
     extensions: [".mjs", ".js", ".ts", ".jsx", ".tsx", ".json"],
     //使Vite通过原始文件路径而不是真正的文件路径确定文件身份

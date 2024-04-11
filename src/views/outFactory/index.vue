@@ -77,7 +77,7 @@
 <script setup lang="ts">
 import { ref, onMounted, watch, reactive } from "vue";
 import * as XLSX from "xlsx";
-import axios from "axios";
+import axios from 'axios';
 import { useRoute, useRouter } from "vue-router";
 
 import OutFactoryBottom from "@/views/outFactory/components/bottom/index.vue";
@@ -103,11 +103,9 @@ import Scene from "@/components/scene/index.vue";
 interface RouterIndex {
   index: number;
 }
-const loadingEnd = ref(false);
+const loadingEnd = ref(false); // loading
 const route = useRoute(); // 查值
 const router = useRouter(); // 跳转 功能
-
-// console.log('route:', route, route.query);
 
 // 表格仓库 信息
 const { updataExcelData } = storeExcelData();
@@ -156,19 +154,9 @@ const routerIndex = getRouterIndex(mode) as unknown as RouterIndex; // 使用类
 // 默认选中那个
 const tabState = ref(0);
 
-tabState.value = routerIndex.index; // 现在可以安全地访问 index 属性
+// 初始化 默认显示哪一个 tabs
+tabState.value = routerIndex.index; 
 
-// console.log( 'tabState.value :',tabState.value  );
-
-onMounted(() => {
-  // 读 excel
-  readerExcel();
-});
-
-watch(excellist, () => {
-  // 获取 excel 数据
-  loadExcelNumDate();
-});
 
 /**
  *  @Author: cc
@@ -250,10 +238,26 @@ const loadExcelNumDate = () => {
   // console.log("表格数据:", excelDataMap);
 };
 
+
+// 加载完毕
+const loadOver = () => {
+  loadingEnd.value = true;
+};
+
+onMounted(() => {
+  // 读 excel
+  readerExcel();
+});
+
+watch(excellist, () => {
+  // 获取 excel 数据
+  loadExcelNumDate();
+});
+
 // 监听 路由 变化 设置显示面板
 watch(
   () => router.currentRoute.value.path,
-  (toPath: string) => {
+  (_: string) => {
     // 模 式
     const { mode } = route.params;
 
@@ -272,17 +276,13 @@ watch(
   { deep: true }
 );
 
-// 加载完毕
-const loadOver = () => {
-  loadingEnd.value = true;
-};
 </script>
 
 <template>
   <!-- 外场 总组件 -->
   <div class="outFactory">
     <!-- loading -->
-    <load v-show="!loadingEnd"/>
+    <load v-show="!loadingEnd" />
 
     <!-- 全局顶部 -->
     <global-header class="header" />

@@ -11,7 +11,22 @@ import warning from "./svg/warning.svg?url";
 import online from "./svg/online.svg?url";
 import offline from "./svg/offline.svg?url";
 
-export default {
+interface SvgIcons {
+  round_icons: {
+    待机: string;
+    告警: string;
+    运行: string;
+    摄像头: string;
+    设备: string;
+    online: string;
+    doing: string;
+    standby: string;
+    warning: string;
+    offline: string;
+  };
+}
+
+const SVG_ICONS: SvgIcons = {
   // 圆形 灯珠
   round_icons: {
     待机,
@@ -26,3 +41,5 @@ export default {
     offline,
   },
 };
+
+export default SVG_ICONS;

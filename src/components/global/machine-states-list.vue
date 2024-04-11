@@ -112,7 +112,7 @@
             //   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25),
             //     0px -6px 10px 0px rgba(0, 255, 133, 0.4), 0px -10px 20px 0px #00ff85;
             position: absolute;
-            left: 40%;
+            left: 50%;
             transform: translate(-50%);
             bottom: -4px;
             z-index: -1;
@@ -122,7 +122,7 @@
 </style>
 
 <script setup lang="ts">
-import { toRefs } from "vue";
+import { ref, toRefs } from "vue";
 import SVG_ICONS from "@/assets/SVG_ICONS";
 
 interface Props {
@@ -151,10 +151,9 @@ const props = withDefaults(defineProps<Props>(),
     }
 )
 
-
-
 // 列表信息
 const { listInfo } = toRefs(props);
+
 </script>
 
 <template>
