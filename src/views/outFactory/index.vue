@@ -220,7 +220,7 @@ const readerExcel = async () => {
 
   excellist.value = fillArrays(arr);
 
-  console.log("第一个表名：", wsname, "\n读取结果", [...excellist.value]);
+  // console.log("第一个表名：", wsname, "\n读取结果", [...excellist.value]);
 };
 
 // 根据 position 获取对应值

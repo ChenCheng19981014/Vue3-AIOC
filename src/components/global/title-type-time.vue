@@ -20,11 +20,13 @@ let activeTab = ref('day')
 // 修改数据
 const toggleTab = (tab: string) => {
   activeTab.value = tab;
+  emits('delivery-date', tab);
 };
 
 const props = defineProps({
     tips: String
 })
+const emits = defineEmits(['delivery-date']); // 传递日期
 </script>
 
 <style scoped lang="scss">
