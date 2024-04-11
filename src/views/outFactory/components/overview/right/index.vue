@@ -25,6 +25,8 @@
 
 <script setup lang="ts">
 import OutFactoryMonitor from "@/views/outFactory/components/overview/right/components/monitor.vue";
+import OutFactoryAlarm from "@/views/outFactory/components/overview/right/components/alarm.vue";
+
 </script>
 
 <template>
@@ -37,7 +39,7 @@ import OutFactoryMonitor from "@/views/outFactory/components/overview/right/comp
       <title-type-common :tips="'设备概括'"></title-type-common>
     </div>
     <div class="alarm">
-      <title-type-common :tips="'综合告警'"></title-type-common>
+      <OutFactoryAlarm></OutFactoryAlarm>
     </div>
   </div>
 </template>
