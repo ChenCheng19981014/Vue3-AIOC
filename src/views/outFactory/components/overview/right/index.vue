@@ -29,6 +29,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import OutFactoryMonitor from "@/views/outFactory/components/overview/right/components/monitor.vue";
+import OutFactoryAlarm from "@/views/outFactory/components/overview/right/components/alarm.vue";
 import OutFactorySummarize from "@/views/outFactory/components/overview/right/components/summarize.vue";
 
 // 监控信息
@@ -65,7 +66,7 @@ const summarizeInfo = ref({
       <OutFactorySummarize :summarizeInfo="summarizeInfo"/>
     </div>
     <div class="alarm">
-      <title-type-common :tips="'综合告警'"></title-type-common>
+      <OutFactoryAlarm></OutFactoryAlarm>
     </div>
   </div>
 </template>

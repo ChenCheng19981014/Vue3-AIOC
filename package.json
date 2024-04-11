@@ -4,7 +4,11 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
+<<<<<<< HEAD
     "dev": "vite --host",
+=======
+    "dev": "vite",
+>>>>>>> d55437fd830b342e1319bf4eaa197016666a8ee1
     "build": "vite build",
     "preview": "vite preview"
   },

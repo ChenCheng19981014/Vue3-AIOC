@@ -9,6 +9,12 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 
+const props = defineProps({
+    position: Array,
+    legendPositiony: String,
+    legendPositionx: String,
+})
+
 const chartData = [
     { value: 4248, name: '电费' }, 
     { value: 3000, name: '水费' }, 
@@ -76,8 +82,8 @@ for (let i = 0; i < chartData.length; i++) {
 
 options.value = {
     legend: {
-        right: '3%',
-        top: chageTop(),
+        right: props.legendPositionx || '3%',
+        top: props.legendPositiony || chageTop(),
         align: 'left',
         itemGap: 18,
         itemWidth: 12,
@@ -132,7 +138,7 @@ options.value = {
             z: 3,
             roundCap: true,
             radius: ['55%', '65%'],
-            center: ['20%', '54%'],
+            center: props.position || ['20%', '54%'],
             label: {
                 show: false,
             },
@@ -145,7 +151,7 @@ options.value = {
             type: 'pie',
             z: 2,
             radius: ['55%', '60%'],
-            center: ['20%', '54%'],
+            center: props.position || ['20%', '54%'],
             label: {
                 show: false,
             },

@@ -282,7 +282,11 @@ watch(
   <!-- 外场 总组件 -->
   <div class="outFactory">
     <!-- loading -->
+<<<<<<< HEAD
     <load v-show="!loadingEnd" />
+=======
+    <!-- <load v-show="!loadingEnd"/> -->
+>>>>>>> d55437fd830b342e1319bf4eaa197016666a8ee1
 
     <!-- 全局顶部 -->
     <global-header class="header" />
