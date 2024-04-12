@@ -10,8 +10,8 @@ export const storeExcelData = defineStore(
     // store表格数据
     const storeExcelDataMap = ref<Object>({});
 
-    const updataExcelData = (data: Object) => {
-      storeExcelDataMap.value = data;
+    const updataExcelData = (model: string, data: Object) => {
+      storeExcelDataMap.value[model] = data;
     };
 
     return {

@@ -77,7 +77,7 @@
 <script setup lang="ts">
 import { ref, onMounted, watch, reactive } from "vue";
 import * as XLSX from "xlsx";
-import axios from 'axios';
+import axios from "axios";
 import { useRoute, useRouter } from "vue-router";
 
 import OutFactoryBottom from "@/views/outFactory/components/bottom/index.vue";
@@ -107,11 +107,16 @@ const loadingEnd = ref(false); // loading
 const route = useRoute(); // 查值
 const router = useRouter(); // 跳转 功能
 
+// excel表格标题 s
+const excelTitles = ref<string[]>([]);
+
 // 表格仓库 信息
 const { updataExcelData } = storeExcelData();
 
 // excel数据
-const excellist = ref<string[]>([]);
+const exceMapList = ref({}) as any as unknown as {
+  [key: string]: any
+};
 
 // tabs 选项
 const tabInfo = reactive({
@@ -155,8 +160,7 @@ const routerIndex = getRouterIndex(mode) as unknown as RouterIndex; // 使用类
 const tabState = ref(0);
 
 // 初始化 默认显示哪一个 tabs
-tabState.value = routerIndex.index; 
-
+tabState.value = routerIndex.index;
 
 /**
  *  @Author: cc
@@ -193,49 +197,83 @@ const readerExcel = async () => {
     responseType: "arraybuffer",
   });
   const data = new Uint8Array(response.data);
+
   const workbook = XLSX.read(data, { type: "array", codepage: 936 }); // 使用 'array' 类型解析
-  const wsname = workbook.SheetNames[0]; //取第一张表，wb.SheetNames[0]是获取Sheets中第一个Sheet的名字
-  const arr = [];
-  //生成json表格内容，wb.Sheets[Sheet名]获取第一个Sheet的数据
-  const ws = XLSX.utils.sheet_to_json(workbook.Sheets[wsname], {
-    header: 1,
-    raw: false,
+
+  // 获取 excel 表名
+  excelTitles.value = workbook.SheetNames;
+
+  workbook.SheetNames.map((titleName: any, _) => {
+    if (_ >= 2) return
+    // 读表
+    const ws = XLSX.utils.sheet_to_json(workbook.Sheets[titleName], {
+      header: 1,
+      raw: false,
+    });
+
+    // 数据
+    const arr = [];
+
+    //编辑数据
+    for (var i = 0; i < ws.length; i++) {
+      arr.push(ws[i] as string);
+    }
+
+    // 列表
+    exceMapList.value[titleName] = fillArrays(arr);
+
   });
-
-  //编辑数据
-  for (var i = 0; i < ws.length; i++) {
-    arr.push(ws[i] as string);
-  }
-
-  excellist.value = fillArrays(arr);
-
-  console.log("第一个表名：", wsname, "\n读取结果", [...excellist.value]);
 };
 
 // 根据 position 获取对应值
-const getValueByPosition = (position: number[]) => {
+const getValueByPosition = (position: number[], titleName: string) => {
   const [row, col] = position;
-  return [...excellist.value][row][col];
+  return [...exceMapList.value[titleName]][row][col];
 };
 
 // get 获取 数据
-const loadExcelNumDate = () => {
-  for (const category in excelDataMap) {
-    const categoryData = excelDataMap[category];
-    for (const timeFrame in categoryData) {
-      const timeFrameData = categoryData[timeFrame];
-      for (const key in timeFrameData) {
-        const { position } = timeFrameData[key];
-        // 获取值并更新 dataMap
-        excelDataMap[category][timeFrame][key].value =
-          getValueByPosition(position);
+const loadExcelNumDate = (model: string, titleName: string) => {
+  // 获取对应的 excel 数据
+  const listMap = excelDataMap[model];
+
+  // 类型
+  const type = Object.prototype.toString.call(listMap);
+
+  // 如果是对象
+  if (type === "[object Object]") {
+    for (const category in listMap) {
+      const categoryData = listMap[category];
+      for (const timeFrame in categoryData) {
+        const timeFrameData = categoryData[timeFrame];
+        for (const key in timeFrameData) {
+          const { position } = timeFrameData[key];
+          // 获取值并更新 dataMap
+          listMap[category][timeFrame][key].value =
+            getValueByPosition(position, titleName);
+        }
       }
     }
   }
+  // 如果是数组
+  else if (type === "[object Array]") {
+    // 循环遍历能耗数组
+    listMap.forEach((item: any) => {
+      // 循环遍历每个对象中的属性
+      Object.keys(item).forEach((key) => {
+        // 获取属性的 position 和 value
+        const { position } = item[key];
+        // 如果 position 不为空
+        if (position && position.length === 2) {
+          // 根据 position 设置 value 值
+          item[key].value = getValueByPosition(position, titleName);
+        }
+      });
+    });
+  }
 
-  //更新 本地存储值
-  updataExcelData(excelDataMap);
-  // console.log("表格数据:", excelDataMap);
+  // 更新本地存储值
+  updataExcelData(model, listMap);
+  // console.log("表格数据:", listMap);
 };
 
 // 加载完毕
@@ -248,10 +286,12 @@ onMounted(() => {
   readerExcel();
 });
 
-watch(excellist, () => {
+watch(exceMapList, () => {
   // 获取 excel 数据
-  loadExcelNumDate();
-});
+  loadExcelNumDate("能耗统计", excelTitles.value[0]);
+
+  loadExcelNumDate("区域能耗", excelTitles.value[0]);
+},{ deep: true });
 
 // 监听 路由 变化 设置显示面板
 watch(
@@ -274,7 +314,6 @@ watch(
   },
   { deep: true }
 );
-
 </script>
 
 <template>
@@ -283,8 +322,8 @@ watch(
     <!-- loading -->
     <!-- <load v-show="!loadingEnd"/> -->
 
-        <!-- 场景 -->
-        <!-- <Scene @loadOver="loadOver" /> -->
+    <!-- 场景 -->
+    <!-- <Scene @loadOver="loadOver" /> -->
 
     <!-- 全局顶部 -->
     <global-header class="header" />
@@ -311,8 +350,6 @@ watch(
         <DeviceLeft />
       </template>
     </trans>
-
-
 
     <!-- 右弹窗 -->
     <trans :showIndex="tabState" direction="right" :slotNumber="4">
