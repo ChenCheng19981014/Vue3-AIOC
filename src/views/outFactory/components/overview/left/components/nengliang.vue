@@ -7,11 +7,12 @@
                     <div class="left">
                         <img :src="item.imgUrl" :alt="item.name">
                         <div class="designation">{{ item.name }}</div>
-                        <div class="record">{{ item.num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") }}<span>{{ index === 0 ? '(kWh)' : '(m³)' }}</span></div>
+                        <div class="record">{{ item.num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") }}<span>{{ index
+                            === 0 ? '(kWh)' : '(m³)' }}</span></div>
                     </div>
                     <div class="percentage">
                         同比
-                        <img :src="`${ index == 0 ? arrow.upArrow : arrow.downArrow }`" alt="">
+                        <img :src="`${index == 0 ? arrow.upArrow : arrow.downArrow}`" alt="">
                         <span>{{ item.percentage }}%</span>
                     </div>
                 </div>
@@ -23,9 +24,10 @@
 <script setup lang="ts">
 import { ref, reactive, computed } from 'vue';
 
-const arrow = reactive({ 
-    upArrow: "/src/assets/images/上箭头.png", 
-    downArrow: "/src/assets/images/下箭头.png", 
+
+const arrow = reactive({
+    upArrow: "/src/assets/images/上箭头.png",
+    downArrow: "/src/assets/images/下箭头.png",
 })
 
 // 模拟数据
@@ -56,16 +58,16 @@ const handleDate = (time: string) => {
 
 // 计算属性，根据传递的字符串动态过滤数据
 const filteredData = computed(() => {
-  switch (timeUnit.value) {
-    case 'day':
-      return totalData.day;
-    case 'month':
-      return totalData.month;
-    case 'year':
-      return totalData.year;
-    default:
-      return [];
-  }
+    switch (timeUnit.value) {
+        case 'day':
+            return totalData.day;
+        case 'month':
+            return totalData.month;
+        case 'year':
+            return totalData.year;
+        default:
+            return [];
+    }
 });
 </script>
 
@@ -73,6 +75,7 @@ const filteredData = computed(() => {
 .nengliang {
     width: 100%;
     height: 100%;
+
     .nengliang-content {
         width: 100%;
         height: 100%;
@@ -81,6 +84,7 @@ const filteredData = computed(() => {
         display: flex;
         flex-direction: column;
         justify-content: space-between;
+
         .nengliang-item {
             width: 100%;
             height: 64px;
@@ -89,14 +93,17 @@ const filteredData = computed(() => {
             align-items: center;
             padding: 8px;
             justify-content: space-between;
+
             .left {
                 display: flex;
                 align-items: center;
                 flex: 1;
+
                 img {
                     width: 48px;
                     height: 48px;
                 }
+
                 .designation {
                     padding-left: 8px;
                     color: var(--color-text-text-70, rgba(255, 255, 255, 0.70));
@@ -109,6 +116,7 @@ const filteredData = computed(() => {
                     line-height: normal;
                     flex: 0.6;
                 }
+
                 .record {
                     flex: 1.9;
                     color: var(--color-text-text-100, #FFF);
@@ -119,6 +127,7 @@ const filteredData = computed(() => {
                     font-style: normal;
                     font-weight: 700;
                     line-height: normal;
+
                     span {
                         color: var(--color-text-text-50, rgba(255, 255, 255, 0.50));
                         font-family: "Source Han Sans CN";
@@ -140,11 +149,13 @@ const filteredData = computed(() => {
                 line-height: normal;
                 display: flex;
                 align-items: center;
+
                 img {
                     width: 6.001px;
                     height: 13.001px;
                     margin: 0 4px;
                 }
+
                 span {
                     color: var(--color-text-text-100, #FFF);
                     font-family: "ding";
@@ -156,5 +167,4 @@ const filteredData = computed(() => {
             }
         }
     }
-}
-</style>
+}</style>

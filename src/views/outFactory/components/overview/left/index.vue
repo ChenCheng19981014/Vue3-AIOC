@@ -1,4 +1,4 @@
-<style scoped lang='scss'>
+<style scoped lang="scss">
 @import "@/design/hooks.scss";
 
 .outFactory-overview-left {
@@ -9,39 +9,42 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+
     .statistics {
         width: 100%;
         height: 262px;
     }
+
     .cost {
         width: 100%;
         height: 248px;
     }
+
     .energy {
         width: 100%;
         height: 374px;
     }
 }
 </style>
-  
-<script setup lang='ts'>
-import NengLiang from "./components/nengliang.vue"
-import NengYuan from "./components/nengyuan.vue"
-import QuYu from "./components/quyu.vue"
+
+<script setup lang="ts">
+import NengLiang from "./components/nengliang.vue";
+import NengYuan from "./components/nengyuan.vue";
+import QuYu from "./components/quyu.vue";
 import { storeExcelData } from "@/store/modules/excel";
 // 表格仓库 信息
 const { storeExcelDataMap } = storeExcelData();
 
-console.log('仓库信息:',storeExcelDataMap);
+console.log("仓库信息:", storeExcelDataMap);
 </script>
-  
+
 <template>
-    <div class='outFactory-overview-left'>
+    <div class="outFactory-overview-left">
         <div class="statistics">
-            <NengLiang></NengLiang>
+            <NengLiang :storeExcelDataMap="storeExcelDataMap"></NengLiang>
         </div>
         <div class="cost">
-            <NengYuan></NengYuan>
+            <NengYuan :storeExcelDataMap="storeExcelDataMap"></NengYuan>
         </div>
         <div class="energy">
             <QuYu :storeExcelDataMap="storeExcelDataMap"></QuYu>
