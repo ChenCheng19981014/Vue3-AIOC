@@ -28,6 +28,7 @@
 </style>
 
 <script setup lang="ts">
+import { ref } from "vue";
 import NengLiang from "./components/nengliang.vue";
 import NengYuan from "./components/nengyuan.vue";
 import QuYu from "./components/quyu.vue";
@@ -35,7 +36,11 @@ import { storeExcelData } from "@/store/modules/excel";
 // 表格仓库 信息
 const { storeExcelDataMap } = storeExcelData();
 
-console.log("仓库信息:", storeExcelDataMap);
+const energyStatistics = ref<any[]>([])
+
+energyStatistics.value = storeExcelDataMap['能耗统计'];
+
+console.log("仓库信息:", energyStatistics.value);
 </script>
 
 <template>

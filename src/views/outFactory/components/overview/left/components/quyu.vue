@@ -16,12 +16,9 @@ type tableListType = {
     [key: string]: any
 }
  // props
-const storeExcelDataMap = defineProps(['storeExcelDataMap']);
+const {storeExcelDataMap} = defineProps(['storeExcelDataMap']);
 
-const table = storeExcelDataMap.storeExcelDataMap['区域能耗'];
-
-console.log('table:', table,);
-
+const table = storeExcelDataMap['区域能耗'];
 
 // 模拟数据
 const tablelist = reactive({

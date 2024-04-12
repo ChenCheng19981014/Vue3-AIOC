@@ -25,8 +25,8 @@
 
   .btn {
     width: 520px;
-    display: flex;
-    justify-content: space-between;
+    @include center;
+    gap: 16px;
 
     .button {
       position: relative;
