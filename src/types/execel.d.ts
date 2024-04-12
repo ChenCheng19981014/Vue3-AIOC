@@ -5,3 +5,5 @@ export type Person = {
   accomplishment: string;
   imageId: string;
 };
+
+export type AreaData = {};

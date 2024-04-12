@@ -28,7 +28,11 @@
 import NengLiang from "./components/nengliang.vue"
 import NengYuan from "./components/nengyuan.vue"
 import QuYu from "./components/quyu.vue"
+import { storeExcelData } from "@/store/modules/excel";
+// 表格仓库 信息
+const { storeExcelDataMap } = storeExcelData();
 
+console.log('仓库信息:',storeExcelDataMap);
 </script>
   
 <template>
@@ -40,7 +44,7 @@ import QuYu from "./components/quyu.vue"
             <NengYuan></NengYuan>
         </div>
         <div class="energy">
-            <QuYu></QuYu>
+            <QuYu :storeExcelDataMap="storeExcelDataMap"></QuYu>
         </div>
     </div>
 </template>

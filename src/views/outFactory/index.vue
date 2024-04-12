@@ -291,7 +291,8 @@ watch(exceMapList, () => {
   loadExcelNumDate("能耗统计", excelTitles.value[0]);
 
   loadExcelNumDate("区域能耗", excelTitles.value[0]);
-},{ deep: true });
+
+}, { deep: true });
 
 // 监听 路由 变化 设置显示面板
 watch(
@@ -320,7 +321,7 @@ watch(
   <!-- 外场 总组件 -->
   <div class="outFactory">
     <!-- loading -->
-    <load v-show="!loadingEnd"/>
+    <!-- <load v-show="!loadingEnd"/> -->
 
     <!-- 场景 -->
     <!-- <Scene @loadOver="loadOver" /> -->
