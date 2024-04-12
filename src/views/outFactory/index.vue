@@ -209,7 +209,7 @@ const readerExcel = async () => {
 
   excellist.value = fillArrays(arr);
 
-  // console.log("第一个表名：", wsname, "\n读取结果", [...excellist.value]);
+  console.log("第一个表名：", wsname, "\n读取结果", [...excellist.value]);
 };
 
 // 根据 position 获取对应值
@@ -237,7 +237,6 @@ const loadExcelNumDate = () => {
   updataExcelData(excelDataMap);
   // console.log("表格数据:", excelDataMap);
 };
-
 
 // 加载完毕
 const loadOver = () => {
@@ -282,11 +281,10 @@ watch(
   <!-- 外场 总组件 -->
   <div class="outFactory">
     <!-- loading -->
-<<<<<<< HEAD
-    <load v-show="!loadingEnd" />
-=======
     <!-- <load v-show="!loadingEnd"/> -->
->>>>>>> d55437fd830b342e1319bf4eaa197016666a8ee1
+
+        <!-- 场景 -->
+        <!-- <Scene @loadOver="loadOver" /> -->
 
     <!-- 全局顶部 -->
     <global-header class="header" />
@@ -314,8 +312,7 @@ watch(
       </template>
     </trans>
 
-    <!-- 场景 -->
-    <Scene @loadOver="loadOver" />
+
 
     <!-- 右弹窗 -->
     <trans :showIndex="tabState" direction="right" :slotNumber="4">
