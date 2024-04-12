@@ -3,7 +3,7 @@
     <div class="quyu">
         <title-type-time :tips="'区域消耗'" @delivery-date="handleData">
             <div class="table-list-qu">
-                <table-list :menu="tablelist.menu" :columns="filteredData" :currentHight="320"></table-list>
+                <table-list :menu="tablelist.menu" :columns="filteredData" :currentHight="288"></table-list>
             </div>
         </title-type-time>
     </div>

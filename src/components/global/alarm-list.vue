@@ -3,23 +3,23 @@
     <div class="alarm-list">
         <!-- 轮播 -->
         <scroll-wrap :distance="props.distanceHeight">
-            <div class="alarm-list-item" v-for="(item, index) in dataList">
+            <div class="alarm-list-item" v-for="(item, index) in dataList" :key="index">
                 <div class="alarm-top">
-                    <div class="name">陌生人入侵</div>
+                    <div class="name">{{ item.name }}</div>
                     <div class="situation">
                         <div class="region">
-                            厂区外围
+                            {{ item.area }}
                             <span>|</span>
-                            周界告警
+                            {{ item.areaRegion }}
                             </div>
-                        <div class="grade">一般</div>
+                        <div class="grade">{{ item.grade }}</div>
                     </div>
                 </div>
                 <div class="alarm-bottom">
-                    <div class="machine">空压机</div>
+                    <div class="machine">{{ item.machine }}</div>
                     <div class="situation">
-                        <div class="time">2024-22-18  09:14:56</div>
-                        <div class="handle">已解除</div>
+                        <div class="time">{{ item.date }}</div>
+                        <div class="handle">{{ item.handle }}</div>
                     </div>
                 </div>
             </div>
