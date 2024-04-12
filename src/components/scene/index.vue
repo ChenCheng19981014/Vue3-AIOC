@@ -11,7 +11,7 @@
 <script setup>
 import { RunScene } from "run-scene-v2";
 import Change from "./Change";
-import { ref, onMounted, defineEmits } from "vue";
+import { ref, onMounted} from "vue";
 const emit = defineEmits(["loadOver"]);
 const scene = ref(null);
 let sceneInstance = null;
