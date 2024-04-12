@@ -193,7 +193,7 @@ const readerExcel = async () => {
   // const response = await axios.get("./excel/AIOC.xlsx", {
   //   responseType: "arraybuffer",
   // });
-  const response = await axios.get("./excel/AIOC数据表单（无公式）.xlsx", {
+  const response = await axios.get("./excel/AIOC数据表单.xlsx", {
     responseType: "arraybuffer",
   });
   const data = new Uint8Array(response.data);
@@ -320,7 +320,7 @@ watch(
   <!-- 外场 总组件 -->
   <div class="outFactory">
     <!-- loading -->
-    <!-- <load v-show="!loadingEnd"/> -->
+    <load v-show="!loadingEnd"/>
 
     <!-- 场景 -->
     <!-- <Scene @loadOver="loadOver" /> -->
