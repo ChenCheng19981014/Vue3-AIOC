@@ -24,8 +24,50 @@ const excelDataMap = {
           value: null,
         },
       },
-      月: {},
-      年: {},
+      月: {
+        // 数值
+        num: {
+          position: [5, 3],
+          value: null
+        },
+        //   单位
+        unit: {
+          position: [5, 4],
+          value: null,
+        },
+        //   上升 或 下降
+        target: {
+          position: [5, 6],
+          value: null,
+        },
+        //    上升 或 下降 值
+        targetNum: {
+          position: [5, 7],
+          value: null,
+        },
+      },
+      年: {
+        // 数值
+        num: {
+          position: [6, 3],
+          value: null,
+        },
+        //   单位
+        unit: {
+          position: [6, 4],
+          value: null,
+        },
+        //   上升 或 下降
+        target: {
+          position: [6, 6],
+          value: null,
+        },
+        //    上升 或 下降 值
+        targetNum: {
+          position: [6, 7],
+          value: null,
+        },
+      },
     },
 
     水能耗: {
@@ -166,7 +208,7 @@ const excelDataMap = {
       },
     },
 
-    能源费用总计: {
+    能源费用统计: {
       日: {
         // 数值
         num: {
@@ -291,33 +333,9 @@ const excelDataMap = {
           value: null,
         },
         unit: {
-          position: [22, 3],
+          position: [22, 4],
           value: null,
-        },
-        dayUse: {
-          position: [22, 3],
-          value: null,
-        },
-        dayCost: {
-          position: [22, 3],
-          value: null,
-        },
-        monthUse: {
-          position: [22, 3],
-          value: null,
-        },
-        monthCost: {
-          position: [22, 3],
-          value: null,
-        },
-        yearUse: {
-          position: [22, 3],
-          value: null,
-        },
-        yearCost: {
-          position: [22, 3],
-          value: null,
-        },
+        }
       },
       月: {
         // 数值
