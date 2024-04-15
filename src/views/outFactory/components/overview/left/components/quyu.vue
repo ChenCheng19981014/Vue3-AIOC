@@ -22,7 +22,7 @@ const { storeExcelDataMap } = defineProps(['storeExcelDataMap']);
 
 const table = storeExcelDataMap['区域能耗'];
 
-console.log('table:', table,);
+// console.log('table:', table,);
 
 
 // 模拟数据

@@ -33,8 +33,8 @@ let dataNum = 0;
 for (var i = 0; i < chartData.length; i++) {
     dataNum += chartData[i].value;
 }
-const colorList = ['#00ffff','#006ced','#00ff8a','#ffb22d','#fa7eed'];
-const sum = chartData.reduce((per, cur) => per + cur.value, 0);
+const colorList = ['#00FF85','#0066FF','#FFBE5C','#00FFE0'];
+const sum: any = chartData.reduce((per, cur: any) => per + cur.value, 0);
 const gap = (1 * sum) / 100;
 const pieData1: any[] = [];
 const pieData2: any[] = [];
