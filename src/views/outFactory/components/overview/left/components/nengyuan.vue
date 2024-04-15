@@ -6,7 +6,7 @@
                 <div class="image">
                     <img src="@/assets/images/Frame.png" alt="无图">
                 </div>
-            </pie-chart> 
+            </pie-chart>
         </title-type-number>
     </div>
 </template>
@@ -19,7 +19,7 @@ const props = defineProps({
 
 let chartData = ref(props.storeExcelDataMap)
 
-watch(props, ()=> {
+watch(props, () => {
     chartData.value = props.storeExcelDataMap
 })
 </script>
@@ -29,10 +29,12 @@ watch(props, ()=> {
     width: 100%;
     height: 100%;
     position: relative;
+
     .image {
-    position: absolute;
-    top: 116px;
-    left: 70px;
+        position: absolute;
+        top: 116px;
+        left: 70px;
+
         img {
             width: 40.25px;
             height: 40.25px;

@@ -38,11 +38,13 @@ const { storeExcelDataMap } = storeExcelData();
 
 // 获取能耗及费用统计信息
 // @ts-ignore
-const consumptionCost = storeExcelDataMap['能耗统计']
-console.log("总数据", storeExcelDataMap)
+const consumptionCost = storeExcelDataMap['综合态势']['能耗统计']
+
+console.log("能耗统计", consumptionCost)
 
 // 获取当前日期
 const Date = ref("day");
+
 const currentDate = (date: string) => {
     Date.value = date;
 }
@@ -94,7 +96,7 @@ const handleconsumption = (data: any) => {
             const yearItem = {
                 imgUrl: `/src/assets/images/${key}.png`,
                 name: key,
-                num: yearData.value, 
+                num: yearData.value,
                 unit: yearUnit.value,
                 target: yearTarget.value,
                 percentage: yearTargetNum.value
@@ -109,6 +111,8 @@ const handleconsumption = (data: any) => {
     return result;
 }
 
+handleconsumption(consumptionCost)
+
 function removeCommasAndParseInt(str: String) {
     // 使用正则表达式去除字符串中的逗号
     const stringWithoutCommas = str.replace(/,/g, '');
@@ -118,7 +122,7 @@ function removeCommasAndParseInt(str: String) {
 }
 
 // 处理能源费用统计问题
-const handleEnergycosts =  (data: any) => {
+const handleEnergycosts = (data: any) => {
     const result: any = {
         day: [],
         month: [],
@@ -150,7 +154,7 @@ const handleEnergycosts =  (data: any) => {
             };
             const yearItem = {
                 name: key,
-                value: removeCommasAndParseInt(yearData.value) || 0, 
+                value: removeCommasAndParseInt(yearData.value) || 0,
                 unit: yearUnit.value,
             };
 

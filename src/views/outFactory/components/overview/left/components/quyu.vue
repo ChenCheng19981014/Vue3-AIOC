@@ -1,6 +1,6 @@
 <!-- 区域消耗 -->
 <template>
-    <div class="quyu" v-if="false">
+    <div class="quyu">
         <title-type-time :tips="'区域消耗'" @delivery-date="handleData">
             <div class="table-list-qu">
                 <table-list :menu="tablelist.menu" :columns="filteredData" :currentHight="288"></table-list>
@@ -15,8 +15,8 @@ import { ref, reactive, computed } from 'vue'
 type tableListType = {
     [key: string]: any
 }
- // props
-const {storeExcelDataMap} = defineProps(['storeExcelDataMap']);
+// props
+const { storeExcelDataMap } = defineProps(['storeExcelDataMap']);
 
 // const table = storeExcelDataMap.storeExcelDataMap['区域能耗'];
 
