@@ -28,51 +28,6 @@ const excelDataMap = {
         月: {},
         年: {},
       },
-      月: {
-        // 数值
-        num: {
-          position: [5, 3],
-          value: null
-        },
-        //   单位
-        unit: {
-          position: [5, 4],
-          value: null,
-        },
-        //   上升 或 下降
-        target: {
-          position: [5, 6],
-          value: null,
-        },
-        //    上升 或 下降 值
-        targetNum: {
-          position: [5, 7],
-          value: null,
-        },
-      },
-      年: {
-        // 数值
-        num: {
-          position: [6, 3],
-          value: null,
-        },
-        //   单位
-        unit: {
-          position: [6, 4],
-          value: null,
-        },
-        //   上升 或 下降
-        target: {
-          position: [6, 6],
-          value: null,
-        },
-        //    上升 或 下降 值
-        targetNum: {
-          position: [6, 7],
-          value: null,
-        },
-      },
-    },
 
       水能耗: {
         日: {
@@ -409,18 +364,10 @@ const excelDataMap = {
       },
     },
 
-    能源费用统计: {
-      日: {
-        // 数值
-        num: {
-          position: [13, 3],
-          value: null,
-        },
-        //   单位
-        unit: {
-          position: [13, 4],
-          value: null,
-        },
+    设备概况: {
+      设备总数: {
+        position: [51, 3],
+        value: null,
       },
       运行: {
         position: [52, 3],
@@ -452,121 +399,9 @@ const excelDataMap = {
       },
     },
 
-    电费: {
-      日: {
-        // 数值
-        num: {
-          position: [16, 3],
-          value: null,
-        },
-        //   单位
-        unit: {
-          position: [16, 4],
-          value: null,
-        },
-      },
-      月: {
-        // 数值
-        num: {
-          position: [17, 3],
-          value: null,
-        },
-        //   单位
-        unit: {
-          position: [17, 4],
-          value: null,
-        },
-      },
-      年: {
-        // 数值
-        num: {
-          position: [18, 3],
-          value: null,
-        },
-        //   单位
-        unit: {
-          position: [18, 4],
-          value: null,
-        },
-      },
-    },
+    综合告警: [],
+  },
 
-    水费: {
-      日: {
-        // 数值
-        num: {
-          position: [19, 3],
-          value: null,
-        },
-        //   单位
-        unit: {
-          position: [19, 4],
-          value: null,
-        },
-      },
-      月: {
-        // 数值
-        num: {
-          position: [20, 3],
-          value: null,
-        },
-        //   单位
-        unit: {
-          position: [20, 4],
-          value: null,
-        },
-      },
-      年: {
-        // 数值
-        num: {
-          position: [21, 3],
-          value: null,
-        },
-        //   单位
-        unit: {
-          position: [21, 4],
-          value: null,
-        },
-      },
-    },
-
-    燃气费: {
-      日: {
-        // 数值
-        num: {
-          position: [22, 3],
-          value: null,
-        },
-        unit: {
-          position: [22, 4],
-          value: null,
-        }
-      },
-      月: {
-        // 数值
-        num: {
-          position: [23, 3],
-          value: null,
-        },
-        //   单位
-        unit: {
-          position: [23, 4],
-          value: null,
-        },
-      },
-      年: {
-        // 数值
-        num: {
-          position: [24, 3],
-          value: null,
-        },
-        //   单位
-        unit: {
-          position: [24, 4],
-          value: null,
-        },
-      },
-    },
   安防管理: {},
 
   能源管理: {},

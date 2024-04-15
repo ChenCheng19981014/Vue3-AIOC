@@ -39,7 +39,7 @@ const { storeExcelDataMap } = storeExcelData();
 // 获取能耗及费用统计信息
 // @ts-ignore
 const consumptionCost = storeExcelDataMap['能耗统计']
-console.log("总数据", consumptionCost)
+console.log("总数据", storeExcelDataMap)
 
 // 获取当前日期
 const Date = ref("day");
