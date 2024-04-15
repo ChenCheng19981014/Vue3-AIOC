@@ -22,6 +22,7 @@ const table = storeExcelDataMap.storeExcelDataMap['区域能耗'];
 
 // console.log('table:', table,);
 
+// const table = storeExcelDataMap['区域能耗'];
 
 // 模拟数据
 const tablelist = reactive({
