@@ -1,19 +1,18 @@
 <!-- 能耗统计 -->
 <template>
     <div class="nengliang">
-        <title-type-time :tips="'能耗统计'" @delivery-date="handleDate">
+        <title-type-time :tips="'能耗统计'" @delivery-date="handleDate" >
             <div class="nengliang-content">
                 <div class="nengliang-item" v-for="(item, index) in filteredData" :key="index">
                     <div class="left">
                         <img :src="item.imgUrl" :alt="item.name">
                         <div class="designation">{{ item.name }}</div>
-                        <div class="record">{{ item.num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") }}<span>{{ index
-                            === 0 ? '(kWh)' : '(m³)' }}</span></div>
+                        <div class="record">{{ item.num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") }}<span>{{ item.unit }}</span></div>
                     </div>
                     <div class="percentage">
                         同比
-                        <img :src="`${index == 0 ? arrow.upArrow : arrow.downArrow}`" alt="">
-                        <span>{{ item.percentage }}%</span>
+                        <img :src="`${item.target == '上升' ? arrow.upArrow : arrow.downArrow}`" alt="">
+                        <span>{{ item.percentage }}<span>%</span></span>
                     </div>
                 </div>
             </div>
@@ -30,23 +29,8 @@ const arrow = reactive({
     downArrow: "/src/assets/images/下箭头.png",
 })
 
-// 模拟数据
-let totalData = reactive({
-    day: [
-        { imgUrl: "/src/assets/images/电能耗.png", name: "电能耗", num: "22000022", percentage: "20" },
-        { imgUrl: "/src/assets/images/水能耗.png", name: "水能耗", num: "2222", percentage: "20" },
-        { imgUrl: "/src/assets/images/气能耗.png", name: "气能耗", num: "2222", percentage: "20" },
-    ],
-    month: [
-        { imgUrl: "/src/assets/images/电能耗.png", name: "电能耗", num: "0022", percentage: "20" },
-        { imgUrl: "/src/assets/images/水能耗.png", name: "水能耗", num: "2222", percentage: "20" },
-        { imgUrl: "/src/assets/images/气能耗.png", name: "气能耗", num: "2222", percentage: "20" },
-    ],
-    year: [
-        { imgUrl: "/src/assets/images/电能耗.png", name: "电能耗", num: "22000022", percentage: "20" },
-        { imgUrl: "/src/assets/images/水能耗.png", name: "水能耗", num: "22212122", percentage: "20" },
-        { imgUrl: "/src/assets/images/气能耗.png", name: "气能耗", num: "2222", percentage: "20" },
-    ],
+const props = defineProps({
+    storeExcelDataMap: Object
 })
 
 // 传递过来的时间单位，默认是日
@@ -54,21 +38,23 @@ let timeUnit = ref('day');
 // 处理子组件传递过来的时间
 const handleDate = (time: string) => {
     timeUnit.value = time;
+    emits('nengliang-date', time);
 }
 
 // 计算属性，根据传递的字符串动态过滤数据
 const filteredData = computed(() => {
     switch (timeUnit.value) {
         case 'day':
-            return totalData.day;
+            return props.storeExcelDataMap!.day;
         case 'month':
-            return totalData.month;
+            return props.storeExcelDataMap!.month;
         case 'year':
-            return totalData.year;
+            return props.storeExcelDataMap!.year;
         default:
             return [];
     }
 });
+const emits = defineEmits(['nengliang-date']); // 传递日期
 </script>
 
 <style scoped lang="scss">
@@ -135,7 +121,6 @@ const filteredData = computed(() => {
                         font-style: normal;
                         font-weight: 500;
                         line-height: normal;
-                        padding-left: 8px;
                     }
                 }
             }
@@ -163,6 +148,15 @@ const filteredData = computed(() => {
                     font-style: normal;
                     font-weight: 700;
                     line-height: normal;
+                    span {
+                        color: var(--color-text-text-50, rgba(255, 255, 255, 0.50));
+                        font-family: "ding";
+                        font-size: 14px;
+                        font-style: normal;
+                        font-weight: 700;
+                        line-height: normal;
+                        letter-spacing: 1.12px;
+                    }
                 }
             }
         }

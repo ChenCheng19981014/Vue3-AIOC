@@ -80,8 +80,6 @@ import * as XLSX from "xlsx";
 import axios from "axios";
 import { useRoute, useRouter } from "vue-router";
 
-import type { Tabs, TabsRouter } from '@/types/execel'
-
 import OutFactoryBottom from "@/views/outFactory/components/bottom/index.vue";
 
 import { excelDataMap } from "@/constant/excel.js";
@@ -121,7 +119,7 @@ const exceMapList = ref({}) as any as unknown as {
 };
 
 // tabs 选项
-const tabInfo: Tabs = reactive({
+const tabInfo = reactive({
   综合态势: {
     mode: "overview",
   },
@@ -138,13 +136,6 @@ const tabInfo: Tabs = reactive({
 
 // 当前的 模块
 const mode = route.params.mode as string;
-
-/**
-*  @Author: cc
-*  @description: 获取当前的路由信息
-*  @param {  路由名称  }
-*  @return {  路由信息 }
-*/
 
 // 获取 路由 对应的索引
 const getRouterIndex = (mode: string) => {
@@ -232,13 +223,6 @@ const readerExcel = async () => {
     exceMapList.value[titleName] = fillArrays(arr);
 
   });
-
-  // 设置显示的标题
-  setTabs(workbook.SheetNames);
-
-  console.log('读的所有表:', exceMapList.value);
-
-  return workbook.SheetNames
 };
 
 // 根据 position 获取对应值
@@ -248,103 +232,54 @@ const getValueByPosition = (position: number[], titleName: string) => {
 };
 
 // get 获取 数据
-const loadExcelNumDate = (model: string, tabsName: string) => {
-  // 获取对应的   excel 数据 取出每一类
-  const excelStructureDate = excelDataMap[tabsName][model];
+const loadExcelNumDate = (model: string, titleName: string) => {
+  // 获取对应的 excel 数据
+  const listMap = excelDataMap[model];
 
-  if (!excelStructureDate) return;
-  // 检查 listMap 类型
-  const type = Array.isArray(excelStructureDate) ? "array" : "object";
+  // 类型
+  const type = Object.prototype.toString.call(listMap);
 
-  /**
-  *  @Author: cc
-  *  @description:  区分 数据类型 数组还是对象 来进行解析不同数据结构
-  */
-  if (type === "object") {
-
-    for (const topMode in excelStructureDate) {
-      const topModeValue = excelStructureDate[topMode];
-      if (typeof topModeValue !== "object" || Array.isArray(topModeValue)) {
-        console.error("无效的类别数据:", topModeValue);
-        continue;
-      }
-      for (const secondMode in topModeValue) {
-        const secondValue = topModeValue[secondMode];
-        const { position } = topModeValue;
-        // 第二层级是数组
-        if (Array.isArray(position) && position.length === 2) {
-          // console.error("无效的时间框架数据:", position );
-          excelStructureDate[topMode].value = getValueByPosition(position, tabsName);
+  // 如果是对象
+  if (type === "[object Object]") {
+    for (const category in listMap) {
+      const categoryData = listMap[category];
+      for (const timeFrame in categoryData) {
+        const timeFrameData = categoryData[timeFrame];
+        for (const key in timeFrameData) {
+          const { position } = timeFrameData[key];
           // 获取值并更新 dataMap
-          //  listMap[category][timeFrame][key].value = getValueByPosition(position, titleName);
-          continue;
-        }
-        // 第三层级是数组
-        for (const key in secondValue) {
-          const { position } = secondValue[key];
-          if (Array.isArray(position) && position.length === 2) {
-            // 获取值并更新 dataMap
-            excelStructureDate[topMode][secondMode][key].value = getValueByPosition(position, tabsName);
-          } else {
-            console.error("无效的位置信息:", position);
-          }
+          listMap[category][timeFrame][key].value =
+            getValueByPosition(position, titleName);
         }
       }
     }
-  } else if (type === "array") {
-    
-    excelStructureDate.forEach((item: any) => {
-      if (typeof item !== "object" || Array.isArray(item)) {
-        console.error("无效的数组项:", item);
-        return;
-      }
-
+  }
+  // 如果是数组
+  else if (type === "[object Array]") {
+    // 循环遍历能耗数组
+    listMap.forEach((item: any) => {
+      // 循环遍历每个对象中的属性
       Object.keys(item).forEach((key) => {
+        // 获取属性的 position 和 value
         const { position } = item[key];
-        if (Array.isArray(position) && position.length === 2) {
-          item[key].value = getValueByPosition(position, tabsName);
-        } else {
-          console.error("无效的位置信息:", position);
+        // 如果 position 不为空
+        if (position && position.length === 2) {
+          // 根据 position 设置 value 值
+          item[key].value = getValueByPosition(position, titleName);
         }
       });
     });
   }
 
-
-  /**
-  *  @Author: cc
-  *  @description: 
-  *  @param {   tabsName 对应 模块名称、 model 对应的模块名称的每一项、excelStructureDate数据  }
-  */
   // 更新本地存储值
-  updataExcelData(tabsName, model, excelStructureDate);
+  updataExcelData(model, listMap);
+  // console.log("表格数据:", listMap);
 };
-
 
 // 加载完毕
 const loadOver = () => {
   loadingEnd.value = true;
 };
-
-/**
-*  @Author: cc
-*  @description: 设置  显示 下方 tabs  的标题
-*/
-const setTabs = (tabsName: TabsRouter | TabsRouter[] | any[]) => {
-
-  const allRouterNames = Object.keys(tabInfo);
-
-  // 将过滤后的数据重新赋值给 tabInfo
-  allRouterNames.forEach((routerName: TabsRouter | string | any) => {
-
-    if (!tabsName.includes(routerName)) {
-
-      delete tabInfo[routerName];
-    }
-  });
-
-}
-
 
 onMounted(() => {
   // 读 excel
@@ -352,16 +287,10 @@ onMounted(() => {
 });
 
 watch(exceMapList, () => {
-  /**
-  *  @Author: cc
-  *  @description:  综合态势 模块
-  */
-  Object.keys(excelDataMap['综合态势']).map((everyTypeName: string) => {
+  // 获取 excel 数据
+  loadExcelNumDate("能耗统计", excelTitles.value[0]);
 
-    // 获取 excel 数据   --- 读 表一
-    loadExcelNumDate(everyTypeName, '综合态势');
-  })
-
+  loadExcelNumDate("区域能耗", excelTitles.value[0]);
 
 }, { deep: true });
 
@@ -370,11 +299,11 @@ watch(
   () => router.currentRoute.value.path,
   (_: string) => {
     // 模 式
-    const { mode } = route.params as { [key: string]: string };
+    const { mode } = route.params;
 
     const foundObject = getRouterIndex(mode);
 
-    const { key, value, index } = foundObject as unknown | { index: number; key: string; value: object } | any;
+    const { key, value, index } = foundObject;
 
     // 通过路由 parmas进行判断 设置索引
     tabState.value = index;

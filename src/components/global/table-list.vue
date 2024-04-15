@@ -73,32 +73,40 @@ const props = defineProps({
         display: flex;
         justify-content: center;
         align-items: center;
+        flex: 1;
     }
   }
 
   .list {
     margin-top: 4px;
     width: 100%;
-    // height: 320px;
     display: flex;
     align-items: center;
     flex-direction: column;
     overflow: hidden;
     .list-item {
       box-sizing: border-box;
-      padding: 0 30px 0 10px;
+      padding: 0 10px 0 10px;
       height: 32px;
       width: 100%;
       display: flex;
       justify-content: space-between;
       align-items: center;
       > div {
+        flex: 1;
+        text-align: center;
         color: rgba(255, 255, 255, 0.8);
         font-family: "SourceHanSansCN";
         font-size: 14px;
         font-style: normal;
         font-weight: 500;
         line-height: normal;
+        // &:nth-child(3) {
+        //     flex: 3;
+        // }
+        // &:nth-child(4) {
+        //     flex: 3;
+        // }
       }
     }
 

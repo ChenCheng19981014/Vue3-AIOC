@@ -13,7 +13,7 @@
 
 const props = defineProps({
     tips: String,
-    num: String
+    num: Number
 })
 </script>
 
