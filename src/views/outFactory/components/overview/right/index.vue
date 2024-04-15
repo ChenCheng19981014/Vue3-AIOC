@@ -36,20 +36,23 @@ import { storeExcelData } from "@/store/modules/excel";
 // 表格仓库 信息
 const { storeExcelDataMap } = storeExcelData();
 
-// const energyStatistics = ref<any[]>([])
+// 获取右侧列表数据
+ // @ts-ignore
+const Monitor = storeExcelDataMap['综合态势']['视频监控']
+ // @ts-ignore
+const Summarize = storeExcelDataMap['综合态势']['设备概况']
+ // @ts-ignore
+const Alarm = storeExcelDataMap['综合态势']['综合告警']
 
-// energyStatistics.value = storeExcelDataMap['能耗统计'];
-
-// console.log("仓库信息:", storeExcelDataMap);
-
+console.log(Summarize)
 
 // 监控信息
 const monitorInfo = ref({
   png: "摄像头",
   list: [
-    { tips: "监控总数", num: 324 },
-    { state: "在线", icon: 'online', num: 42 },
-    { state: "离线", icon: 'offline', num: 3 },
+    { tips: "监控总数", num: Monitor.监控总数.value },
+    { state: "在线", icon: 'online', num: Monitor.在线.value },
+    { state: "离线", icon: 'offline', num: Monitor.离线.value },
   ],
 })
 
@@ -57,12 +60,24 @@ const monitorInfo = ref({
 const summarizeInfo = ref({
   png: "设备",
   list: [
-    { tips: "设备总数", num: 124 },
-    { state: "运行", icon: 'doing', num: 100 },
-    { state: "待机", icon: 'standby', num: 23 },
-    { state: "告警", icon: 'warning', num: 1 },
+    { tips: "设备总数", num: Summarize.设备总数.value },
+    { state: "运行", icon: 'doing', num: Summarize.运行.value },
+    { state: "待机", icon: 'standby', num: Summarize.待机.value },
+    { state: "告警", icon: 'warning', num: Summarize.告警.value },
   ],
 })
+
+// 获取设备概况图表数据
+const getSummarizeChart = (data: any) => {
+  const formattedData = [];
+  for (const key in data) {
+    if (data.hasOwnProperty(key) && (key === "维修保养" || key === "人工停机" || key === "工艺调整" || key === "更换耗材")) {
+      formattedData.push({ name: key, value: parseInt(data[key].value) });
+    }
+  }
+  return formattedData;
+}
+console.log(getSummarizeChart(Summarize))
 
 </script>
 
@@ -74,7 +89,7 @@ const summarizeInfo = ref({
     </div>
     <div class="summarize">
       <!-- 设备概括 -->
-      <OutFactorySummarize :summarizeInfo="summarizeInfo" />
+      <OutFactorySummarize :summarizeInfo="summarizeInfo"  />
     </div>
     <div class="alarm">
       <OutFactoryAlarm></OutFactoryAlarm>
