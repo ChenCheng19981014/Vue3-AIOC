@@ -44,7 +44,7 @@ const { storeExcelDataMap } = storeExcelData();
 </script>
 
 <template>
-    <div class="outFactory-overview-left" >
+    <div class="outFactory-overview-left">
         <div class="statistics">
             <NengLiang :storeExcelDataMap="storeExcelDataMap['综合态势']"></NengLiang>
         </div>
