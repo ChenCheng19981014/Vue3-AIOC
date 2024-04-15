@@ -428,8 +428,8 @@ const excelDataMap = {
 
 // 区域能耗 每一项
 const getAreaData = () => {
-  excelDataMap['综合态势']["区域能耗"] = new Array(21).fill("").map((_, index) => {
-    const initY = 27 + index;
+  excelDataMap['综合态势']["区域能耗"] = new Array(22).fill("").map((_, index) => {
+    const initY = 26 + index;
     return {
       area: {
         position: [initY, 1],
