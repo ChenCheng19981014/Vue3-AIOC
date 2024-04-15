@@ -180,7 +180,7 @@ const filteredData = computed(() => {
 </script>
 
 <template>
-    <div class="outFactory-overview-left">
+    <div class="outFactory-overview-left" >
         <div class="statistics">
             <NengLiang :storeExcelDataMap="handleconsumption(consumptionCost)" @nengliang-date="currentDate"></NengLiang>
         </div>
@@ -188,7 +188,7 @@ const filteredData = computed(() => {
             <NengYuan :storeExcelDataMap="filteredData"></NengYuan>
         </div>
         <div class="energy">
-            <QuYu :storeExcelDataMap="storeExcelDataMap"></QuYu>
+            <QuYu :storeExcelDataMap="storeExcelDataMap['综合态势']"></QuYu>
         </div>
     </div>
 </template>
