@@ -31,6 +31,17 @@ import { ref } from "vue";
 import OutFactoryMonitor from "@/views/outFactory/components/overview/right/components/monitor.vue";
 import OutFactoryAlarm from "@/views/outFactory/components/overview/right/components/alarm.vue";
 import OutFactorySummarize from "@/views/outFactory/components/overview/right/components/summarize.vue";
+import { storeExcelData } from "@/store/modules/excel";
+
+// 表格仓库 信息
+const { storeExcelDataMap } = storeExcelData();
+
+// const energyStatistics = ref<any[]>([])
+
+// energyStatistics.value = storeExcelDataMap['能耗统计'];
+
+// console.log("仓库信息:", storeExcelDataMap);
+
 
 // 监控信息
 const monitorInfo = ref({
@@ -63,7 +74,7 @@ const summarizeInfo = ref({
     </div>
     <div class="summarize">
       <!-- 设备概括 -->
-      <OutFactorySummarize :summarizeInfo="summarizeInfo"/>
+      <OutFactorySummarize :summarizeInfo="summarizeInfo" />
     </div>
     <div class="alarm">
       <OutFactoryAlarm></OutFactoryAlarm>

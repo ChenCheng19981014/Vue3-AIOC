@@ -36,23 +36,23 @@ import { storeExcelData } from "@/store/modules/excel";
 // 表格仓库 信息
 const { storeExcelDataMap } = storeExcelData();
 
-const energyStatistics = ref<any[]>([])
+// const energyStatistics = ref<any[]>([])
 
-energyStatistics.value = storeExcelDataMap['能耗统计'];
+// energyStatistics.value = storeExcelDataMap['能耗统计'];
 
-console.log("仓库信息:", energyStatistics.value);
+// console.log("仓库信息:", storeExcelDataMap);
 </script>
 
 <template>
-    <div class="outFactory-overview-left">
+    <div class="outFactory-overview-left" >
         <div class="statistics">
-            <NengLiang :storeExcelDataMap="storeExcelDataMap"></NengLiang>
+            <NengLiang :storeExcelDataMap="storeExcelDataMap['综合态势']"></NengLiang>
         </div>
         <div class="cost">
-            <NengYuan :storeExcelDataMap="storeExcelDataMap"></NengYuan>
+            <NengYuan :storeExcelDataMap="storeExcelDataMap['综合态势']"></NengYuan>
         </div>
         <div class="energy">
-            <QuYu :storeExcelDataMap="storeExcelDataMap"></QuYu>
+            <QuYu :storeExcelDataMap="storeExcelDataMap['综合态势']"></QuYu>
         </div>
     </div>
 </template>

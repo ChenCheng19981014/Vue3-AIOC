@@ -10,13 +10,14 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive, computed } from 'vue'
+import { ref, reactive, computed } from 'vue';
+
 // 列表 类型
 type tableListType = {
     [key: string]: any
 }
- // props
-const {storeExcelDataMap} = defineProps(['storeExcelDataMap']);
+// props
+const { storeExcelDataMap } = defineProps(['storeExcelDataMap']);
 
 const table = storeExcelDataMap['区域能耗'];
 
