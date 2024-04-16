@@ -40,7 +40,7 @@ const { storeExcelDataMap } = storeExcelData();
 // @ts-ignore
 const consumptionCost = storeExcelDataMap["综合态势"]["overflowLeft1"]
 
-console.log("能耗统计", consumptionCost)
+// console.log("能耗统计", consumptionCost)
 
 // 测试
 const test = (data: any) => {
@@ -57,7 +57,7 @@ const test = (data: any) => {
     }
     return newArray;
 }
-console.log(test(consumptionCost))
+// console.log(test(consumptionCost))
 
 // 获取当前日期
 const Date = ref("day");

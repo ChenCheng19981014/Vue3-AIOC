@@ -1,4 +1,24 @@
-// excel 数据 映射表
+
+
+/**
+*  @Author: cc
+*  @description:  根据位置[ x, y ] 获取 数组
+*  @param { row[] 、ranks[]  }
+*  @return { arr[{ positon:[], value:'' }]  }
+*/
+const getArrByPosition = (row, ranks) => {
+  let arr = [];
+  for (let rowIndex = row[0]; rowIndex <= row[1]; rowIndex++) {
+    for (let ranksIndex = ranks[0]; ranksIndex <= ranks[1]; ranksIndex++) {
+      const p1 = rowIndex;
+      const p2 = ranksIndex;
+      arr.push({ position: [p1, p2], value: null })
+    }
+  }
+  return arr
+}
+
+// 动态 EXCEL 数据 映射表
 const excelDataMap = {
   综合态势: {
     topTips: [
@@ -11,13 +31,13 @@ const excelDataMap = {
     overflowLeft1Tips: [
       { position: [4, 1], value: null },
       { position: [7, 1], value: null },
-      { position: [10, 1], value: null }, 
+      { position: [10, 1], value: null },
       { position: [13, 1], value: null },
       { position: [16, 1], value: null },
       { position: [19, 1], value: null },
       { position: [22, 1], value: null },
     ],
-    overflowLeft1: [],
+    overflowLeft1: getArrByPosition([4, 24], [2, 9]),
     overflowLeft2Tips: [],
     overflowLeft2: [],
     overflowRight1: [],
@@ -32,31 +52,5 @@ const excelDataMap = {
 
 
 
-// 能耗 统计
-const eneryTotal = () => {
-  // Rows and ranks
-
-  let row = [4, 24]; // 行数
-
-  let ranks = [2, 9]; // 列数
-
-  let arr = [  ]
-
-  for (let rowIndex = row[0]; rowIndex <= row[1]; rowIndex++) {
-    // console.log('rowIndex:',rowIndex);
-    for (let ranksIndex = ranks[0]; ranksIndex <= ranks[1]; ranksIndex++) {
-      const p1 = rowIndex;
-      const p2 = ranksIndex;
-      // console.log('ranksIndex:',ranksIndex);
-      arr.push( { position:[ p1,p2 ],value:null } )
-    }
-  }
-
-// 能耗
-  excelDataMap['综合态势'].overflowLeft1 = arr;
-
-}
-
-eneryTotal();// 能耗 统计
 
 export { excelDataMap };
