@@ -39,17 +39,19 @@ const { storeExcelDataMap } = storeExcelData();
 // 获取能耗及费用统计信息
 // @ts-ignore
 const consumptionCost = storeExcelDataMap["综合态势"]["overflowLeft1"]
+// @ts-ignore
+const consumptionTitle = storeExcelDataMap["综合态势"]["overflowLeft1Tips"]
 
 console.log("能耗统计", consumptionCost)
 
-// 测试
-const test = (data: any) => {
+// 拿到能耗统计的初始数据
+const getconsumptionCostData = (data: any) => {
     const newArray = [];
     // 每七个元素为一组
     for (let i = 0; i < data.length; i += 8) {
         const group = data.slice(i, i + 8); // 提取每组的七个元素
         // 提取每组的value值并筛选非空值
-        const values = group.map(item => item.value).filter(value => value !== null);
+        const values = group.map((item: any) => item.value).filter((value: any) => value !== null);
         // 将非空值添加到新数组中
         if (values.length > 0) {
             newArray.push(values);
@@ -57,7 +59,23 @@ const test = (data: any) => {
     }
     return newArray;
 }
-console.log(test(consumptionCost))
+// 给能耗统计的初始数据中添加title
+const consumptionCostTitle = (data: any) => {
+    const newArray = [];
+    for (let i = 0; i < getconsumptionCostData(data).length; i += 3) {
+        const group = getconsumptionCostData(data).slice(i, i + 3); // 提取每组的三个数组
+
+        // 在每组数组的第一个位置依次添加要添加的值
+        for (let j = 0; j < group.length; j++) {
+            group[j].unshift(consumptionTitle[i / 3].value);
+        }
+        // 将处理后的组添加到新数组中
+        newArray.push(group);
+    }
+    return newArray;
+}
+
+console.log(consumptionCostTitle(consumptionCost))
 
 // 获取当前日期
 const Date = ref("day");
@@ -66,6 +84,12 @@ const currentDate = (date: string) => {
     Date.value = date;
 }
 
+// 能耗统计数据处理
+const handleconsumption1 = () => {
+    const original = consumptionCostTitle(consumptionCost)
+
+}
+handleconsumption1()
 // 能耗统计数据处理
 const handleconsumption = (data: any) => {
     const result: any = {
