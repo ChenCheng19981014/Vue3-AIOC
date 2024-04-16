@@ -1,22 +1,227 @@
-
-
 /**
-*  @Author: cc
-*  @description:  根据位置[ x, y ] 获取 数组
-*  @param { row[] 、ranks[]  }
-*  @return { arr[{ positon:[], value:'' }]  }
-*/
+ *  @Author: cc
+ *  @description:  根据位置[ x, y ] 获取 数组
+ *  @param { row[] 、ranks[]  }
+ *  @return { arr[{ positon:[], value:'' }]  }
+ */
 const getArrByPosition = (row, ranks) => {
   let arr = [];
   for (let rowIndex = row[0]; rowIndex <= row[1]; rowIndex++) {
     for (let ranksIndex = ranks[0]; ranksIndex <= ranks[1]; ranksIndex++) {
       const p1 = rowIndex;
       const p2 = ranksIndex;
-      arr.push({ position: [p1, p2], value: null })
+      arr.push({ position: [p1, p2], value: null });
     }
   }
-  return arr
-}
+  return arr;
+};
+
+let t = [
+  { position: [4, 1], value: null },
+  { position: [4, 2], value: null },
+  { position: [4, 3], value: null },
+  { position: [4, 4], value: null },
+  { position: [4, 5], value: null },
+  { position: [4, 6], value: null },
+  { position: [4, 7], value: null },
+  { position: [4, 8], value: null },
+  { position: [4, 9], value: null },
+  { position: [5, 1], value: null },
+  { position: [5, 2], value: null },
+  { position: [5, 3], value: null },
+  { position: [5, 4], value: null },
+  { position: [5, 5], value: null },
+  { position: [5, 6], value: null },
+  { position: [5, 7], value: null },
+  { position: [5, 8], value: null },
+  { position: [5, 9], value: null },
+  { position: [6, 1], value: null },
+  { position: [6, 2], value: null },
+  { position: [6, 3], value: null },
+  { position: [6, 4], value: null },
+  { position: [6, 5], value: null },
+  { position: [6, 6], value: null },
+  { position: [6, 7], value: null },
+  { position: [6, 8], value: null },
+  { position: [6, 9], value: null },
+  { position: [7, 1], value: null },
+  { position: [7, 2], value: null },
+  { position: [7, 3], value: null },
+  { position: [7, 4], value: null },
+  { position: [7, 5], value: null },
+  { position: [7, 6], value: null },
+  { position: [7, 7], value: null },
+  { position: [7, 8], value: null },
+  { position: [7, 9], value: null },
+  { position: [8, 1], value: null },
+  { position: [8, 2], value: null },
+  { position: [8, 3], value: null },
+  { position: [8, 4], value: null },
+  { position: [8, 5], value: null },
+  { position: [8, 6], value: null },
+  { position: [8, 7], value: null },
+  { position: [8, 8], value: null },
+  { position: [8, 9], value: null },
+  { position: [9, 1], value: null },
+  { position: [9, 2], value: null },
+  { position: [9, 3], value: null },
+  { position: [9, 4], value: null },
+  { position: [9, 5], value: null },
+  { position: [9, 6], value: null },
+  { position: [9, 7], value: null },
+  { position: [9, 8], value: null },
+  { position: [9, 9], value: null },
+  { position: [10, 1], value: null },
+  { position: [10, 2], value: null },
+  { position: [10, 3], value: null },
+  { position: [10, 4], value: null },
+  { position: [10, 5], value: null },
+  { position: [10, 6], value: null },
+  { position: [10, 7], value: null },
+  { position: [10, 8], value: null },
+  { position: [10, 9], value: null },
+  { position: [11, 1], value: null },
+  { position: [11, 2], value: null },
+  { position: [11, 3], value: null },
+  { position: [11, 4], value: null },
+  { position: [11, 5], value: null },
+  { position: [11, 6], value: null },
+  { position: [11, 7], value: null },
+  { position: [11, 8], value: null },
+  { position: [11, 9], value: null },
+  { position: [12, 1], value: null },
+  { position: [12, 2], value: null },
+  { position: [12, 3], value: null },
+  { position: [12, 4], value: null },
+  { position: [12, 5], value: null },
+  { position: [12, 6], value: null },
+  { position: [12, 7], value: null },
+  { position: [12, 8], value: null },
+  { position: [12, 9], value: null },
+  { position: [13, 1], value: null },
+  { position: [13, 2], value: null },
+  { position: [13, 3], value: null },
+  { position: [13, 4], value: null },
+  { position: [13, 5], value: null },
+  { position: [13, 6], value: null },
+  { position: [13, 7], value: null },
+  { position: [13, 8], value: null },
+  { position: [13, 9], value: null },
+  { position: [14, 1], value: null },
+  { position: [14, 2], value: null },
+  { position: [14, 3], value: null },
+  { position: [14, 4], value: null },
+  { position: [14, 5], value: null },
+  { position: [14, 6], value: null },
+  { position: [14, 7], value: null },
+  { position: [14, 8], value: null },
+  { position: [14, 9], value: null },
+  { position: [15, 1], value: null },
+  { position: [15, 2], value: null },
+  { position: [15, 3], value: null },
+  { position: [15, 4], value: null },
+  { position: [15, 5], value: null },
+  { position: [15, 6], value: null },
+  { position: [15, 7], value: null },
+  { position: [15, 8], value: null },
+  { position: [15, 9], value: null },
+  { position: [16, 1], value: null },
+  { position: [16, 2], value: null },
+  { position: [16, 3], value: null },
+  { position: [16, 4], value: null },
+  { position: [16, 5], value: null },
+  { position: [16, 6], value: null },
+  { position: [16, 7], value: null },
+  { position: [16, 8], value: null },
+  { position: [16, 9], value: null },
+  { position: [17, 1], value: null },
+  { position: [17, 2], value: null },
+  { position: [17, 3], value: null },
+  { position: [17, 4], value: null },
+  { position: [17, 5], value: null },
+  { position: [17, 6], value: null },
+  { position: [17, 7], value: null },
+  { position: [17, 8], value: null },
+  { position: [17, 9], value: null },
+  { position: [18, 1], value: null },
+  { position: [18, 2], value: null },
+  { position: [18, 3], value: null },
+  { position: [18, 4], value: null },
+  { position: [18, 5], value: null },
+  { position: [18, 6], value: null },
+  { position: [18, 7], value: null },
+  { position: [18, 8], value: null },
+  { position: [18, 9], value: null },
+  { position: [19, 1], value: null },
+  { position: [19, 2], value: null },
+  { position: [19, 3], value: null },
+  { position: [19, 4], value: null },
+  { position: [19, 5], value: null },
+  { position: [19, 6], value: null },
+  { position: [19, 7], value: null },
+  { position: [19, 8], value: null },
+  { position: [19, 9], value: null },
+  { position: [20, 1], value: null },
+  { position: [20, 2], value: null },
+  { position: [20, 3], value: null },
+  { position: [20, 4], value: null },
+  { position: [20, 5], value: null },
+  { position: [20, 6], value: null },
+  { position: [20, 7], value: null },
+  { position: [20, 8], value: null },
+  { position: [20, 9], value: null },
+  { position: [21, 1], value: null },
+  { position: [21, 2], value: null },
+  { position: [21, 3], value: null },
+  { position: [21, 4], value: null },
+  { position: [21, 5], value: null },
+  { position: [21, 6], value: null },
+  { position: [21, 7], value: null },
+  { position: [21, 8], value: null },
+  { position: [21, 9], value: null },
+  { position: [22, 1], value: null },
+  { position: [22, 2], value: null },
+  { position: [22, 3], value: null },
+  { position: [22, 4], value: null },
+  { position: [22, 5], value: null },
+  { position: [22, 6], value: null },
+  { position: [22, 7], value: null },
+  { position: [22, 8], value: null },
+  { position: [22, 9], value: null },
+  { position: [23, 1], value: null },
+  { position: [23, 2], value: null },
+  { position: [23, 3], value: null },
+  { position: [23, 4], value: null },
+  { position: [23, 5], value: null },
+  { position: [23, 6], value: null },
+  { position: [23, 7], value: null },
+  { position: [23, 8], value: null },
+  { position: [23, 9], value: null },
+  { position: [24, 1], value: null },
+  { position: [24, 2], value: null },
+  { position: [24, 3], value: null },
+  { position: [24, 4], value: null },
+  { position: [24, 5], value: null },
+  { position: [24, 6], value: null },
+  { position: [24, 7], value: null },
+  { position: [24, 8], value: null },
+  { position: [24, 9], value: null },
+];
+/**
+ *  @Author: cc
+ *  @description: 根据长度进行截取
+ *  @param {  array原数组 len长度  }
+ *  @return {  全新数组 }
+ */
+const sliceByLengthFn = (array, len) => {
+  if (!Array.isArray(array) || len <= 0) return [];
+  const arr = [];
+  for (let i = 0; i < array.length; i += len) {
+    arr.push(array.slice(i, i + len));
+  }
+  return arr;
+};
+
 
 // 动态 EXCEL 数据 映射表
 const excelDataMap = {
@@ -38,11 +243,11 @@ const excelDataMap = {
       { position: [22, 1], value: null },
     ],
     overflowLeft1: getArrByPosition([4, 24], [2, 9]),
-    overflowLeft2Tips: [],
-    overflowLeft2: [],
-    overflowRight1: [],
-    overflowRight2: [],
-    overflowRight3: [],
+    overflowLeft2Tips: getArrByPosition([26, 26], [1, 10]),
+    overflowLeft2: getArrByPosition([27, 47], [1, 9]),
+    overflowRight1: getArrByPosition([48, 50], [1, 4]),
+    overflowRight2: getArrByPosition([51, 58], [1, 4]),
+    overflowRight3: getArrByPosition([61, 70], [1, 8]),
   },
 
   安防管理: {},
@@ -50,7 +255,4 @@ const excelDataMap = {
   能源管理: {},
 };
 
-
-
-
-export { excelDataMap };
+export { excelDataMap, sliceByLengthFn};
