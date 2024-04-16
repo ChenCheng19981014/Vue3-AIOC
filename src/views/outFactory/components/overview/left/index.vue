@@ -75,7 +75,6 @@ const consumptionCostTitle = (data: any) => {
     return newArray;
 }
 
-console.log(consumptionCostTitle(consumptionCost))
 
 // 获取当前日期
 const Date = ref("day");

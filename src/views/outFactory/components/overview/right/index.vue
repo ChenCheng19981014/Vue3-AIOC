@@ -33,10 +33,17 @@ import OutFactoryAlarm from "@/views/outFactory/components/overview/right/compon
 import OutFactorySummarize from "@/views/outFactory/components/overview/right/components/summarize.vue";
 import { storeExcelData } from "@/store/modules/excel";
 
+type OverView = {
+  [key: string]: any[]
+}
+
 // 表格仓库 信息
 const { storeExcelDataMap } = storeExcelData();
 
-const overview = storeExcelDataMap['综合态势'] as unknown | any | { [key: string]: object };
+// 综合态势 数据
+
+const overview: OverView = storeExcelDataMap['综合态势'] as { [key: string]: any[] };
+
 
 // 视频 监控
 const Monitor = overview.overflowRight1.map((item: any[]) => Object.values(item).filter((msg) => msg.value).map((context) => context.value));
@@ -44,7 +51,7 @@ const Monitor = overview.overflowRight1.map((item: any[]) => Object.values(item)
 // 设备概括
 const Summarize = overview.overflowRight2.map((item: any[]) => Object.values(item).filter((msg) => msg.value).map((context) => context.value));
 
-const Alarm = overview.overflowRight3.map((item: any[]) => Object.values(item).filter((msg) => msg.value).map((context) => context.value)).filter( everyItem=> everyItem.length!==0);
+const Alarm = overview.overflowRight3.map((item: any[]) => Object.values(item).filter((msg) => msg.value).map((context) => context.value)).filter((everyItem: any[]) => everyItem.length !== 0);
 
 
 // 监控信息
@@ -62,7 +69,7 @@ const monitorInfo = ref({
 // 设备概括
 const summarizeInfo = ref({
   png: "设备",
-  list: Summarize.slice(0,4).map((item: string[], index: number) => {
+  list: Summarize.slice(0, 4).map((item: string[], index: number) => {
     if (index >= 4) return
     if (index === 0) {
       return { tips: item[0], num: item[1] }
@@ -97,7 +104,7 @@ const getSummarizeChart = (data: any) => {
     </div>
     <div class="summarize">
       <!-- 设备概括 -->
-      <OutFactorySummarize :summarizeInfo="summarizeInfo"  />
+      <OutFactorySummarize :summarizeInfo="summarizeInfo" />
     </div>
     <div class="alarm">
       <OutFactoryAlarm :alarmInfo="alarmInfo"></OutFactoryAlarm>

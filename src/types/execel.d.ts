@@ -9,10 +9,10 @@ export type Person = {
 export type AreaData = {};
 
 export type Tabs = {
-  综合态势: string;
-  安防管理: string;
-  能源管理: string;
-  设备管理: string;
+  综合态势: object;
+  安防管理: object;
+  能源管理: object;
+  设备管理: object;
 };
 
 export type TabsRouter = "综合态势" | "安防管理" | "能源管理" | "设备管理";
