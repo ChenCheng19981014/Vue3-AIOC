@@ -1,7 +1,7 @@
 <!-- 能源费用统计 -->
 <template>
     <div class="nengyuan">
-        <title-type-number :tips="'能源费用统计'">
+        <title-type-number :tips="props.title" :num="props.storeExcelDataMap[0].value">
             <pie-chart :chartData="chartData">
                 <div class="image">
                     <img src="@/assets/images/Frame.png" alt="无图">
@@ -15,10 +15,10 @@
 import { ref, watch } from 'vue'
 const props = defineProps({
     storeExcelDataMap: Array,
+    title: String,
 })
 
 let chartData = ref(props.storeExcelDataMap)
-
 watch(props, () => {
     chartData.value = props.storeExcelDataMap
 })

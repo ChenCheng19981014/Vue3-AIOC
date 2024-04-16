@@ -1,7 +1,7 @@
 <!-- 能耗统计 -->
 <template>
     <div class="nengliang">
-        <title-type-time :tips="'能耗统计'" @delivery-date="handleDate" >
+        <title-type-time :tips="props.title" @delivery-date="handleDate" >
             <div class="nengliang-content">
                 <div class="nengliang-item" v-for="(item, index) in filteredData" :key="index">
                     <div class="left">
@@ -10,8 +10,10 @@
                         <div class="record">{{ item.num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") }}<span>{{ item.unit }}</span></div>
                     </div>
                     <div class="percentage">
-                        同比
-                        <img :src="`${item.target == '上升' ? arrow.upArrow : arrow.downArrow}`" alt="">
+                        <div class="percentage-item">
+                            同比
+                            <img :src="`${item.target == '上升' ? arrow.upArrow : arrow.downArrow}`" alt="">
+                        </div>
                         <span>{{ item.percentage }}<span>%</span></span>
                     </div>
                 </div>
@@ -30,7 +32,8 @@ const arrow = reactive({
 })
 
 const props = defineProps({
-    storeExcelDataMap: Object
+    storeExcelDataMap: Object,
+    title: String
 })
 
 // 传递过来的时间单位，默认是日
@@ -83,7 +86,7 @@ const emits = defineEmits(['nengliang-date']); // 传递日期
             .left {
                 display: flex;
                 align-items: center;
-                flex: 1;
+                flex: 8;
 
                 img {
                     width: 48px;
@@ -104,7 +107,7 @@ const emits = defineEmits(['nengliang-date']); // 传递日期
                 }
 
                 .record {
-                    flex: 1.9;
+                    flex: 1.6;
                     color: var(--color-text-text-100, #FFF);
 
                     /* 特殊数字/数字1-28b */
@@ -126,6 +129,7 @@ const emits = defineEmits(['nengliang-date']); // 传递日期
             }
 
             .percentage {
+                flex: 2.8;
                 color: var(--color-text-text-50, rgba(255, 255, 255, 0.50));
                 font-family: "Source Han Sans CN";
                 font-size: 14px;
@@ -134,12 +138,19 @@ const emits = defineEmits(['nengliang-date']); // 传递日期
                 line-height: normal;
                 display: flex;
                 align-items: center;
+                justify-content: space-between;
 
-                img {
-                    width: 6.001px;
-                    height: 13.001px;
-                    margin: 0 4px;
+                .percentage-item {
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                    img {
+                        width: 6.001px;
+                        height: 13.001px;
+                        margin: 0 4px;
+                    }
                 }
+         
 
                 span {
                     color: var(--color-text-text-100, #FFF);
