@@ -8,8 +8,18 @@ const excelDataMap = {
       { position: [51, 0], value: null },
       { position: [59, 0], value: null },
     ],
-    overflowLeft1Tips: [],
-    overflowLeft1: [],
+    overflowLeft1Tips: [
+      { position: [4, 1], value: null },
+      { position: [7, 1], value: null },
+      { position: [10, 1], value: null }, 
+      { position: [13, 1], value: null },
+      { position: [16, 1], value: null },
+      { position: [19, 1], value: null },
+      { position: [22, 1], value: null },
+    ],
+    overflowLeft1: [
+      
+    ],
     overflowLeft2Tips: [],
     overflowLeft2: [],
     overflowRight1: [],
