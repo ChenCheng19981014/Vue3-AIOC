@@ -16,10 +16,14 @@ export const storeExcelData = defineStore(
       设备管理: {},
     });
 
-    const updataExcelData = (tabsName: string, model: string, data: Object) => {
-      storeExcelDataMap.value[tabsName][model] = null;
-      storeExcelDataMap.value[tabsName][model] = data;
-      // console.log("仓库:", tabsName, model, storeExcelDataMap.value);
+    // const updataExcelData = (tabsName: string, model: string, data: Object) => {
+    // storeExcelDataMap.value[tabsName][model] = null;
+    // storeExcelDataMap.value[tabsName][model] = data;
+    // console.log("仓库:", tabsName, model, storeExcelDataMap.value);
+    // };
+
+    const updataExcelData = (data: Object) => {
+      storeExcelDataMap.value = data;
     };
 
     return {

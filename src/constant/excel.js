@@ -2,11 +2,11 @@
 const excelDataMap = {
   综合态势: {
     topTips: [
-      { position: [4,1], value: null },
-      { position: [25,1], value: null },
-      { position: [48,1], value: null },
-      { position: [51,1], value: null },
-      { position: [59,1], value: null },
+      { position: [4, 0], value: null },
+      { position: [25, 0], value: null },
+      { position: [48, 0], value: null },
+      { position: [51, 0], value: null },
+      { position: [59, 0], value: null },
     ],
     overflowLeft1Tips: [],
     overflowLeft1: [],
