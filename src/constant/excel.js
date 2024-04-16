@@ -64,4 +64,4 @@ const excelDataMap = {
   能源管理: {},
 };
 
-export { excelDataMap, sliceByLengthFn};
+export { excelDataMap, sliceByLengthFn };

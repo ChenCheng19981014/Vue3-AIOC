@@ -41,9 +41,7 @@ type OverView = {
 const { storeExcelDataMap } = storeExcelData();
 
 // 综合态势 数据
-
 const overview: OverView = storeExcelDataMap['综合态势'] as { [key: string]: any[] };
-
 
 // 视频 监控
 const Monitor = overview.overflowRight1.map((item: any[]) => Object.values(item).filter((msg) => msg.value).map((context) => context.value));
@@ -51,8 +49,8 @@ const Monitor = overview.overflowRight1.map((item: any[]) => Object.values(item)
 // 设备概括
 const Summarize = overview.overflowRight2.map((item: any[]) => Object.values(item).filter((msg) => msg.value).map((context) => context.value));
 
+// 综合告警
 const Alarm = overview.overflowRight3.map((item: any[]) => Object.values(item).filter((msg) => msg.value).map((context) => context.value)).filter((everyItem: any[]) => everyItem.length !== 0);
-
 
 // 监控信息
 const monitorInfo = ref({
@@ -93,6 +91,7 @@ const getSummarizeChart = (data: any) => {
   }
   return formattedData;
 }
+
 
 </script>
 
