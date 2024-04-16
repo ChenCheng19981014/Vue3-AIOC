@@ -143,13 +143,11 @@ const mode = route.params.mode as string;
 const getRouterIndex = (mode: string): number => {
   let index = 0; // 初始时没有找到任何对象
   // 遍历 tabInfo 的键值对及其索引
-  Object.keys(tabInfo).forEach((tabsModel, _) => {
+  Object.values(tabInfo).forEach((tabsModel, _) => {
     // 如果当前键值对中的 mode 值等于要查找的 modeToFind
     if (tabsModel === mode) {
       // 保存找到的对象及其索引
       index = _;
-      // 找到后停止循环
-      return;
     }
   });
   return index;
@@ -162,10 +160,10 @@ const routerIndex = getRouterIndex(mode); // 使用类型断言确定返回类�
 tabState.value = routerIndex;
 
 // 切换 tabs
-const changeTab = (name: string, val: object, index: number) => {
-  const { mode } = val as { [key: string]: string };
+const changeTab = ( mode: string, index: number) => {
+
   tabState.value = index; // 设置显示 索引
-  // console.log("模块:", name, "\n索引：", index, "\n值:", val, "\nmode:", mode);
+
   // 更新当前的模块
   router.replace({ params: { mode } });
 };
@@ -278,7 +276,7 @@ const getExcelData = (exceMapList: string[], tabsModule: string) => {
 
   console.log("映射表：", excelDataMap);
 
-  updataExcelData( excelDataMap )
+  updataExcelData(excelDataMap)
 };
 
 // 监听 解析表格值
@@ -300,20 +298,15 @@ watch(
     // 模 式 初始化
     const { mode } = route.params as { [key: string]: string };
 
-    const foundObject = getRouterIndex(mode);
-
-    const { key, value, index } = foundObject as
-      | unknown
-      | { index: number; key: string; value: object }
-      | any;
+    const index = getRouterIndex(mode);
 
     // 通过路由 parmas进行判断 设置索引
     tabState.value = index;
 
     // 显示 对应的 左右侧模块
-    changeTab(key, value, index);
+    changeTab(mode, index);
 
-    // console.log("跳转路由", toPath, '\n模式', mode, '\n索引:', index);
+    // console.log('\n模式', mode, '\n索引:', index);
   },
   { deep: true }
 );
@@ -386,8 +379,8 @@ onMounted(() => {
     <OutFactoryBottom class="outFactory-bottom">
       <!-- 测试 btn -->
       <div @pointerdown="(e: any) => e.stopPropagation()" class="btn">
-        <div :class="{ button: true, active: _ === tabState }" v-for="(val, key, _) in tabInfo"
-          @click="changeTab(key, val, _)">
+        <div :class="{ button: true, active: index === tabState }" v-for="(mode, key, index) in tabInfo"
+          @click="changeTab( mode, index)">
           {{ key }}
         </div>
       </div>

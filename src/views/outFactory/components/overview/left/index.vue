@@ -42,7 +42,7 @@ const consumptionCost = storeExcelDataMap["综合态势"]["overflowLeft1"]
 // @ts-ignore
 const consumptionTitle = storeExcelDataMap["综合态势"]["overflowLeft1Tips"]
 
-console.log("能耗统计", consumptionCost)
+// console.log("能耗统计", consumptionCost)
 
 // 拿到能耗统计的初始数据
 const getconsumptionCostData = (data: any) => {
