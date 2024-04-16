@@ -38,11 +38,11 @@ const { storeExcelDataMap } = storeExcelData();
 
 // 获取能耗及费用统计信息
 // @ts-ignore
+const topTips = storeExcelDataMap["综合态势"]["topTips"]
+// @ts-ignore
 const consumptionCost = storeExcelDataMap["综合态势"]["overflowLeft1"]
 // @ts-ignore
 const consumptionTitle = storeExcelDataMap["综合态势"]["overflowLeft1Tips"]
-
-// console.log("能耗统计", consumptionCost)
 
 // 拿到能耗统计的初始数据
 const getconsumptionCostData = (data: any) => {
@@ -75,7 +75,7 @@ const consumptionCostTitle = (data: any) => {
     return newArray;
 }
 
-console.log(consumptionCostTitle(consumptionCost))
+console.log("consumptionCostTitle", consumptionCostTitle(consumptionCost))
 
 // 获取当前日期
 const Date = ref("day");
@@ -85,7 +85,7 @@ const currentDate = (date: string) => {
 }
 
 // 能耗统计数据处理
-const handleconsumption1 = () => {
+const handleconsumption = () => {
     const original = consumptionCostTitle(consumptionCost).slice(0, 3).flatMap(item => [...item]);
     // 构造结果对象
     const result = {
@@ -116,71 +116,6 @@ const handleconsumption1 = () => {
     })
     return result
 }
-console.log("!1", handleconsumption1())
-handleconsumption1()
-// 能耗统计数据处理
-const handleconsumption = (data: any) => {
-    const result: any = {
-        day: [],
-        month: [],
-        year: []
-    }
-    // 遍历接口数据，根据需要的格式返回新数据
-    for (const key in data) {
-        if (data.hasOwnProperty(key) && (key === "电能耗" || key === "水能耗" || key === "气能耗")) {
-            const item = data[key];
-            // 获取每个能耗类型的日、月、年数据
-            const dayData = item.日.num;
-            const monthData = item.月.num;
-            const yearData = item.年.num;
-            // 获取每个能耗类型的日、月、年数据单位
-            const dayUnit = item.日.unit;
-            const monthUnit = item.月.unit;
-            const yearUnit = item.年.unit;
-            // 获取每个能耗类型的日、月、年数据上升下降情况
-            const dayTarget = item.日.target;
-            const monthTarget = item.月.target;
-            const yearTarget = item.年.target;
-            // 获取每个能耗类型的日、月、年数据上升下降比例
-            const dayTargetNum = item.日.targetNum;
-            const monthTargetNum = item.月.targetNum;
-            const yearTargetNum = item.年.targetNum;
-            // 构造日、月、年的数据格式
-            const dayItem = {
-                imgUrl: `/src/assets/images/${key}.png`,
-                name: key, // 名称
-                num: dayData.value, // 数值
-                unit: dayUnit.value, // 单位
-                target: dayTarget.value, // 上升下降情况
-                percentage: dayTargetNum.value // 上升下降比例
-            };
-            const monthItem = {
-                imgUrl: `/src/assets/images/${key}.png`,
-                name: key,
-                num: monthData.value,
-                unit: monthUnit.value,
-                target: monthTarget.value,
-                percentage: monthTargetNum.value
-            };
-            const yearItem = {
-                imgUrl: `/src/assets/images/${key}.png`,
-                name: key,
-                num: yearData.value,
-                unit: yearUnit.value,
-                target: yearTarget.value,
-                percentage: yearTargetNum.value
-            };
-
-            // 将构造好的数据放入对应的数组中
-            result.day.push(dayItem);
-            result.month.push(monthItem);
-            result.year.push(yearItem);
-        }
-    }
-    return result;
-}
-
-handleconsumption(consumptionCost)
 
 function removeCommasAndParseInt(str: String) {
     // 使用正则表达式去除字符串中的逗号
@@ -191,60 +126,43 @@ function removeCommasAndParseInt(str: String) {
 }
 
 // 处理能源费用统计问题
-const handleEnergycosts = (data: any) => {
-    const result: any = {
+const handleEnergycosts = () => {
+    const original = consumptionCostTitle(consumptionCost).slice(3, 7).flatMap(item => [...item]);
+    // 构造结果对象
+    const result = {
         day: [],
         month: [],
         year: []
-    }
-    // 遍历接口数据，根据需要的格式返回新数据
-    for (const key in data) {
-        if (data.hasOwnProperty(key) && (key === "电费" || key === "水费" || key === "燃气费" || key === "能源费用统计")) {
-            const item = data[key];
-            // 获取每个能耗类型的日、月、年数据
-            const dayData = item.日.num;
-            const monthData = item.月.num;
-            const yearData = item.年.num;
-            // 获取每个能耗类型的日、月、年数据单位/比例
-            const dayUnit = item.日.unit;
-            const monthUnit = item.月.unit;
-            const yearUnit = item.年.unit;
-            // 构造日、月、年的数据格式
-            const dayItem = {
-                name: key, // 名称
-                value: removeCommasAndParseInt(dayData.value) || 0, // 数值
-                // value: parseInt(dayData.value), // 数值
-                unit: dayUnit.value, // 单位
-            };
-            const monthItem = {
-                name: key,
-                value: removeCommasAndParseInt(monthData.value) || 0,
-                unit: monthUnit.value,
-            };
-            const yearItem = {
-                name: key,
-                value: removeCommasAndParseInt(yearData.value) || 0,
-                unit: yearUnit.value,
-            };
-
-            // 将构造好的数据放入对应的数组中
-            result.day.push(dayItem);
-            result.month.push(monthItem);
-            result.year.push(yearItem);
+    };
+    original.forEach(item => {
+        const [key, period, value, unit] = item;
+        // 构造日、月、年的数据格式
+        const dataItem = {
+            name: key,
+            value: removeCommasAndParseInt(value), // 去除首尾空格
+            unit: unit,
+        };
+        // 将构造好的数据放入对应的数组中
+        if (period === '日') {
+            result.day.push(dataItem);
+        } else if (period === '月') {
+            result.month.push(dataItem);
+        } else if (period === '年') {
+            result.year.push(dataItem);
         }
-    }
-    return result;
+    })
+    return result
 }
 
 // 计算属性，根据传递的字符串动态过滤数据
 const filteredData = computed(() => {
     switch (Date.value) {
         case 'day':
-            return handleEnergycosts(consumptionCost).day;
+            return handleEnergycosts().day;
         case 'month':
-            return handleEnergycosts(consumptionCost).month;
+            return handleEnergycosts().month;
         case 'year':
-            return handleEnergycosts(consumptionCost).year;
+            return handleEnergycosts().year;
         default:
             return [];
     }
@@ -255,10 +173,10 @@ const filteredData = computed(() => {
 <template>
     <div class="outFactory-overview-left">
         <div class="statistics">
-            <NengLiang :storeExcelDataMap="handleconsumption1()" @nengliang-date="currentDate"></NengLiang>
+            <NengLiang :storeExcelDataMap="handleconsumption()" @nengliang-date="currentDate" :title="topTips[0].value"></NengLiang>
         </div>
         <div class="cost">
-            <NengYuan :storeExcelDataMap="filteredData"></NengYuan>
+            <NengYuan :storeExcelDataMap="filteredData" :title="handleEnergycosts().day[0].name"></NengYuan>
         </div>
         <div class="energy">
             <QuYu :storeExcelDataMap="storeExcelDataMap['综合态势']"></QuYu>
