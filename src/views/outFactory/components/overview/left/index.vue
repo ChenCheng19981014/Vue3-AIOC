@@ -43,6 +43,10 @@ const topTips = storeExcelDataMap["综合态势"]["topTips"]
 const consumptionCost = storeExcelDataMap["综合态势"]["overflowLeft1"]
 // @ts-ignore
 const consumptionTitle = storeExcelDataMap["综合态势"]["overflowLeft1Tips"]
+// @ts-ignore
+const consumptionquyu = storeExcelDataMap["综合态势"]["overflowLeft2"]
+// @ts-ignore
+const consumptionquyuTitle = storeExcelDataMap["综合态势"]["overflowLeft2Tips"]
 
 // 拿到能耗统计的初始数据
 const getconsumptionCostData = (data: any) => {
@@ -74,8 +78,6 @@ const consumptionCostTitle = (data: any) => {
     }
     return newArray;
 }
-
-console.log("consumptionCostTitle", consumptionCostTitle(consumptionCost))
 
 // 获取当前日期
 const Date = ref("day");
@@ -168,6 +170,40 @@ const filteredData = computed(() => {
     }
 });
 
+// 处理区域能耗模块的数据
+// 处理表格的title数据
+const handleEnetgyTitle = () => {
+    const valuesArray = consumptionquyuTitle
+        .map((item: any) => item.value)
+        .filter((value: string) => value !== null && value !== undefined && value !== '');
+
+    // 去重操作
+    const uniqueValuesArray = [...new Set(valuesArray)];
+    return uniqueValuesArray;
+}
+// 处理表格的内容数据
+const handleEnetgyData = () => {
+    // 初始化处理后的数据结构
+    const result = {
+        day: [].filter(row => row.every(cell => cell !== null && cell !== undefined && cell !== '')),
+        month: [].filter(row => row.every(cell => cell !== null && cell !== undefined && cell !== '')),
+        year: [].filter(row => row.every(cell => cell !== null && cell !== undefined && cell !== ''))
+    };
+    consumptionquyu.forEach(dataItem => {
+        // day数组中的元素数据
+        const dayData = dataItem.slice(0, 5);
+        // month数组中的元素数据
+        const monthData = dataItem.slice(0, 3).concat(dataItem[5], dataItem[6]);
+        // year数组中的元素数据
+        const yearData = dataItem.slice(0, 3).concat(dataItem[7], dataItem[8]);
+
+        // 将提取的value值存入结果对象对应的数组中
+        result.day.push(dayData.map(item => item.value));
+        result.month.push(monthData.map(item => item.value));
+        result.year.push(yearData.map(item => item.value));
+    });
+    return result;
+}
 </script>
 
 <template>
@@ -179,7 +215,7 @@ const filteredData = computed(() => {
             <NengYuan :storeExcelDataMap="filteredData" :title="handleEnergycosts().day[0].name"></NengYuan>
         </div>
         <div class="energy">
-            <QuYu :storeExcelDataMap="storeExcelDataMap['综合态势']"></QuYu>
+            <QuYu :storeExcelDataMap="handleEnetgyData()" :menu="handleEnetgyTitle()" :title="topTips[1].value"></QuYu>
         </div>
     </div>
 </template>

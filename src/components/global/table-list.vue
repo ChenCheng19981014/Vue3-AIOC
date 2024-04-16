@@ -11,13 +11,10 @@
             <!-- 轮播 -->
             <scroll-wrap :distance="props.distanceHeight">
                 <div class="list-item" v-for="(item, index) in props.columns" :key="index">
-                    <div 
-                        v-for="(params, index) in Object.assign(item)" 
-                        :key="index"
-                        :style="`color:${params.color ? params.color : 'rgb(255, 255, 255, 0.80)'};`"
-                    >
-                        {{ params.field }}
-                    </div>
+                    <div>{{ item[0] }}</div>
+                    <div>{{ item[1] }} {{ item[2] }}</div>
+                    <div>{{ item[3] }}</div>
+                    <div>{{ item[4] }}</div>
                 </div>
             </scroll-wrap>
         </div>
@@ -25,6 +22,7 @@
 </template>
 
 <script setup>
+import { watch } from "vue"
 const props = defineProps({
     menu: Array,
     columns: Array,
@@ -40,6 +38,11 @@ const props = defineProps({
         default: 32
     }
 })
+watch(props.columns, () => {
+    console.log("columns", props.columns)
+
+})
+console.log("columns", props.columns)
 </script>
 
 <style scoped lang="scss">
