@@ -86,9 +86,37 @@ const currentDate = (date: string) => {
 
 // 能耗统计数据处理
 const handleconsumption1 = () => {
-    const original = consumptionCostTitle(consumptionCost)
-
+    const original = consumptionCostTitle(consumptionCost).slice(0, 3).flatMap(item => [...item]);
+    // 构造结果对象
+    const result = {
+        day: [],
+        month: [],
+        year: []
+    };
+    original.forEach(item => {
+        const [key, period, value, unit, target, targetDirection, percentage, percentageUnit] = item;
+        const imgUrl = `/src/assets/images/${key}.png`;
+        // 构造日、月、年的数据格式
+        const dataItem = {
+            imgUrl,
+            name: key,
+            num: value.trim(), // 去除首尾空格
+            unit: unit,
+            target: targetDirection, // 上升下降情况
+            percentage: percentage
+        };
+        // 将构造好的数据放入对应的数组中
+        if (period === '日') {
+            result.day.push(dataItem);
+        } else if (period === '月') {
+            result.month.push(dataItem);
+        } else if (period === '年') {
+            result.year.push(dataItem);
+        }
+    })
+    return result
 }
+console.log("!1", handleconsumption1())
 handleconsumption1()
 // 能耗统计数据处理
 const handleconsumption = (data: any) => {
@@ -227,7 +255,7 @@ const filteredData = computed(() => {
 <template>
     <div class="outFactory-overview-left">
         <div class="statistics">
-            <NengLiang :storeExcelDataMap="handleconsumption(consumptionCost)" @nengliang-date="currentDate"></NengLiang>
+            <NengLiang :storeExcelDataMap="handleconsumption1()" @nengliang-date="currentDate"></NengLiang>
         </div>
         <div class="cost">
             <NengYuan :storeExcelDataMap="filteredData"></NengYuan>
