@@ -337,7 +337,7 @@ onMounted(() => {
     <global-header class="header" />
 
     <!-- 左弹窗 -->
-    <trans :showIndex="tabState" direction="left" :slotNumber="4" v-if="false">
+    <trans :showIndex="tabState" direction="left" :slotNumber="4">
       <!-- 左1 -->
       <template v-slot:slot-0>
         <OverviewLeft />

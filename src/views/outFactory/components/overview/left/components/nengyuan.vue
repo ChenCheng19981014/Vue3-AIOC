@@ -1,7 +1,7 @@
 <!-- 能源费用统计 -->
 <template>
     <div class="nengyuan">
-        <title-type-number :tips="'能源费用统计'" :num="chartData[0].value">
+        <title-type-number :tips="'能源费用统计'">
             <pie-chart :chartData="chartData">
                 <div class="image">
                     <img src="@/assets/images/Frame.png" alt="无图">

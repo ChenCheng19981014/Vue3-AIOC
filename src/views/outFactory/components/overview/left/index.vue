@@ -38,9 +38,26 @@ const { storeExcelDataMap } = storeExcelData();
 
 // 获取能耗及费用统计信息
 // @ts-ignore
-const consumptionCost = storeExcelDataMap['综合态势']['能耗统计']
+const consumptionCost = storeExcelDataMap["综合态势"]["overflowLeft1"]
 
 console.log("能耗统计", consumptionCost)
+
+// 测试
+const test = (data: any) => {
+    const newArray = [];
+    // 每七个元素为一组
+    for (let i = 0; i < data.length; i += 8) {
+        const group = data.slice(i, i + 8); // 提取每组的七个元素
+        // 提取每组的value值并筛选非空值
+        const values = group.map(item => item.value).filter(value => value !== null);
+        // 将非空值添加到新数组中
+        if (values.length > 0) {
+            newArray.push(values);
+        }
+    }
+    return newArray;
+}
+console.log(test(consumptionCost))
 
 // 获取当前日期
 const Date = ref("day");

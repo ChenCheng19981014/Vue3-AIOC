@@ -17,9 +17,7 @@ const excelDataMap = {
       { position: [19, 1], value: null },
       { position: [22, 1], value: null },
     ],
-    overflowLeft1: [
-      
-    ],
+    overflowLeft1: [],
     overflowLeft2Tips: [],
     overflowLeft2: [],
     overflowRight1: [],

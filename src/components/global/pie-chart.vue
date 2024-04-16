@@ -17,13 +17,13 @@ const props = defineProps({
 })
 
 const chartData = props.chartData?.slice(1) || []
-console.log(props.chartData)
+// console.log(props.chartData)
 
 // 改变legend的top值
 const chageTop = () => {
-    if (props.chartData[0].name === "能源费用统计") {
-        return '30%'
-    }
+    // if (props.chartData[0].name === "能源费用统计") {
+    //     return '30%'
+    // }
 }
 
 let options = ref({})
