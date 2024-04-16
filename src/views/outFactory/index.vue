@@ -279,6 +279,14 @@ const getExcelData = (exceMapList: string[], tabsModule: string) => {
   updataExcelData(excelDataMap)
 };
 
+// 表格数据二次处理数据
+const processExcel = () => {
+
+  excelDataMap['综合态势'].overflowRight3 = sliceByLengthFn(excelDataMap['综合态势'].overflowRight3, 8);
+
+  console.log('修改后的constant的值:', excelDataMap);
+}
+
 // 监听 解析表格值
 watch(
   exceMapList,
@@ -290,14 +298,9 @@ watch(
     // 获取 表格信息
     getExcelData(exceList, '综合态势');
 
+    // 表格数据二次处理数据
+    processExcel();
 
-    excelDataMap['综合态势'].overflowRight3 = sliceByLengthFn(excelDataMap['综合态势'].overflowRight3, 8)
-
-    // const arr = sliceByLengthFn(excelDataMap['综合态势'].overflowRight3, 8)
-
-    // console.log('arr:', arr);
-
-    console.log('修改后的constant的值:', excelDataMap);
   },
   { deep: true }
 );
