@@ -300,7 +300,7 @@ watch(
   () => {
     const exceList = exceMapList.value;
 
-    console.log("读的所有表:", exceMapList.value);
+    // console.log("读的所有表:", exceMapList.value);
 
     // 获取 表格信息
     getExcelData(exceList, '综合态势');
@@ -374,7 +374,7 @@ onMounted(() => {
     </trans>
 
     <!-- 右弹窗 -->
-    <trans :showIndex="tabState" direction="right" :slotNumber="4" v-if="false">
+    <trans :showIndex="tabState" direction="right" :slotNumber="4" >
       <!-- 右1 -->
       <template v-slot:slot-0>
         <OverviewRight />

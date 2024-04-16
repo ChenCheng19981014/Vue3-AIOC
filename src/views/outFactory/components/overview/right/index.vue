@@ -36,36 +36,45 @@ import { storeExcelData } from "@/store/modules/excel";
 // 表格仓库 信息
 const { storeExcelDataMap } = storeExcelData();
 
-// 获取右侧列表数据
- // @ts-ignore
-const Monitor = storeExcelDataMap['综合态势']['视频监控']
- // @ts-ignore
-const Summarize = storeExcelDataMap['综合态势']['设备概况']
- // @ts-ignore
-const Alarm = storeExcelDataMap['综合态势']['综合告警']
+const overview = storeExcelDataMap['综合态势'] as unknown | any | { [key: string]: object };
 
-console.log(Summarize)
+// 视频 监控
+const Monitor = overview.overflowRight1.map((item: any[]) => Object.values(item).filter((msg) => msg.value).map((context) => context.value));
+
+// 设备概括
+const Summarize = overview.overflowRight2.map((item: any[]) => Object.values(item).filter((msg) => msg.value).map((context) => context.value));
+
+const Alarm = overview.overflowRight3.map((item: any[]) => Object.values(item).filter((msg) => msg.value).map((context) => context.value)).filter( everyItem=> everyItem.length!==0);
+
 
 // 监控信息
 const monitorInfo = ref({
   png: "摄像头",
-  list: [
-    { tips: "监控总数", num: Monitor.监控总数.value },
-    { state: "在线", icon: 'online', num: Monitor.在线.value },
-    { state: "离线", icon: 'offline', num: Monitor.离线.value },
-  ],
+  list: Monitor.map((item: string[], index: number) => {
+    if (index === 0) {
+      return { tips: item[0], num: item[1] }
+    } else {
+      return { state: item[0], icon: item[0] === '离线' ? 'offline' : 'online', num: item[1] }
+    }
+  }),
 })
 
 // 设备概括
 const summarizeInfo = ref({
   png: "设备",
-  list: [
-    { tips: "设备总数", num: Summarize.设备总数.value },
-    { state: "运行", icon: 'doing', num: Summarize.运行.value },
-    { state: "待机", icon: 'standby', num: Summarize.待机.value },
-    { state: "告警", icon: 'warning', num: Summarize.告警.value },
-  ],
+  list: Summarize.slice(0,4).map((item: string[], index: number) => {
+    if (index >= 4) return
+    if (index === 0) {
+      return { tips: item[0], num: item[1] }
+    } else {
+      return { state: item[0], icon: item[0] === '运行' ? 'doing' : item[0] === '待机' ? 'standby' : "warning", num: item[1] }
+    }
+  }),
 })
+
+// 综合告警
+const alarmInfo = ref(Alarm)
+
 
 // 获取设备概况图表数据
 const getSummarizeChart = (data: any) => {
@@ -77,7 +86,6 @@ const getSummarizeChart = (data: any) => {
   }
   return formattedData;
 }
-console.log(getSummarizeChart(Summarize))
 
 </script>
 
@@ -92,7 +100,7 @@ console.log(getSummarizeChart(Summarize))
       <OutFactorySummarize :summarizeInfo="summarizeInfo"  />
     </div>
     <div class="alarm">
-      <OutFactoryAlarm></OutFactoryAlarm>
+      <OutFactoryAlarm :alarmInfo="alarmInfo"></OutFactoryAlarm>
     </div>
   </div>
 </template>
