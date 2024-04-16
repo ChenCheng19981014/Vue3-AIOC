@@ -38,18 +38,24 @@
       letter-spacing: 1.6px;
       font-family: "pm1";
       padding: 4px 16px;
-      background: var(--green-60,
-          linear-gradient(180deg,
-            rgba(255, 255, 255, 0.6) 60.42%,
-            rgba(0, 255, 133, 0.6) 125%));
+      background: var(
+        --green-60,
+        linear-gradient(
+          180deg,
+          rgba(255, 255, 255, 0.6) 60.42%,
+          rgba(0, 255, 133, 0.6) 125%
+        )
+      );
       background-clip: text;
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
 
     .active {
-      background: var(--green,
-          linear-gradient(180deg, #fff 60.42%, #00ff85 125%));
+      background: var(
+        --green,
+        linear-gradient(180deg, #fff 60.42%, #00ff85 125%)
+      );
       background-clip: text;
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
@@ -80,7 +86,7 @@ import * as XLSX from "xlsx";
 import axios from "axios";
 import { useRoute, useRouter } from "vue-router";
 
-import type { Tabs, TabsRouter } from '@/types/execel'
+import type { Tabs, TabsRouter } from "@/types/execel";
 
 import OutFactoryBottom from "@/views/outFactory/components/bottom/index.vue";
 
@@ -105,28 +111,25 @@ import Scene from "@/components/scene/index.vue";
 interface RouterIndex {
   index: number;
 }
+// 表格仓库 信息
+const { updataExcelData } = storeExcelData();
 const loadingEnd = ref(false); // loading
 const route = useRoute(); // 查值
 const router = useRouter(); // 跳转 功能
-
-// excel表格标题 s
+// 解析出的excel 表格标题
 const excelTitles = ref<string[]>([]);
-
-// 表格仓库 信息
-const { updataExcelData } = storeExcelData();
 
 // excel数据
 const exceMapList = ref({}) as any as unknown as {
-  [key: string]: any
+  [key: string]: any;
 };
 
-
 /**
-*  @Author: cc
-*  @description: 获取当前的路由信息
-*  @param {  路由名称  }
-*  @return {  路由索引 }
-*/
+ *  @Author: cc
+ *  @description: 获取当前的路由信息
+ *  @param {  路由名称  }
+ *  @return {  路由索引 }
+ */
 
 // 默认选中那个
 const tabState = ref(0);
@@ -161,12 +164,10 @@ const getRouterIndex = (mode: string): number => {
 // 获取 当前的索引
 const routerIndex = getRouterIndex(mode); // 使用类型断言确定返回类型
 
-
 // 初始化 默认显示哪一个 tabs
 tabState.value = routerIndex;
 
 // 切换 tabs
-
 const changeTab = (name: string, val: object, index: number) => {
   const { mode } = val as { [key: string]: string };
   tabState.value = index; // 设置显示 索引
@@ -176,9 +177,9 @@ const changeTab = (name: string, val: object, index: number) => {
 };
 
 /**
-*  @Author: cc
-*  @description: 解析 xlxs 表格
-*/
+ *  @Author: cc
+ *  @description: 解析 xlxs 表格
+ */
 
 // 数组 填充
 const fillArrays = (data: string[] | number[] | any[]) => {
@@ -207,7 +208,7 @@ const readerExcel = async () => {
   excelTitles.value = workbook.SheetNames;
 
   workbook.SheetNames.map((titleName: any, _) => {
-    if (_ >= 2) return
+    if (_ >= 2) return;
     // 读表
     const ws = XLSX.utils.sheet_to_json(workbook.Sheets[titleName], {
       header: 1,
@@ -224,14 +225,12 @@ const readerExcel = async () => {
 
     // 列表
     exceMapList.value[titleName] = fillArrays(arr);
-
   });
 
   // 设置显示的标题
   setTabs(workbook.SheetNames);
 
-
-  return workbook.SheetNames
+  return workbook.SheetNames;
 };
 
 //  设置  显示 下方 tabs  的标题
@@ -243,24 +242,41 @@ const setTabs = (tabsName: TabsRouter | TabsRouter[] | any[]) => {
       delete tabInfo[routerName];
     }
   });
-}
+};
 
 // 加载完毕
-const loadOver = () => loadingEnd.value = true;
+const loadOver = () => (loadingEnd.value = true);
+
+/**
+ *  @Author: cc
+ *  @description: 根据映射表 获取 对应的 值
+ */
+// 通过 位置获取值
+const getValueByPosition = (position: string) => {
+
+};
+
+// 获取 表格 内容
+const getExcelData = (position: string) => {
+
+  Object.keys(excelDataMap).map((module: string) => {
 
 
-onMounted(() => {
-  // 读 excel
-  readerExcel();
-});
+  });
 
-watch(exceMapList, () => {
+  console.log("映射表：", excelDataMap);
+};
 
-
-  console.log('读的所有表:', exceMapList.value);
-
-
-}, { deep: true });
+// 监听 解析表格值
+watch(
+  exceMapList,
+  () => {
+    console.log("读的所有表:", exceMapList.value);
+    // 获取 表格信息
+    getExcelData(exceMapList.value);
+  },
+  { deep: true }
+);
 
 // 监听 路由 变化 设置显示面板
 watch(
@@ -271,7 +287,10 @@ watch(
 
     const foundObject = getRouterIndex(mode);
 
-    const { key, value, index } = foundObject as unknown | { index: number; key: string; value: object } | any;
+    const { key, value, index } = foundObject as
+      | unknown
+      | { index: number; key: string; value: object }
+      | any;
 
     // 通过路由 parmas进行判断 设置索引
     tabState.value = index;
@@ -283,6 +302,11 @@ watch(
   },
   { deep: true }
 );
+
+onMounted(() => {
+  // 读 excel
+  readerExcel();
+});
 </script>
 
 <template>
@@ -347,8 +371,11 @@ watch(
     <OutFactoryBottom class="outFactory-bottom">
       <!-- 测试 btn -->
       <div @pointerdown="(e: any) => e.stopPropagation()" class="btn">
-        <div :class="{ button: true, active: _ === tabState }" v-for="(val, key, _) in tabInfo"
-          @click="changeTab(key, val, _)">
+        <div
+          :class="{ button: true, active: _ === tabState }"
+          v-for="(val, key, _) in tabInfo"
+          @click="changeTab(key, val, _)"
+        >
           {{ key }}
         </div>
       </div>
