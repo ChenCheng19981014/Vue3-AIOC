@@ -120,53 +120,61 @@ const exceMapList = ref({}) as any as unknown as {
   [key: string]: any
 };
 
-
-/**
-*  @Author: cc
-*  @description: 获取当前的路由信息
-*  @param {  路由名称  }
-*  @return {  路由索引 }
-*/
-
-// 默认选中那个
-const tabState = ref(0);
-
 // tabs 选项
 const tabInfo: Tabs = reactive({
-  综合态势: "overview",
-  安防管理: "safe",
-  能源管理: "energy",
-  设备管理: "device",
+  综合态势: {
+    mode: "overview",
+  },
+  安防管理: {
+    mode: "safe",
+  },
+  能源管理: {
+    mode: "energy",
+  },
+  设备管理: {
+    mode: "device",
+  },
 });
 
 // 当前的 模块
 const mode = route.params.mode as string;
 
+/**
+*  @Author: cc
+*  @description: 获取当前的路由信息
+*  @param {  路由名称  }
+*  @return {  路由信息 }
+*/
+
 // 获取 路由 对应的索引
-const getRouterIndex = (mode: string): number => {
-  let index = 0; // 初始时没有找到任何对象
+const getRouterIndex = (mode: string) => {
+  let foundObject = null; // 初始时没有找到任何对象
   // 遍历 tabInfo 的键值对及其索引
-  Object.keys(tabInfo).forEach((tabsModel, _) => {
+  Object.entries(tabInfo).forEach(([key, value], index) => {
     // 如果当前键值对中的 mode 值等于要查找的 modeToFind
-    if (tabsModel === mode) {
+    if (value.mode === mode) {
       // 保存找到的对象及其索引
-      index = _;
+      foundObject = { key, value, index };
       // 找到后停止循环
       return;
     }
   });
-  return index;
+  return foundObject;
 };
 
 // 获取 当前的索引
-const routerIndex = getRouterIndex(mode); // 使用类型断言确定返回类型
+const routerIndex = getRouterIndex(mode) as unknown as RouterIndex; // 使用类型断言确定返回类型
 
+// 默认选中那个
+const tabState = ref(0);
 
 // 初始化 默认显示哪一个 tabs
-tabState.value = routerIndex;
+tabState.value = routerIndex.index;
 
-// 切换 tabs
-
+/**
+ *  @Author: cc
+ *  @description:  切换 tabs
+ */
 const changeTab = (name: string, val: object, index: number) => {
   const { mode } = val as { [key: string]: string };
   tabState.value = index; // 设置显示 索引
@@ -174,11 +182,6 @@ const changeTab = (name: string, val: object, index: number) => {
   // 更新当前的模块
   router.replace({ params: { mode } });
 };
-
-/**
-*  @Author: cc
-*  @description: 解析 xlxs 表格
-*/
 
 // 数组 填充
 const fillArrays = (data: string[] | number[] | any[]) => {
@@ -196,6 +199,9 @@ const fillArrays = (data: string[] | number[] | any[]) => {
 
 // 读 excel
 const readerExcel = async () => {
+  // const response = await axios.get("./excel/AIOC.xlsx", {
+  //   responseType: "arraybuffer",
+  // });
   const response = await axios.get("./excel/AIOC数据表单.xlsx", {
     responseType: "arraybuffer",
   });
@@ -230,23 +236,114 @@ const readerExcel = async () => {
   // 设置显示的标题
   setTabs(workbook.SheetNames);
 
+  console.log('读的所有表:', exceMapList.value);
 
   return workbook.SheetNames
 };
 
-//  设置  显示 下方 tabs  的标题
+// 根据 position 获取对应值
+const getValueByPosition = (position: number[], titleName: string) => {
+  const [row, col] = position;
+  return [...exceMapList.value[titleName]][row][col];
+};
+
+// get 获取 数据
+const loadExcelNumDate = (model: string, tabsName: string) => {
+  // 获取对应的   excel 数据 取出每一类
+  const excelStructureDate = excelDataMap[tabsName][model];
+
+  if (!excelStructureDate) return;
+  // 检查 listMap 类型
+  const type = Array.isArray(excelStructureDate) ? "array" : "object";
+
+  /**
+  *  @Author: cc
+  *  @description:  区分 数据类型 数组还是对象 来进行解析不同数据结构
+  */
+  if (type === "object") {
+
+    for (const topMode in excelStructureDate) {
+      const topModeValue = excelStructureDate[topMode];
+      if (typeof topModeValue !== "object" || Array.isArray(topModeValue)) {
+        console.error("无效的类别数据:", topModeValue);
+        continue;
+      }
+      for (const secondMode in topModeValue) {
+        const secondValue = topModeValue[secondMode];
+        const { position } = topModeValue;
+        // 第二层级是数组
+        if (Array.isArray(position) && position.length === 2) {
+          // console.error("无效的时间框架数据:", position );
+          excelStructureDate[topMode].value = getValueByPosition(position, tabsName);
+          // 获取值并更新 dataMap
+          //  listMap[category][timeFrame][key].value = getValueByPosition(position, titleName);
+          continue;
+        }
+        // 第三层级是数组
+        for (const key in secondValue) {
+          const { position } = secondValue[key];
+          if (Array.isArray(position) && position.length === 2) {
+            // 获取值并更新 dataMap
+            excelStructureDate[topMode][secondMode][key].value = getValueByPosition(position, tabsName);
+          } else {
+            console.error("无效的位置信息:", position);
+          }
+        }
+      }
+    }
+  } else if (type === "array") {
+    
+    excelStructureDate.forEach((item: any) => {
+      if (typeof item !== "object" || Array.isArray(item)) {
+        console.error("无效的数组项:", item);
+        return;
+      }
+
+      Object.keys(item).forEach((key) => {
+        const { position } = item[key];
+        if (Array.isArray(position) && position.length === 2) {
+          item[key].value = getValueByPosition(position, tabsName);
+        } else {
+          console.error("无效的位置信息:", position);
+        }
+      });
+    });
+  }
+
+
+  /**
+  *  @Author: cc
+  *  @description: 
+  *  @param {   tabsName 对应 模块名称、 model 对应的模块名称的每一项、excelStructureDate数据  }
+  */
+  // 更新本地存储值
+  updataExcelData(tabsName, model, excelStructureDate);
+};
+
+
+// 加载完毕
+const loadOver = () => {
+  loadingEnd.value = true;
+};
+
+/**
+*  @Author: cc
+*  @description: 设置  显示 下方 tabs  的标题
+*/
 const setTabs = (tabsName: TabsRouter | TabsRouter[] | any[]) => {
+
   const allRouterNames = Object.keys(tabInfo);
+
   // 将过滤后的数据重新赋值给 tabInfo
   allRouterNames.forEach((routerName: TabsRouter | string | any) => {
+
     if (!tabsName.includes(routerName)) {
+
       delete tabInfo[routerName];
     }
   });
-}
 
-// 加载完毕
-const loadOver = () => loadingEnd.value = true;
+}
 
 
 onMounted(() => {
@@ -255,9 +352,15 @@ onMounted(() => {
 });
 
 watch(exceMapList, () => {
+  /**
+  *  @Author: cc
+  *  @description:  综合态势 模块
+  */
+  Object.keys(excelDataMap['综合态势']).map((everyTypeName: string) => {
 
-
-  console.log('读的所有表:', exceMapList.value);
+    // 获取 excel 数据   --- 读 表一
+    loadExcelNumDate(everyTypeName, '综合态势');
+  })
 
 
 }, { deep: true });
@@ -266,7 +369,7 @@ watch(exceMapList, () => {
 watch(
   () => router.currentRoute.value.path,
   (_: string) => {
-    // 模 式 初始化
+    // 模 式
     const { mode } = route.params as { [key: string]: string };
 
     const foundObject = getRouterIndex(mode);
@@ -287,7 +390,7 @@ watch(
 
 <template>
   <!-- 外场 总组件 -->
-  <div class="outFactory">
+  <div class="outFactory" v-if="false">
     <!-- loading -->
     <!-- <load v-show="!loadingEnd"/> -->
 
@@ -298,7 +401,7 @@ watch(
     <global-header class="header" />
 
     <!-- 左弹窗 -->
-    <trans :showIndex="tabState" direction="left" :slotNumber="4" v-if="false">
+    <trans :showIndex="tabState" direction="left" :slotNumber="4">
       <!-- 左1 -->
       <template v-slot:slot-0>
         <OverviewLeft />
@@ -321,7 +424,7 @@ watch(
     </trans>
 
     <!-- 右弹窗 -->
-    <trans :showIndex="tabState" direction="right" :slotNumber="4" v-if="false">
+    <trans :showIndex="tabState" direction="right" :slotNumber="4">
       <!-- 右1 -->
       <template v-slot:slot-0>
         <OverviewRight />
