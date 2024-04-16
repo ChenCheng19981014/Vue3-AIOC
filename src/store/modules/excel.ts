@@ -22,7 +22,7 @@ export const storeExcelData = defineStore(
     // console.log("仓库:", tabsName, model, storeExcelDataMap.value);
     // };
 
-    const updataExcelData = (data: Object) => {
+    const updataExcelData = (data: Tabs) => {
       storeExcelDataMap.value = data;
     };
 

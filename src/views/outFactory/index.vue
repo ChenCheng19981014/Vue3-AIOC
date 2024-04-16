@@ -84,7 +84,7 @@ import type { Tabs, TabsRouter } from "@/types/execel";
 
 import OutFactoryBottom from "@/views/outFactory/components/bottom/index.vue";
 
-import { excelDataMap } from "@/constant/excel.js";
+import { excelDataMap, sliceByLengthFn } from "@/constant/excel.js";
 import { storeExcelData } from "@/store/modules/excel";
 
 import OverviewLeft from "@/views/outFactory/components/overview/left/index.vue";
@@ -160,7 +160,7 @@ const routerIndex = getRouterIndex(mode); // 使用类型断言确定返回类�
 tabState.value = routerIndex;
 
 // 切换 tabs
-const changeTab = ( mode: string, index: number) => {
+const changeTab = (mode: string, index: number) => {
 
   tabState.value = index; // 设置显示 索引
 
@@ -274,19 +274,40 @@ const getExcelData = (exceMapList: string[], tabsModule: string) => {
     });
   });
 
-  console.log("映射表：", excelDataMap);
+  // console.log("映射表：", excelDataMap);
 
   updataExcelData(excelDataMap)
 };
+
+// 表格数据二次处理数据 数据截取
+const processExcel = () => {
+
+  excelDataMap['综合态势'].overflowLeft2 = sliceByLengthFn(excelDataMap['综合态势'].overflowLeft2, 9);
+
+  excelDataMap['综合态势'].overflowRight1 = sliceByLengthFn(excelDataMap['综合态势'].overflowRight1, 4);
+
+  excelDataMap['综合态势'].overflowRight2 = sliceByLengthFn(excelDataMap['综合态势'].overflowRight2, 4);
+
+  excelDataMap['综合态势'].overflowRight3 = sliceByLengthFn(excelDataMap['综合态势'].overflowRight3, 8);
+
+
+  console.log('修改后的constant的值:', excelDataMap);
+}
 
 // 监听 解析表格值
 watch(
   exceMapList,
   () => {
     const exceList = exceMapList.value;
-    console.log("读的所有表:", exceMapList.value);
+
+    // console.log("读的所有表:", exceMapList.value);
+
     // 获取 表格信息
     getExcelData(exceList, '综合态势');
+
+    // 表格数据二次处理数据
+    processExcel();
+
   },
   { deep: true }
 );
@@ -353,7 +374,7 @@ onMounted(() => {
     </trans>
 
     <!-- 右弹窗 -->
-    <trans :showIndex="tabState" direction="right" :slotNumber="4" v-if="false">
+    <trans :showIndex="tabState" direction="right" :slotNumber="4" >
       <!-- 右1 -->
       <template v-slot:slot-0>
         <OverviewRight />
@@ -380,7 +401,7 @@ onMounted(() => {
       <!-- 测试 btn -->
       <div @pointerdown="(e: any) => e.stopPropagation()" class="btn">
         <div :class="{ button: true, active: index === tabState }" v-for="(mode, key, index) in tabInfo"
-          @click="changeTab( mode, index)">
+          @click="changeTab(mode, index)">
           {{ key }}
         </div>
       </div>
