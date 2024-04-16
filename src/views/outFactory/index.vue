@@ -274,15 +274,22 @@ const getExcelData = (exceMapList: string[], tabsModule: string) => {
     });
   });
 
-  console.log("映射表：", excelDataMap);
+  // console.log("映射表：", excelDataMap);
 
   updataExcelData(excelDataMap)
 };
 
-// 表格数据二次处理数据
+// 表格数据二次处理数据 数据截取
 const processExcel = () => {
 
+  excelDataMap['综合态势'].overflowLeft2 = sliceByLengthFn(excelDataMap['综合态势'].overflowLeft2, 9);
+
+  excelDataMap['综合态势'].overflowRight1 = sliceByLengthFn(excelDataMap['综合态势'].overflowRight1, 4);
+
+  excelDataMap['综合态势'].overflowRight2 = sliceByLengthFn(excelDataMap['综合态势'].overflowRight2, 4);
+
   excelDataMap['综合态势'].overflowRight3 = sliceByLengthFn(excelDataMap['综合态势'].overflowRight3, 8);
+
 
   console.log('修改后的constant的值:', excelDataMap);
 }
