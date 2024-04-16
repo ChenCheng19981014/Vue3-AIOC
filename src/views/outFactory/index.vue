@@ -271,7 +271,7 @@ const getExcelData = (exceMapList: string[], tabsModule: string) => {
       // 修改这里的访问方式
       excelDataMap[tabsModule][type][index]['value'] = value;
 
-      console.log('值:', value, position, excelDataMap[tabsModule][type][index]);
+      // console.log('值:', value, position, excelDataMap[tabsModule][type][index]);
 
     });
   });
