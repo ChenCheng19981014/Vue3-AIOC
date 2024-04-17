@@ -3,8 +3,16 @@ import { defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
 import path from "path";
 import svgLoader from "vite-svg-loader";
+import legacy from "@vitejs/plugin-legacy";
 export default defineConfig({
-  plugins: [vue(), svgLoader()],
+  plugins: [
+    vue(),
+    svgLoader(),
+    legacy({
+      targets: ["ie>=11"],
+      additionalLegacyPolyfills: ["regenerator-runtime/runtime"],
+    }),
+  ],
   //项目部署的基础路径
   base: "./",
   //静态资源服务的文件夹
