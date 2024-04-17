@@ -11,10 +11,11 @@
             <!-- 轮播 -->
             <scroll-wrap :distance="props.distanceHeight">
                 <div class="list-item" v-for="(item, index) in props.columns" :key="index">
-                    <div>{{ item[0] }}</div>
-                    <div>{{ item[1] }} {{ item[2] }}</div>
-                    <div>{{ item[3] }}</div>
-                    <div>{{ item[4] }}</div>
+                    <div v-show="item[0]">{{ item[0] }}</div>
+                    <div v-show="item[1]">{{ item[1] }}</div>
+                    <div v-show="item[2]">{{ item[2] }}</div>
+                    <div v-show="item[3]">{{ item[3] }}</div>
+                    <div v-show="item[4]">{{ item[4] }}</div>
                 </div>
             </scroll-wrap>
         </div>

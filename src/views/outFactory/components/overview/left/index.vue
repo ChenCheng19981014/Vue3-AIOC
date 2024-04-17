@@ -185,11 +185,11 @@ const handleEnetgyTitle = () => {
 const handleEnetgyData = () => {
     // 初始化处理后的数据结构
     const result = {
-        day: [].filter(row => row.every(cell => cell !== null && cell !== undefined && cell !== '')),
-        month: [].filter(row => row.every(cell => cell !== null && cell !== undefined && cell !== '')),
-        year: [].filter(row => row.every(cell => cell !== null && cell !== undefined && cell !== ''))
+        day: [],
+        month: [],
+        year: []
     };
-    consumptionquyu.forEach(dataItem => {
+    consumptionquyu.forEach((dataItem: any) => {
         // day数组中的元素数据
         const dayData = dataItem.slice(0, 5);
         // month数组中的元素数据
@@ -197,10 +197,20 @@ const handleEnetgyData = () => {
         // year数组中的元素数据
         const yearData = dataItem.slice(0, 3).concat(dataItem[7], dataItem[8]);
 
-        // 将提取的value值存入结果对象对应的数组中
-        result.day.push(dayData.map(item => item.value));
-        result.month.push(monthData.map(item => item.value));
-        result.year.push(yearData.map(item => item.value));
+        // 过滤掉空值
+        const dayDataMap = dayData.map((item: any) => item.value).filter((value: any) => value !== null)
+        const monthDataMap = monthData.map((item: any) => item.value).filter((value: any) => value !== null);
+        const yearDataMap = yearData.map((item: any) => item.value).filter((value: any) => value !== null);
+        // 判断是否为空，如果为空则不放入数组中
+        if (dayDataMap.length > 0) {
+            result.day.push(dayData.map(item => item.value));
+        }
+        if (monthDataMap.length > 0) {
+            result.month.push(monthData.map(item => item.value));
+        }
+        if (yearDataMap.length > 0) {
+            result.year.push(yearData.map(item => item.value));
+        }
     });
     return result;
 }

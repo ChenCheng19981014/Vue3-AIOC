@@ -13,16 +13,16 @@
 <script setup lang='ts'>
 import { toRefs } from 'vue';
 // props 值
-const props = defineProps(['monitorInfo']);
+const props = defineProps(['monitorInfo', 'title']);
 
 // 视频监控 信息
-const { monitorInfo } = toRefs(props);
+const { monitorInfo, title } = toRefs(props);
 </script>
   
 <template>
    <div class='outFactory-monitor'>
       <!-- titles -->
-      <title-type-common :tips="'视频监控'">
+      <title-type-common :tips="title">
          <!-- 监控 组件 -->
          <machine-states-list :listInfo="monitorInfo" class="list" />
       </title-type-common>

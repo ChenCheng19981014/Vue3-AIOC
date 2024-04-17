@@ -15,7 +15,7 @@ const props = defineProps({
     chartData: Array,
 })
 
-const chartData = props.chartData?.slice(1) || []
+const chartData = props.chartData || []
 
 // 初始化echarts
 function generateOptions(chartData: any[], legendPositionx: string, legendPositiony: string, position: Array) {
@@ -151,7 +151,7 @@ function chageTop(chartData: any[]) {
 let options = ref(generateOptions(chartData, props.legendPositionx, props.legendPositiony, props.position));
 
 watch(props, () => {
-    chartData.splice(0, chartData.length, ...props.chartData?.slice(1));
+    chartData.splice(0, chartData.length, ...props.chartData);
     options.value = generateOptions(chartData, props.legendPositionx, props.legendPositiony, props.position);
 });
 </script>

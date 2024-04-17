@@ -1,7 +1,7 @@
 <!-- 综合告警 -->
 <template>
     <div class="alarm">
-        <title-type-common :tips="'综合告警'">
+        <title-type-common :tips="title">
             <div class="alarm-main">
                 <alarm-list :dataList="dataList"></alarm-list>
             </div>
@@ -13,10 +13,10 @@
 import { ref, toRefs } from "vue";
 
 // props 值
-const props = defineProps(["alarmInfo"]);
+const props = defineProps(["alarmInfo", "title"]);
 
 // 视频监控 信息
-const { alarmInfo } = toRefs(props);
+const { alarmInfo, title } = toRefs(props);
 
 // update
 const convertDateFormat = (dateString:string) => {

@@ -32,11 +32,17 @@ const handleData = (time: string) => {
 const filteredData = computed(() => {
     switch (timeUnit.value) {
         case 'day':
-            return props.storeExcelDataMap.day;
+            return props.storeExcelDataMap.day.map(item => 
+                 [item[0], `${item[1]} ${item[2]}`, item[3], item[4]]
+            );
         case 'month':
-            return props.storeExcelDataMap.month;
+            return props.storeExcelDataMap.month.map(item => 
+                [item[0], `${item[1]} ${item[2]}`, item[3], item[4]]
+            );
         case 'year':
-            return props.storeExcelDataMap.year;
+            return props.storeExcelDataMap.year.map(item => 
+                [item[0], `${item[1]} ${item[2]}`, item[3], item[4]]
+            );
         default:
             return [];
     }
