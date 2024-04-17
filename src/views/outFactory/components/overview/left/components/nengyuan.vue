@@ -18,9 +18,14 @@ const props = defineProps({
     title: String,
 })
 
-let chartData = ref(props.storeExcelDataMap)
+
+// 图表格式
+// {name: '电费', value: 4248 }
+
+
+let chartData = ref(props.storeExcelDataMap.slice(1))
 watch(props, () => {
-    chartData.value = props.storeExcelDataMap
+    chartData.value = props.storeExcelDataMap.slice(1)
 })
 </script>
 

@@ -40,6 +40,10 @@ type OverView = {
 // 表格仓库 信息
 const { storeExcelDataMap } = storeExcelData();
 
+// @ts-ignore
+// 获取顶部标题
+const topTips = storeExcelDataMap["综合态势"]["topTips"]
+
 // 综合态势 数据
 const overview: OverView = storeExcelDataMap['综合态势'] as { [key: string]: any[] };
 
@@ -80,18 +84,17 @@ const summarizeInfo = ref({
 // 综合告警
 const alarmInfo = ref(Alarm)
 
-
 // 获取设备概况图表数据
 const getSummarizeChart = (data: any) => {
-  const formattedData = [];
-  for (const key in data) {
-    if (data.hasOwnProperty(key) && (key === "维修保养" || key === "人工停机" || key === "工艺调整" || key === "更换耗材")) {
-      formattedData.push({ name: key, value: parseInt(data[key].value) });
-    }
-  }
-  return formattedData;
+  // 截取最后四个数组
+  const lastFourData = data.slice(-4);
+  // 对最后四个数组进行处理
+  const processedData = lastFourData.map(item => {
+    const [name, value] = item;
+    return { name, value: parseFloat(value) };
+  });
+  return processedData;
 }
-
 
 </script>
 
@@ -99,14 +102,14 @@ const getSummarizeChart = (data: any) => {
   <div class="outFactory-overview-right">
     <!-- 视频监控 -->
     <div class="monitor">
-      <OutFactoryMonitor :monitorInfo="monitorInfo" />
+      <OutFactoryMonitor :monitorInfo="monitorInfo" :title="topTips[2].value" />
     </div>
     <div class="summarize">
       <!-- 设备概括 -->
-      <OutFactorySummarize :summarizeInfo="summarizeInfo" />
+      <OutFactorySummarize :chartData="getSummarizeChart(Summarize)" :summarizeInfo="summarizeInfo" :title="topTips[3].value" />
     </div>
     <div class="alarm">
-      <OutFactoryAlarm :alarmInfo="alarmInfo"></OutFactoryAlarm>
+      <OutFactoryAlarm :alarmInfo="alarmInfo" :title="topTips[4].value"></OutFactoryAlarm>
     </div>
   </div>
 </template>

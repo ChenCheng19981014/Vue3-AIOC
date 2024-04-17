@@ -42,16 +42,16 @@
 <script setup lang="ts">
 import { toRefs } from "vue";
 // props 值
-const props = defineProps(["summarizeInfo"]);
+const props = defineProps(["summarizeInfo", "title", "chartData"]);
 
 // 视频监控 信息
-const { summarizeInfo } = toRefs(props);
+const { summarizeInfo, title, chartData } = toRefs(props);
 </script>
 
 <template>
     <div class="outFactory-summarize">
         <!-- titles -->
-        <title-type-common :tips="'设备概括'">
+        <title-type-common :tips="title">
             <div class="summarize-content">
                 <!-- 监控 组件 -->
                 <machine-states-list :listInfo="summarizeInfo" class="list" />
@@ -61,6 +61,7 @@ const { summarizeInfo } = toRefs(props);
                         :position="['20%', '38%']"
                         :legendPositiony = "'-4%'"
                         :legendPositionx = "'0%'"
+                        :chartData="chartData"
                     >
                     <div class="image">
                         <img src="@/assets/images/设备概括.png" alt="无图">
