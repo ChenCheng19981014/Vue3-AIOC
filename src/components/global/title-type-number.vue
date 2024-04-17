@@ -3,7 +3,7 @@
     <div class="bgNumber">
         <div class="title">
             <div class="text">{{ props.tips }}</div>
-            <div class="number">{{ props.num }}<span>元</span></div>
+            <div class="number">{{ props.num!.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") }}<span>元</span></div>
         </div>
         <slot></slot>
     </div>
