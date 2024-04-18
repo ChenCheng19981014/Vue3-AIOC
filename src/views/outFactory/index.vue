@@ -342,10 +342,10 @@ onMounted(() => {
   <!-- 外场 总组件 -->
   <div class="outFactory">
     <!-- loading -->
-    <!-- <load v-show="!loadingEnd"/> -->
+    <load v-show="!loadingEnd"/>
 
     <!-- 场景 -->
-    <!-- <Scene @loadOver="loadOver" /> -->
+    <Scene @loadOver="loadOver" />
 
     <!-- 全局顶部 -->
     <global-header class="header" />
