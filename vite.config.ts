@@ -1,20 +1,20 @@
 // vite.config.ts
 import { defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
+import viteCompression from "vite-plugin-compression";
 import path from "path";
 import svgLoader from "vite-svg-loader";
-import legacy from "@vitejs/plugin-legacy";
+import Legacy from "@vitejs/plugin-legacy";
 export default defineConfig({
+  //项目部署的基础路径
+  base: "./",
   plugins: [
     vue(),
     svgLoader(),
-    legacy({
-      targets: ["ie>=11"],
-      additionalLegacyPolyfills: ["regenerator-runtime/runtime"],
+    Legacy({
+      targets: ["defaults", "not IE 11"],
     }),
   ],
-  //项目部署的基础路径
-  base: "./",
   //静态资源服务的文件夹
   publicDir: "public",
   resolve: {

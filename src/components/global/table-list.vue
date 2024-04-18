@@ -40,10 +40,10 @@ const props = defineProps({
     }
 })
 watch(props.columns, () => {
-    console.log("columns", props.columns)
+    // console.log("columns", props.columns)
 
 })
-console.log("columns", props.columns)
+// console.log("columns", props.columns)
 </script>
 
 <style scoped lang="scss">

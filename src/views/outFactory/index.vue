@@ -189,9 +189,16 @@ const fillArrays = (data: string[] | number[] | any[]) => {
 
 // 读 excel
 const readerExcel = async () => {
-  const response = await axios.get("./excel/AIOC数据表单.xlsx", {
+  
+  // const response = await axios.get("./excel/AIOC数据表单.xlsx", {
+  //   responseType: "arraybuffer",
+  // });
+
+  const response = await axios.get("http://192.168.3.15:3001/AIOC数据表单.xlsx", {
     responseType: "arraybuffer",
   });
+  
+
   const data = new Uint8Array(response.data);
 
   const workbook = XLSX.read(data, { type: "array", codepage: 936 }); // 使用 'array' 类型解析
@@ -264,12 +271,13 @@ const getExcelData = (exceMapList: string[], tabsModule: string) => {
 
       const { position } = item;
 
-      const value = getValueByPosition(exceMapList, tabsModule, position);
+      let value = getValueByPosition(exceMapList, tabsModule, position);
+
+      // 处理 换行符
+      value = value?.replace(/\n/g, ''); 
 
       // 修改这里的访问方式
       excelDataMap[tabsModule][type][index]['value'] = value;
-
-      // console.log('值:', value, position, excelDataMap[tabsModule][type][index]);
 
     });
   });
@@ -300,10 +308,13 @@ watch(
   () => {
     const exceList = exceMapList.value;
 
-    // console.log("读的所有表:", exceMapList.value);
+    console.log("读的所有表:", exceMapList.value);
 
     // 获取 表格信息
     getExcelData(exceList, '综合态势');
+
+    getExcelData(exceList, '安防管理');
+
 
     // 表格数据二次处理数据
     processExcel();

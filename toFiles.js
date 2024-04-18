@@ -1,23 +1,14 @@
-// 如果运行报错 Cannot use import statement outside a module 换成
-// const fs = require("fs");
-import fs from "fs";
-
-const htmlPath = "./dist/index.html"; // 打包后的html文件路径
-const htmlText = fs.readFileSync(htmlPath, 'utf8');
-const htmlArr = htmlText.match(/.*\n/g) || [];
-
-let result = "";
-
-htmlArr.forEach(v => {
-  v = v
-    .replace(/script ?nomodule\s?/g, "script ")
-    .replace(/\s?crossorigin\s?/g, " ")
-    .replace(/data-src/g, 'src');
-  if (!v.includes(`script type="module"`)) {
-    result += v;
-  }
+import fs from 'fs';
+console.time('转换耗时');
+const distPath = './dist/index.html';//打包路径的index.html
+let htmlText = fs.readFileSync(distPath, 'utf8');
+let resultText = '';
+let htmlArr = htmlText.match(/.*\n/g) || [];
+htmlArr.forEach(str => {
+  str = str.replace(/\s?nomodule\s?/g, ' ');
+  str = str.replace(/\s?crossorigin\s?/g, ' ');
+  str = str.replace(/data-src/g, 'src');
+  if (!/type="module"/i.test(str)) resultText += str;
 });
-
-fs.writeFileSync(htmlPath, result, 'utf8');
-
-console.log("处理完成");
+fs.writeFileSync(distPath, resultText, 'utf8');
+console.timeEnd('转换耗时');

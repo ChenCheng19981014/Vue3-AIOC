@@ -34,6 +34,7 @@ const sliceByLengthFn = (array, len) => {
 
 // 动态 EXCEL 数据 映射表
 const excelDataMap = {
+
   综合态势: {
     topTips: [
       { position: [4, 0], value: null },
@@ -59,7 +60,19 @@ const excelDataMap = {
     overflowRight3: getArrByPosition([61, 70], [1, 8]),
   },
 
-  安防管理: {},
+  安防管理: {
+    topTips: [
+      { position: [4, 0], value: null },
+      { position: [36, 0], value: null },
+      { position: [43, 0], value: null },
+      { position: [46, 0], value: null },
+      { position: [56, 0], value: null },
+    ],
+    safeLeft1: getArrByPosition([4, 6], [1, 4]),
+    safeLeft2:[],
+    safeRight1:[],
+    safeRight1:[],
+  },
 
   能源管理: {},
 };
