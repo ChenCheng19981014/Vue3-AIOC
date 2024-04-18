@@ -39,11 +39,9 @@ const props = defineProps({
         default: 32
     }
 })
-watch(props.columns, () => {
-    console.log("columns", props.columns)
+// watch(props.columns, () => {
 
-})
-console.log("columns", props.columns)
+// })
 </script>
 
 <style scoped lang="scss">

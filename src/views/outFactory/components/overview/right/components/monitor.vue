@@ -17,6 +17,8 @@ const props = defineProps(['monitorInfo', 'title']);
 
 // 视频监控 信息
 const { monitorInfo, title } = toRefs(props);
+
+console.log(" 1212", monitorInfo)
 </script>
   
 <template>
