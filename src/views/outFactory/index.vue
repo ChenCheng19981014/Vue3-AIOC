@@ -190,13 +190,13 @@ const fillArrays = (data: string[] | number[] | any[]) => {
 // 读 excel
 const readerExcel = async () => {
   
-  // const response = await axios.get("./excel/AIOC数据表单.xlsx", {
-  //   responseType: "arraybuffer",
-  // });
-
-  const response = await axios.get("http://192.168.3.15:3001/AIOC数据表单.xlsx", {
+  const response = await axios.get("./excel/AIOC数据表单.xlsx", {
     responseType: "arraybuffer",
   });
+
+  // const response = await axios.get("http://192.168.3.15:3001/AIOC数据表单.xlsx", {
+  //   responseType: "arraybuffer",
+  // });
   
 
   const data = new Uint8Array(response.data);
