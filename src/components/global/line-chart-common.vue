@@ -33,13 +33,17 @@
 
 <script setup lang="ts">
 import * as echarts from "echarts";
-import { ref, onMounted } from "vue";
+import { ref, onMounted, watch } from "vue";
+let chartBase = ref();  // 图表实例
 
-let chartBase = ref(null);  // 图表实例
+const loadOver = ( instance ) => {
+    hoverEcharts(instance);
+    console.log('实例:',instance);
+}
 
 // hover图表的效果
-const hoverEcharts = () => {
-    chartBase.value?.instance.on('mouseover', (params) => {
+const hoverEcharts = (instance) => {
+    instance.on('mouseover', (params) => {
         console.log(params);
     })
 }
@@ -179,12 +183,14 @@ const { options } = defineProps({
 });
 
 onMounted(() => {
-    hoverEcharts();
 })
+
+
+
 </script>
 
 <template>
     <div class="lineChartCommon">
-        <chart-base-v3 ref="chartBase" :options="options" />
+        <chart-base-v3 ref="chartBase" :options="options" @loadOver="loadOver" />
     </div>
 </template>

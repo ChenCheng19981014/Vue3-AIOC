@@ -298,6 +298,8 @@ const processExcel = () => {
 
   excelDataMap['综合态势'].overflowRight3 = sliceByLengthFn(excelDataMap['综合态势'].overflowRight3, 8);
 
+  excelDataMap['安防管理'].safeLeft2 = sliceByLengthFn(excelDataMap['安防管理'].safeLeft2, 12);
+
 
   console.log('修改后的constant的值:', excelDataMap);
 }
@@ -314,7 +316,6 @@ watch(
     getExcelData(exceList, '综合态势');
 
     getExcelData(exceList, '安防管理');
-
 
     // 表格数据二次处理数据
     processExcel();

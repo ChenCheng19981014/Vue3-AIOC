@@ -69,9 +69,16 @@ const excelDataMap = {
       { position: [56, 0], value: null },
     ],
     safeLeft1: getArrByPosition([4, 6], [1, 4]),
-    safeLeft2:[],
-    safeRight1:[],
-    safeRight1:[],
+
+    safeLeft2Tips: [
+      { position: [9, 1], value: null },
+      { position: [15, 1], value: null },
+      { position: [22, 1], value: null },
+      { position: [29, 1], value: null },
+    ],
+    safeLeft2: getArrByPosition([9, 35], [2, 3]),
+    safeRight1: [],
+    safeRight1: [],
   },
 
   能源管理: {},

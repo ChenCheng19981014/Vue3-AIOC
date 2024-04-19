@@ -7,8 +7,8 @@ import * as echarts from "echarts";
 import { onMounted, onUnmounted, ref, watch, nextTick } from "vue";
 import "echarts-liquidfill"
 import "echarts-gl"
-
 const chartRef = ref(null);
+const emit = defineEmits(["loadOver"]);
 let chartInstance;
 
 const initChart = () => {
@@ -19,21 +19,25 @@ const initChart = () => {
     try {
         chartInstance = echarts.init(chartRef.value);
         chartInstance.setOption(props.options);
+        emit('loadOver',chartInstance)
     } catch (error) {
         console.error("无法加载图表：", error);
     }
 };
 
 onMounted(() => {
-    nextTick(() => {
-        initChart();
         window.addEventListener("resize", () => {
             if (chartInstance) {
                 chartInstance.resize();
             }
         });
-    });
 });
+
+watch(chartRef,()=>{
+    initChart();
+    // 初始化
+    console.log('初始化*----');
+})
 
 onUnmounted(() => {
     if (chartInstance) {
