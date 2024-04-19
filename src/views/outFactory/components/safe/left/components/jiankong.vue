@@ -54,7 +54,7 @@ const tabs = ref([
 const videoSources = ref([
     { src: "/src/assets/video/1.mp4", position: "室外A1-1001" },
     { src: "/src/assets/video/2.mp4", position: "室外B2-2002" },
-    { src: "/src/assets/video/1.mp4", position: "室外C3-3003" },
+    { src: "/src/assets/video/3.mp4", position: "室外C3-3003" },
     { src: "/src/assets/video/2.mp4", position: "室外D4-4004" },
     { src: "/src/assets/video/1.mp4", position: "室外D4-4004" },
     { src: "/src/assets/video/2.mp4", position: "室外D4-4004" },
