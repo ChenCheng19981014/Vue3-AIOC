@@ -33,20 +33,58 @@
 
 <script setup lang="ts">
 import * as echarts from "echarts";
-import { ref, onMounted, watch } from "vue";
+import { ref, onMounted } from "vue";
 let chartBase = ref();  // 图表实例
 
-const loadOver = ( instance ) => {
+const loadOver = (instance: any) => {
     hoverEcharts(instance);
     console.log('实例:',instance);
 }
 
 // hover图表的效果
-const hoverEcharts = (instance) => {
-    instance.on('mouseover', (params) => {
+// const hoverEcharts = (instance: any) => {
+//     let lastHighlightedIndex: any = null;
+//     instance.on('mouseover', (params: any) => {
+//         if (params.componentType === "series" && params.seriesType === "bar") {
+//             var { dataIndex } = params;
+//             if (lastHighlightedIndex !== null) {
+//                 instance.dispatchAction({
+//                     type: 'showTip',
+//                     seriesIndex: lastHighlightedIndex,
+//                     dataIndex: lastHighlightedIndex,
+//                 })
+//             }
+//         }
+//         lastHighlightedIndex = dataIndex;
+//         console.log(params);
+//     })
+// }
+const hoverEcharts = (instance: any) => {
+    let lastHighlightedIndex: any = null;
+    instance.on('mouseover', (params: any) => {
+        if (params.componentType === "series" && params.seriesType === "bar") {
+            // 处理柱状图的逻辑
+            const { dataIndex } = params;
+            if (lastHighlightedIndex !== null) {
+                instance.dispatchAction({
+                    type: 'showTip',
+                    seriesIndex: 1, // 柱状图的系列索引
+                    dataIndex: dataIndex,
+                });
+            }
+        } else if (params.componentType === "series" && params.seriesType === "line") {
+            // 处理折线图的逻辑，显示竖线
+            instance.dispatchAction({
+                type: 'showTip',
+                seriesIndex: 0, // 折线图的系列索引
+                dataIndex: params.dataIndex,
+            });
+        }
+        lastHighlightedIndex = params.dataIndex;
         console.log(params);
-    })
-}
+    });
+};
+
 
 const { options } = defineProps({
     options: {
@@ -79,6 +117,31 @@ const { options } = defineProps({
                 },
 
             },
+            // tooltip: {
+            //     trigger: "axis", // 使用坐标轴触发，即鼠标悬停时触发
+            //     axisPointer: {
+            //         type: "line", // 设置指示器为直线
+            //         lineStyle: {
+            //             color: "#FFBE5C", // 竖线颜色
+            //             width: 1, // 竖线宽度
+            //         },
+            //     },
+            //     show: true,
+            //     confine: true,
+            //     backgroundColor: "rgba(0,0,0,0)",
+            //     position: "top",
+            //     textStyle: {
+            //         color: "#78EC4E",
+            //         fontStyle: "normal",
+            //         fontWeight: "normal",
+            //         fontSize: 14,
+            //         lineHeight: "normal",
+            //     },
+            //     formatter: (params, elOne, elTwo) => {
+            //         const htmlText = `<div class='custom-tooltip-style'>${params[0].data}</div>`;
+            //         return htmlText;
+            //     },
+            // },
             xAxis: {
                 type: "category",
                 axisLine: {
@@ -184,9 +247,6 @@ const { options } = defineProps({
 
 onMounted(() => {
 })
-
-
-
 </script>
 
 <template>
