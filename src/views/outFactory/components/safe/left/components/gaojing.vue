@@ -12,7 +12,7 @@
             </div>
             <!-- charts -->
             <div class="warning-charts">
-                <line-chart-common />
+                <line-chart-common :chartData="warning.charts.chartData" :colors="warning.charts.colors"/>
             </div>
         </title-type-detail>
     </div>
