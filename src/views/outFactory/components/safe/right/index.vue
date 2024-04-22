@@ -24,10 +24,30 @@
 </style>
   
 <script setup lang='ts'>
+import { ref } from "vue";
 import Apply from "./components/apply.vue"
-import Alarm from "./components/alarm.vue"
+import ALarm from "./components/alarm.vue"
 import RealTime from "./components/realTime.vue"
 
+
+// 模拟实时告警数据，使用的是综合态势的数据，后期替换
+// 综合态势 数据
+import { storeExcelData } from "@/store/modules/excel";
+
+type OverView = {
+  [key: string]: any[]
+}
+
+// 表格仓库 信息
+const { storeExcelDataMap } = storeExcelData();
+const overview: OverView = storeExcelDataMap['综合态势'] as { [key: string]: any[] };
+const Alarm = overview.overflowRight3
+    .map((item: any[]) => Object.values(item)
+    .filter((msg) => msg.value).map((context) => context.value))
+    .filter((everyItem: any[]) => everyItem.length !== 0);
+
+// 综合告警
+const alarmInfo = ref(Alarm)
 </script>
   
 <template>
@@ -36,10 +56,10 @@ import RealTime from "./components/realTime.vue"
             <Apply></Apply>
         </div>
         <div class="alarm">
-            <Alarm></Alarm>
+            <ALarm></ALarm>
         </div>
         <div class="realTime">
-            <RealTime></RealTime>
+            <RealTime :alarmInfo="alarmInfo"></RealTime>
         </div>
     </div>
 </template>

@@ -89,7 +89,7 @@ const getSummarizeChart = (data: any) => {
   // 截取最后四个数组
   const lastFourData = data.slice(-4);
   // 对最后四个数组进行处理
-  const processedData = lastFourData.map(item => {
+  const processedData = lastFourData.map((item: any) => {
     const [name, value] = item;
     return { name, value: parseFloat(value) };
   });
