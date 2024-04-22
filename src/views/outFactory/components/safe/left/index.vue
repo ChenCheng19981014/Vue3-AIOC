@@ -35,10 +35,23 @@ const videoTabs = storeExcelDataMap["安防管理"]["safeLeft2Tips"];
 // 视频
 const video = storeExcelDataMap["安防管理"]["safeLeft2"];
 
+
 // 告警统计
 const warning = ref({
     tips: storeExcelDataMap["安防管理"]["safeLeft3"],
     details: storeExcelDataMap["安防管理"]["safeLeft4"],
+    charts: {
+        chartData: {
+            xAxis: storeExcelDataMap["安防管理"]["safeLeft4"][0].filter((_, index: number) => index !== 0 && _.value ).map((item: any) => item.value),
+            yAxis: storeExcelDataMap["安防管理"]["safeLeft4"][1].filter((_, index: number) => index !== 0 && _.value ).map((item: any) => item.value),
+        },
+        colors: {
+            verticalLineColor: '#FFBE5C', // 竖线颜色
+            gradientBackground: 'rgba(241, 176, 79, 0.39)', // 渐变背景
+            InflectionPoint: '#FFBE5C', // 拐点颜色
+            tooltip: 'CustomTooltip' // 提示框样式
+        },
+    }
 });
 
 // 监控信息模拟数据
@@ -70,6 +83,7 @@ const videoInfo = ref({
         };
     }),
 });
+
 
 </script>
 

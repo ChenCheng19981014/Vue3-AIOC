@@ -28,6 +28,8 @@ const props = defineProps({
     }
 })
 
+
+
 watch(toRefs(props), () => {
     updateChartOptions()
 })
