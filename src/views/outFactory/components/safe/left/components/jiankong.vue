@@ -18,7 +18,7 @@
                 </div>
                 <div class="video">
                     <div class="video-item" v-for="(item, index) in videoSources[currentVideo]" :key="index">
-                        <video ref="video" class="video-item-style" autoplay muted loop>
+                        <video ref="video" class="video-item-style" autoplay muted loop :src="item.src">
                             <source :src="item.src" type="video/mp4">
                         </video>
                         <div class="text">

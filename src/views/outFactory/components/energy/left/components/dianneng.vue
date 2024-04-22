@@ -17,14 +17,21 @@
                 </div>
             </div>
             <div class="dianneng-content-echarts">
-                <line-chart-common />
+                <line-chart-common :colors="colors" />
             </div>
         </title-type-time>
     </div>
 </template>
 
 <script setup lang="ts">
-// import { ref } from 'vue'
+import { reactive } from 'vue'
+
+let colors = reactive({
+    verticalLineColor: '#00FFE0', // 竖线颜色
+    gradientBackground: 'rgba(1, 255, 133, 0.39)', // 渐变背景
+    InflectionPoint: '#00FFE0',
+    tooltip: 'CustomTooltip1'
+})
 
 </script>
 
