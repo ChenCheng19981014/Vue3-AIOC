@@ -61,7 +61,7 @@ watch(timeUnit, () => {
 
     .table-list-qu {
         width: 100%;
-        height: 100%;
+        height: 336px;
         padding-top: 16px;
     }
 }

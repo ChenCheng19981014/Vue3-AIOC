@@ -67,7 +67,7 @@ const emits = defineEmits(['nengliang-date']); // 传递日期
 
     .nengliang-content {
         width: 100%;
-        height: 100%;
+        height: 224px;
         box-sizing: border-box;
         padding-top: 16px;
         display: flex;

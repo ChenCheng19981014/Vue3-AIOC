@@ -37,7 +37,7 @@ options.value = {
         },
         formatter: function (params: any) {
             // 循环处理数据，展示数据
-            return `<div class='CustomTooltip'>${params[0].axisValue || ''}</div>`;
+            return `<div class='CustomTooltip'>${params[0].value || ''}</div>`;
         },
         position: function (point, params, dom, rect, size: any) {
             console.log(point)

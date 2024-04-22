@@ -198,9 +198,9 @@ const handleEnetgyData = () => {
         const yearData = dataItem.slice(0, 3).concat(dataItem[7], dataItem[8]);
 
         // 过滤掉空值
-        const dayDataMap = dayData.map((item: any) => item.value).filter((value: any) => value !== null)
-        const monthDataMap = monthData.map((item: any) => item.value).filter((value: any) => value !== null);
-        const yearDataMap = yearData.map((item: any) => item.value).filter((value: any) => value !== null);
+        const dayDataMap = dayData.map((item: any) => item.value).filter((value: any) => value !== null && value !== undefined && value !== '')
+        const monthDataMap = monthData.map((item: any) => item.value).filter((value: any) => value !== null && value !== undefined && value !== '')
+        const yearDataMap = yearData.map((item: any) => item.value).filter((value: any) => value !== null && value !== undefined && value !== '');
         // 判断是否为空，如果为空则不放入数组中
         if (dayDataMap.length > 0) {
             result.day.push(dayData.map(item => item.value));

@@ -92,7 +92,7 @@ const setLargeVidoe = (index: number) => {
     height: 100%;
     .jiankong-content {
         width: 100%;
-        height: 100%;
+        height: 593px;
         display: flex;
         flex-direction: column;
         .jiankong-data {
