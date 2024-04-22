@@ -30,6 +30,10 @@ import { storeExcelData } from "@/store/modules/excel";
 const { storeExcelDataMap } = storeExcelData();
 // 监控信息
 const monitor = storeExcelDataMap["安防管理"]["safeLeft1"];
+// 视频 tab
+const videoTabs = storeExcelDataMap["安防管理"]["safeLeft2Tips"];
+// 视频
+const video = storeExcelDataMap["安防管理"]["safeLeft2"];
 
 // 监控信息模拟数据
 const monitorInfo = ref({
@@ -48,13 +52,26 @@ const monitorInfo = ref({
         },
     ],
 });
+
+const videoInfo = ref({
+    tabs: videoTabs.map((item: any) => item.value),
+    videoSources:  new Array(4).fill('').map((_, i: number) => {
+            const src = video[i].filter((_, num: number) => num % 2 !== 0);
+            const p = video[i].filter((_, num: number) => num % 2 == 0);
+            return {
+                src: src.map(item => item.value),
+                position: p.map(item => item.value)
+            }
+        })
+});
+
 </script>
 
 <template>
     <div class="outFactory-safe-left">
         <!-- 视频监控 -->
         <div class="monitor">
-            <JianKong :monitorInfo="monitorInfo"></JianKong>
+            <JianKong :monitorInfo="monitorInfo" :videoInfo="videoInfo"></JianKong>
         </div>
         <!-- 告警统计 -->
         <div class="alarm">

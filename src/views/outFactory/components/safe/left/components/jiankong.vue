@@ -10,19 +10,14 @@
                 <div class="jiankong-diagram">
                     <img src="@/assets/images/重点监控视频.png" alt="监控视频">
                     <div class="tabs">
-                        <div 
-                            class="tabs-item" 
-                            v-for="(item, index) in tabs" 
-                            :key="index" 
-                            @click="changeCurrentVideo(index)"
-                            :class="{ activeId: currentVideo === index }"
-                        >
+                        <div class="tabs-item" v-for="(item, index) in tabs" :key="index" @click="changeCurrentVideo(index)"
+                            :class="{ activeId: currentVideo === index }">
                             {{ item.name }}
                         </div>
                     </div>
                 </div>
                 <div class="video">
-                    <div class="video-item" v-for="(item, index) in videoSources" :key="index" v-show="currentVideo == 0">
+                    <div class="video-item" v-for="(item, index) in videoSources[currentVideo]" :key="index">
                         <video ref="video" class="video-item-style" autoplay muted loop>
                             <source :src="item.src" type="video/mp4">
                         </video>
@@ -39,26 +34,31 @@
 
 <script setup lang="ts">
 import { toRefs, ref } from 'vue';
-const props = defineProps(['monitorInfo', 'title']);
+const props = defineProps(['monitorInfo', 'title', 'videoInfo']);
 // 视频监控 信息
-const { monitorInfo } = toRefs(props);
+const { monitorInfo, videoInfo } = toRefs(props);
 
 // tab按钮
-const tabs = ref([
-    { name: '外围' },
-    { name: '区域B' },
-    { name: '区域C' },
-    { name: '区域D' },
-])
-// 视频源
+const tabs = ref(videoInfo.value.tabs.map((item: string) => { return { name: item } }))
+
+// 视频资源
 const videoSources = ref([
-    { src: "/src/assets/video/1.mp4", position: "室外A1-1001" },
-    { src: "/src/assets/video/2.mp4", position: "室外B2-2002" },
-    { src: "/src/assets/video/3.mp4", position: "室外C3-3003" },
-    { src: "/src/assets/video/2.mp4", position: "室外D4-4004" },
-    { src: "/src/assets/video/1.mp4", position: "室外D4-4004" },
-    { src: "/src/assets/video/2.mp4", position: "室外D4-4004" },
-]);
+    ...videoInfo.value.videoSources.map((item: { [key: string]: any }) => {
+        const { src, position } = item;
+        return src.map((_, index: number) => {
+            return {
+                src: src[index],
+                position: position[index],
+            }
+        })
+    })]);
+
+
+
+// 视频源
+
+console.log('videoSources:', videoSources.value);
+
 
 // 监控视频，默认选择第一个
 let currentVideo = ref(0)
@@ -75,13 +75,13 @@ const setLargeVidoe = (index: number) => {
     // 获取目前点击的video
     const currentClickVideo = video.value[index]
     if (currentClickVideo.requestFullscreen) {
-      currentClickVideo.requestFullscreen();
+        currentClickVideo.requestFullscreen();
     } else if (currentClickVideo.mozRequestFullScreen) { // Firefox
-      currentClickVideo.mozRequestFullScreen();
+        currentClickVideo.mozRequestFullScreen();
     } else if (currentClickVideo.webkitRequestFullscreen) { // Chrome, Safari and Opera
-      currentClickVideo.webkitRequestFullscreen();
+        currentClickVideo.webkitRequestFullscreen();
     } else if (currentClickVideo.msRequestFullscreen) { // IE/Edge
-      currentClickVideo.msRequestFullscreen();
+        currentClickVideo.msRequestFullscreen();
     }
 }
 </script>
@@ -90,34 +90,41 @@ const setLargeVidoe = (index: number) => {
 .outFactory-safe-jiankong {
     width: 100%;
     height: 100%;
+
     .jiankong-content {
         width: 100%;
         height: 593px;
         display: flex;
         flex-direction: column;
+
         .jiankong-data {
             width: 100%;
             padding: 16px 0;
+
             .list {
                 width: 100%;
                 height: 76px;
                 padding: 8px 0;
             }
         }
+
         .jiankong-diagram {
             width: 100%;
             display: flex;
             flex-direction: column;
+
             img {
                 width: 100%;
                 height: 34px;
             }
+
             .tabs {
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
                 gap: 8px;
                 padding: 16px 0;
+
                 .tabs-item {
                     display: flex;
                     padding: 8px 10px;
@@ -135,6 +142,7 @@ const setLargeVidoe = (index: number) => {
                     font-size: 14px;
                     font-weight: 500;
                     cursor: pointer;
+
                     &.activeId {
                         border-radius: 4px;
                         border: 1px solid var(--color-basic-cyan-cyan-1, #00FFE0);
@@ -144,6 +152,7 @@ const setLargeVidoe = (index: number) => {
                 }
             }
         }
+
         .video {
             width: 100%;
             height: 383px;
@@ -151,31 +160,36 @@ const setLargeVidoe = (index: number) => {
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
+
             .video-item {
                 width: 210px;
                 height: 117px;
                 // background: #008c8c;
-                margin-bottom: 16px; /* 设置下方间距 */
-                box-sizing: border-box; /* 盒子大小包含边框 */
+                margin-bottom: 16px;
+                /* 设置下方间距 */
+                box-sizing: border-box;
+                /* 盒子大小包含边框 */
                 border: 1.051px solid var(--30, rgba(7, 131, 250, 0.30));
                 position: relative;
 
                 .video-item-style {
                     width: 210px;
                     height: 117px;
+
                     &::-webkit-media-controls,
-                        video::-moz-media-controls,
-                        video::-webkit-media-controls-enclosure{
-                        display:none !important;
+                    video::-moz-media-controls,
+                    video::-webkit-media-controls-enclosure {
+                        display: none !important;
                     }
 
                     &::-webkit-media-controls-panel,
                     &::-webkit-media-controls-panel-container,
                     &::-webkit-media-controls-start-playback-button {
-                        display:none !important;
+                        display: none !important;
                         -webkit-appearance: none;
                     }
                 }
+
                 .text {
                     width: 100%;
                     height: 28px;
@@ -189,6 +203,7 @@ const setLargeVidoe = (index: number) => {
                     background: url("@/assets/images/video-bg.png");
                     background-size: 100% 100%;
                     bottom: 0;
+
                     .position {
                         color: var(--color-text-text-100, #FFF);
                         text-align: center;
@@ -198,6 +213,7 @@ const setLargeVidoe = (index: number) => {
                         font-weight: 500;
                         line-height: normal;
                     }
+
                     img {
                         width: 24px;
                         height: 18px;
