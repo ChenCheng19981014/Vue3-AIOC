@@ -15,9 +15,11 @@ import pinia from "@/store";
 import gloablComponent from "@/components";
 //公共样式
 import "@/design/index.scss";
-
+import myDirective from "@/directive/index";
 // 获取应用实例对象
 const app = createApp(App);
+
+myDirective(app);
 
 // 安装element-plus插件
 app.use(ElementPlus, {

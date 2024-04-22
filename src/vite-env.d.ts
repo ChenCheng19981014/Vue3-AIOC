@@ -15,6 +15,7 @@ declare module "@/store/*";
 declare module "@/views/*";
 declare module "@/constant/*";
 declare module "@/design/*";
+declare module "@/components/*";
 
 declare module "*.vue" {
   import { DefineComponent } from "vue";
