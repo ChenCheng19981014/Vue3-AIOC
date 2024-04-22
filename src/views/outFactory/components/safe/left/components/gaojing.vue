@@ -4,10 +4,10 @@
         <title-type-detail :tips="'告警统计'">
             <div class="content">
                 <div class="whole">
-                    全部告警<span>1,026</span>条
+                    {{ warning.tips[0].value }}<span>{{ warning.tips[2].value }}</span>{{ warning.tips[3].value }}
                 </div>
                 <div class="week">
-                    本周告警<span>733</span>条
+                    {{ warning.tips[4].value }}<span>{{ warning.tips[6].value }}</span>{{ warning.tips[7].value }}
                 </div>
             </div>
             <!-- charts -->
@@ -19,6 +19,14 @@
 </template>
 
 <script setup lang="ts">
+import { toRefs, ref } from 'vue';
+
+const props = defineProps(['warning']);
+
+const { warning } = toRefs(props);
+
+
+console.log('告警统计:', warning.value.details, warning.value.tips, warning.value);
 
 </script>
 
@@ -39,7 +47,9 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
-        .whole, .week {
+
+        .whole,
+        .week {
             color: var(--color-text-text-70, rgba(255, 255, 255, 0.70));
             /* 文本/正文2-14m */
             font-family: "Source Han Sans CN";
@@ -49,6 +59,7 @@
             line-height: normal;
             display: flex;
             align-items: center;
+
             span {
                 padding: 0 6px 0 12px;
                 color: var(--color-text-text-100, #FFF);
@@ -67,5 +78,4 @@
         width: 100%;
         height: 178px;
     }
-}
-</style>
+}</style>

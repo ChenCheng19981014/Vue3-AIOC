@@ -57,8 +57,6 @@ const videoSources = ref([
 
 // 视频源
 
-console.log('videoSources:', videoSources.value);
-
 
 // 监控视频，默认选择第一个
 let currentVideo = ref(0)
