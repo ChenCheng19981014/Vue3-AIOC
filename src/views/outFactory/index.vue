@@ -298,6 +298,11 @@ const processExcel = () => {
   excelDataMap['安防管理'].safeLeft2 = sliceByLengthFn(excelDataMap['安防管理'].safeLeft2, 12);
   excelDataMap['安防管理'].safeLeft4 = sliceByLengthFn(excelDataMap['安防管理'].safeLeft4, 9);
   excelDataMap['安防管理'].safeRight2 = sliceByLengthFn(excelDataMap['安防管理'].safeRight2, 9);
+
+  excelDataMap['安防管理'].safeRight3 = sliceByLengthFn(excelDataMap['安防管理'].safeRight3, 5);
+
+
+  excelDataMap['安防管理'].safeRight5 = sliceByLengthFn(excelDataMap['安防管理'].safeRight5, 8);
   excelDataMap['安防管理'].safeRight6 = sliceByLengthFn(excelDataMap['安防管理'].safeRight6, 10);
 
   console.log('修改后的constant的值:', excelDataMap);

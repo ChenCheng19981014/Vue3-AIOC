@@ -35,6 +35,12 @@ const videoTabs = storeExcelDataMap["安防管理"]["safeLeft2Tips"];
 // 视频
 const video = storeExcelDataMap["安防管理"]["safeLeft2"];
 
+// 告警统计
+const warning = ref({
+    tips: storeExcelDataMap["安防管理"]["safeLeft3"],
+    details: storeExcelDataMap["安防管理"]["safeLeft4"],
+});
+
 // 监控信息模拟数据
 const monitorInfo = ref({
     png: "摄像头",
@@ -55,14 +61,14 @@ const monitorInfo = ref({
 
 const videoInfo = ref({
     tabs: videoTabs.map((item: any) => item.value),
-    videoSources:  new Array(4).fill('').map((_, i: number) => {
-            const src = video[i].filter((_, num: number) => num % 2 !== 0);
-            const p = video[i].filter((_, num: number) => num % 2 == 0);
-            return {
-                src: src.map(item => item.value),
-                position: p.map(item => item.value)
-            }
-        })
+    videoSources: new Array(4).fill("").map((_, i: number) => {
+        const src = video[i].filter((_, num: number) => num % 2 !== 0);
+        const p = video[i].filter((_, num: number) => num % 2 == 0);
+        return {
+            src: src.map((item: any) => item.value),
+            position: p.map((item: any) => item.value),
+        };
+    }),
 });
 
 </script>
@@ -75,7 +81,7 @@ const videoInfo = ref({
         </div>
         <!-- 告警统计 -->
         <div class="alarm">
-            <GaoJing></GaoJing>
+            <GaoJing :warning="warning"></GaoJing>
         </div>
     </div>
 </template>

@@ -39,11 +39,11 @@ const props = defineProps(['monitorInfo', 'title', 'videoInfo']);
 const { monitorInfo, videoInfo } = toRefs(props);
 
 // tab按钮
-const tabs = ref(videoInfo.value.tabs.map((item: string) => { return { name: item } }))
+const tabs = ref(videoInfo?.value.tabs.map((item: string) => { return { name: item } }))
 
 // 视频资源
 const videoSources = ref([
-    ...videoInfo.value.videoSources.map((item: { [key: string]: any }) => {
+    ...videoInfo?.value.videoSources.map((item: { [key: string]: any }) => {
         const { src, position } = item;
         return src.map((_, index: number) => {
             return {
@@ -56,8 +56,6 @@ const videoSources = ref([
 
 
 // 视频源
-
-console.log('videoSources:', videoSources.value);
 
 
 // 监控视频，默认选择第一个
