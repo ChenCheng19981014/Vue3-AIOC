@@ -28,10 +28,23 @@ const props = defineProps({
     }
 })
 
+// 获取y轴刻度最大值
+const getMaxYaixs = () => {
+    const maxValue = Math.max(...props.chartData.yAxis); // 获取最大值
+    const roundedMaxValue = Math.ceil(maxValue / 5) * 5; // 向上取整
+    return roundedMaxValue
+}
 
+const getInterval = () => {
+    const maxValue = Math.max(...props.chartData.yAxis); // 获取最大值
+    const roundedMaxValue = Math.ceil(maxValue / 5) * 5; // 向上取整
+    const dividedMaxValue = Math.ceil(roundedMaxValue / 5); // 向上取整，然后除以5，然后再乘以5
+    return dividedMaxValue;
+}
 
 watch(toRefs(props), () => {
     updateChartOptions()
+    getInterval()
 })
 
 let options = ref({})
@@ -105,7 +118,8 @@ const updateChartOptions = () => {
         },
         yAxis: {
             type: "value",
-            minInterval: 100, //分割刻度范围
+            // minInterval: 100, //分割刻度范围
+            max: getMaxYaixs(), //设置最大值
             splitLine: {
                 show: true,
                 lineStyle: {
@@ -113,7 +127,9 @@ const updateChartOptions = () => {
                     type: 'dashed'
                 }
             },
+            interval: getInterval(), //坐标轴刻度文字显示间隔
             axisLabel: { //坐标轴刻度文字的设置
+                
                 show: true, //是否显示
                 inside: false, //坐标轴刻度文字指向 (true表示向上   false表示向下)
                 rotate: 0, //坐标轴刻度文字的旋转角度
