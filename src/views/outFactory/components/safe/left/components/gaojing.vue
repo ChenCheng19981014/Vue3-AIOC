@@ -4,10 +4,10 @@
         <title-type-detail :tips="'告警统计'">
             <div class="content">
                 <div class="whole">
-                    {{ warning.tips[0].value }}<span>{{ warning.tips[2].value }}</span>{{ warning.tips[3].value }}
+                    {{ warning.tips[0].value }}<span v-splitCharacter="warning.tips[2].value"></span>{{ warning.tips[3].value }}
                 </div>
                 <div class="week">
-                    {{ warning.tips[4].value }}<span>{{ warning.tips[6].value }}</span>{{ warning.tips[7].value }}
+                    {{ warning.tips[4].value }}<span v-splitCharacter="warning.tips[6].value"></span>{{ warning.tips[7].value }}
                 </div>
             </div>
             <!-- charts -->
