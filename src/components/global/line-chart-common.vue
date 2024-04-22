@@ -9,9 +9,15 @@ import * as echarts from "echarts";
 import { ref, onMounted, reactive } from "vue";
 let chartBase = ref();  // 图表实例
 
+// 模拟数据
 let chartData = reactive({
     xAxis: ["02.15", "02.16", "02.17", "02.18", "02.19", "02.20", "02.21", "02.22"],
     yAxis: [150, 230, 224, 218, 135, 147, 260, 350]
+})
+// 模拟颜色
+let colors = reactive({
+    verticalLineColor: '#FFBE5C', // 竖线颜色
+    gradientBackground: 'rgba(241, 176, 79, 0.39)' // 渐变背景
 })
 
 let options = ref({})
@@ -21,7 +27,7 @@ options.value = {
         axisPointer: {
             type: "line", // 设置指示器为直线
             lineStyle: {
-                color: "#FFBE5C", // 竖线颜色
+                color: colors.verticalLineColor, // 竖线颜色
                 width: 1, // 竖线宽度
             },
         },
@@ -126,7 +132,7 @@ options.value = {
             areaStyle: {
                 color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
                     offset: 0,
-                    color: 'rgba(241, 176, 79, 0.39)' // 0% 处的颜色
+                    color: colors.gradientBackground // 0% 处的颜色
                 }, {
                     offset: 1,
                     color: 'rgba(0, 0, 0, 0.00)' // 100% 处的颜色
