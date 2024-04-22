@@ -2,11 +2,13 @@
 <template>
     <div class="nengyuan">
         <title-type-number :tips="props.title" :num="props.storeExcelDataMap[0].value">
-            <pie-chart :chartData="chartData">
-                <div class="image">
-                    <img src="@/assets/images/Frame.png" alt="无图">
-                </div>
-            </pie-chart>
+            <div class="nengyuan-content">
+                <pie-chart :chartData="chartData">
+                    <div class="image">
+                        <img src="@/assets/images/Frame.png" alt="无图">
+                    </div>
+                </pie-chart>
+            </div>
         </title-type-number>
     </div>
 </template>
@@ -34,15 +36,18 @@ watch(props, () => {
     width: 100%;
     height: 100%;
     position: relative;
+    .nengyuan-content {
+        width: 100%;
+        height: 210px;
+        .image {
+            position: absolute;
+            top: 116px;
+            left: 70px;
 
-    .image {
-        position: absolute;
-        top: 116px;
-        left: 70px;
-
-        img {
-            width: 40.25px;
-            height: 40.25px;
+            img {
+                width: 40.25px;
+                height: 40.25px;
+            }
         }
     }
 }

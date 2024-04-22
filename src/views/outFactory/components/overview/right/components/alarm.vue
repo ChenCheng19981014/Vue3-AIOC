@@ -60,7 +60,7 @@ const dataList = ref(
 
     .alarm-main {
         width: 100%;
-        height: 100%;
+        height: 418px;
         padding-top: 16px;
     }
 }

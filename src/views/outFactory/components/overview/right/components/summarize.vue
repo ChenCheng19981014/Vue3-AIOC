@@ -7,7 +7,7 @@
 
     .summarize-content {
         width: 100%;
-        height: 100%;
+        height: 258px;
         @include center;
         flex-direction: column;
         justify-content: space-between;
