@@ -35,6 +35,8 @@ const videoTabs = storeExcelDataMap["安防管理"]["safeLeft2Tips"];
 // 视频
 const video = storeExcelDataMap["安防管理"]["safeLeft2"];
 
+// 安防 顶部模块 titles
+const topTips = ref([...storeExcelDataMap["安防管理"]["topTips"]]);
 
 // 告警统计
 const warning = ref({
@@ -84,6 +86,7 @@ const videoInfo = ref({
     }),
 });
 
+console.log('顶部模块:',topTips.value);
 
 </script>
 
@@ -91,11 +94,11 @@ const videoInfo = ref({
     <div class="outFactory-safe-left">
         <!-- 视频监控 -->
         <div class="monitor">
-            <JianKong :monitorInfo="monitorInfo" :videoInfo="videoInfo"></JianKong>
+            <JianKong :title="topTips[0].value" :monitorInfo="monitorInfo" :videoInfo="videoInfo"></JianKong>
         </div>
         <!-- 告警统计 -->
         <div class="alarm">
-            <GaoJing :warning="warning"></GaoJing>
+            <GaoJing :title="topTips[1].value" :warning="warning"></GaoJing>
         </div>
     </div>
 </template>

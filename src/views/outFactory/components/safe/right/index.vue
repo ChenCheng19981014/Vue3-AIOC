@@ -42,6 +42,9 @@ type SafeManage = {
 // 表格仓库 信息
 const { storeExcelDataMap } = storeExcelData();
 
+// 安防 顶部模块 titles
+const topTips = ref([...storeExcelDataMap["安防管理"]["topTips"]]);
+
 // 安防管理
 const safeManage: SafeManage = storeExcelDataMap['安防管理'] as { [key: string]: any[] };
 // 实时
@@ -70,14 +73,14 @@ const aLarm = ref({
 <template>
     <div class='outFactory-safe-right'>
         <div class="apply">
-            <Apply :applyInfo="applyInfo"></Apply>
+            <Apply :title="topTips[2].value" :applyInfo="applyInfo"></Apply>
         </div>
         <!-- 告警统计 -->
         <div class="alarm">
-            <ALarm :aLarm="aLarm" :centerTitle="aLarm.title"></ALarm>
+            <ALarm :title="topTips[3].value" :aLarm="aLarm" :centerTitle="aLarm.title"></ALarm>
         </div>
         <div class="realTime">
-            <RealTime :alarmInfo="realTimeInfo"></RealTime>
+            <RealTime :title="topTips[4].value" :alarmInfo="realTimeInfo"></RealTime>
         </div>
     </div>
 </template>

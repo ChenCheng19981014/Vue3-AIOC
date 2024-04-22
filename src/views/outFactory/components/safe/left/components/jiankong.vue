@@ -1,7 +1,7 @@
 <!-- 视频监控 -->
 <template>
     <div class="outFactory-safe-jiankong">
-        <title-type-common :tips="'视频监控'">
+        <title-type-common :tips="title">
             <div class="jiankong-content">
                 <div class="jiankong-data">
                     <!-- 监控 组件 -->
@@ -36,7 +36,7 @@
 import { toRefs, ref } from 'vue';
 const props = defineProps(['monitorInfo', 'title', 'videoInfo']);
 // 视频监控 信息
-const { monitorInfo, videoInfo } = toRefs(props);
+const { monitorInfo, videoInfo,title } = toRefs(props);
 
 // tab按钮
 const tabs = ref(videoInfo?.value.tabs.map((item: string) => { return { name: item } }))

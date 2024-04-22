@@ -1,9 +1,9 @@
 <template>
     <div class="outFactory-safe-realTime">
-        <title-type-common :tips="'实时告警'">
+        <title-type-common :tips="title">
             <div class="safe-alarm">
                 <div style="width: 430px; height: 402px; padding-top: 16px;">
-                    <alarm-list :dataList="dataList"></alarm-list>                
+                    <alarm-list :dataList="dataList"></alarm-list>
                 </div>
             </div>
         </title-type-common>
@@ -14,13 +14,13 @@
 import { ref, toRefs } from "vue";
 
 // props 值
-const props = defineProps(["alarmInfo", "title"]);
+const props = defineProps(["alarmInfo", "title",]);
 
 // 视频监控 信息
-const { alarmInfo } = toRefs(props);
+const { alarmInfo, title } = toRefs(props);
 
 // update
-const convertDateFormat = (dateString:string) => {
+const convertDateFormat = (dateString: string) => {
     // 拆分日期字符串
     const parts = dateString.split('/');
 
@@ -58,6 +58,7 @@ const dataList = ref(
 .alarm {
     width: 430px;
     height: 100%;
+
     .safe-alarm {
         padding-top: 16px;
         width: 100%;

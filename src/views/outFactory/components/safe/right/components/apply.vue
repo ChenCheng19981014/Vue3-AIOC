@@ -1,6 +1,6 @@
 <template>
     <div class="outFactory-safe-apply">
-        <title-type-common :tips="'资源使用情况'">
+        <title-type-common :tips="title">
             <div class="apply-content">
                 <div class="apply-content-item" v-for="(item, index) in applyData" :key="index">
                     <piechart-luminous :value="item.value">
@@ -18,9 +18,9 @@
 <script setup lang="ts">
 import { ref, toRefs } from 'vue'
 
-const props = defineProps(['applyInfo']);
+const props = defineProps(['applyInfo','title']);
 
-const { applyInfo } = toRefs(props);
+const { applyInfo,title } = toRefs(props);
 
 // 模拟数据
 const applyData = ref([

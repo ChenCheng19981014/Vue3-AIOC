@@ -1,29 +1,31 @@
 <!-- 告警统计 -->
 <template>
     <div class="outFactory-safe-gaojing">
-        <title-type-detail :tips="'告警统计'">
+        <title-type-detail :tips="title">
             <div class="content">
                 <div class="whole">
-                    {{ warning.tips[0].value }}<span v-splitCharacter="warning.tips[2].value"></span>{{ warning.tips[3].value }}
+                    {{ warning.tips[0].value }}<span v-splitCharacter="warning.tips[2].value"></span>{{
+                        warning.tips[3].value }}
                 </div>
                 <div class="week">
-                    {{ warning.tips[4].value }}<span v-splitCharacter="warning.tips[6].value"></span>{{ warning.tips[7].value }}
+                    {{ warning.tips[4].value }}<span v-splitCharacter="warning.tips[6].value"></span>{{
+                        warning.tips[7].value }}
                 </div>
             </div>
             <!-- charts -->
             <div class="warning-charts">
-                <line-chart-common :chartData="warning.charts.chartData" :colors="warning.charts.colors"/>
+                <line-chart-common :chartData="warning.charts.chartData" :colors="warning.charts.colors" />
             </div>
         </title-type-detail>
     </div>
 </template>
 
 <script setup lang="ts">
-import { toRefs,  } from 'vue';
+import { toRefs, } from 'vue';
 
-const props = defineProps(['warning']);
+const props = defineProps(['warning', 'title']);
 
-const { warning } = toRefs(props);
+const { warning, title } = toRefs(props);
 
 // console.log('告警统计:', warning.value.details, warning.value.tips, warning.value);
 

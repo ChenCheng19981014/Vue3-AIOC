@@ -1,7 +1,7 @@
 <!-- 告警统计 -->
 <template>
     <div class="outFactory-safe-alarm">
-        <title-type-common :tips="'告警统计'">
+        <title-type-common :tips="title">
             <div class="safe-alarm-content">
                 <div class="safe-alarm-top">
                     <img src="@/assets/images/翻牌器.png" alt="图标" />
@@ -68,11 +68,9 @@
 import { ref, toRefs } from "vue";
 import safeUp from "@/assets/images/icon-上升.png";
 import safeDown from "@/assets/images/icon-下降.png";
-const props = defineProps(["aLarm", "centerTitle"]);
+const props = defineProps(["aLarm", "centerTitle","title"]);
 // 告警统计 数据
-const { aLarm, centerTitle } = toRefs(props);
-
-console.log("告警统计:", aLarm?.value);
+const { aLarm, centerTitle ,title} = toRefs(props);
 
 // 颜色数组循环
 const colors = ['#00FF85', '#0066FF'];
