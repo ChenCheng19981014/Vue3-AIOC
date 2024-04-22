@@ -16,12 +16,17 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, toRefs } from 'vue'
+
+const props = defineProps(['applyInfo']);
+
+const { applyInfo } = toRefs(props);
+
 // 模拟数据
 const applyData = ref([
-    { imgUrl: '/src/assets/images/CPU.png', text: 'CPU', value: '90.1' },
-    { imgUrl: '/src/assets/images/内存.png', text: '内存', value: '15.5' },
-    { imgUrl: '/src/assets/images/硬盘.png', text: '硬盘', value: '12.8' },
+    { imgUrl: `/src/assets/images/${applyInfo?.value[0].value}.png`, text: applyInfo?.value[0].value, value: applyInfo?.value[2].value },
+    { imgUrl: `/src/assets/images/${applyInfo?.value[4].value}.png`, text: applyInfo?.value[4].value, value: applyInfo?.value[6].value },
+    { imgUrl: `/src/assets/images/${applyInfo?.value[8].value}.png`, text: applyInfo?.value[8].value, value: applyInfo?.value[10].value },
 ])
 
 </script>
@@ -30,15 +35,18 @@ const applyData = ref([
 .outFactory-safe-apply {
     width: 100%;
     height: 100%;
+
     .apply-content {
         width: 100%;
         height: 164px;
         display: flex;
         justify-content: space-between;
+
         .apply-content-item {
             width: 98px;
             height: 132px;
             padding-top: 32px;
+
             .icon {
                 width: 100%;
                 height: 24px;
@@ -46,10 +54,12 @@ const applyData = ref([
                 align-items: center;
                 justify-content: center;
                 margin-top: 10px;
+
                 img {
                     width: 24px;
                     height: 24px;
                 }
+
                 .text {
                     color: var(--color-text-text-70, rgba(255, 255, 255, 0.70));
                     text-align: center;
@@ -63,5 +73,4 @@ const applyData = ref([
             }
         }
     }
-}
-</style>
+}</style>

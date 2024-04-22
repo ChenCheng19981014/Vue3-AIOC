@@ -19,14 +19,13 @@
 </template>
 
 <script setup lang="ts">
-import { toRefs, ref } from 'vue';
+import { toRefs,  } from 'vue';
 
 const props = defineProps(['warning']);
 
 const { warning } = toRefs(props);
 
-
-console.log('告警统计:', warning.value.details, warning.value.tips, warning.value);
+// console.log('告警统计:', warning.value.details, warning.value.tips, warning.value);
 
 </script>
 
