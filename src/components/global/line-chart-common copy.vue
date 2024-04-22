@@ -139,7 +139,6 @@ const { options } = defineProps({
                 },
                 formatter: '{c}ml' + '<p id="tipCircle"></p>', // {c} 就是y的值 {a} <br/>
                 position: function (point, params, dom, rect, size) {
-                    console.log(point)
                     const maxY = Math.max.apply(null, [150, 230, 224, 218, 135, 147, 260, 350])
 
                     const pecentY = (size.viewSize[1] - 60 * 2) / maxY

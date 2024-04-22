@@ -40,7 +40,6 @@ options.value = {
             return `<div class='CustomTooltip'>${params[0].value || ''}</div>`;
         },
         position: function (point, params, dom, rect, size: any) {
-            console.log(point)
             // 计算 y 的坐标
             const maxY = Math.max.apply(null, chartData.yAxis)
             const pecentY = (size.viewSize[1] - 60 * 2) / maxY // 计算y轴的百分比
