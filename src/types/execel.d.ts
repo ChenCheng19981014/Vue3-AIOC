@@ -11,10 +11,10 @@ export type AreaData = {};
 
 // 全局tabs
 export type Tabs = {
-  综合态势: object;
-  安防管理: object;
-  能源管理: object;
-  设备管理: object;
+  综合态势: object | any;
+  安防管理: object | any;
+  能源管理: object | any;
+  设备管理: object | any;
 };
 
 // 全局tabs 元组

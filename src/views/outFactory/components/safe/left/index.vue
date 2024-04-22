@@ -1,4 +1,4 @@
-<style scoped lang='scss'>
+<style scoped lang="scss">
 @import "@/design/hooks.scss";
 
 .outFactory-safe-left {
@@ -8,36 +8,50 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+
     .monitor {
         width: 100%;
         height: 631px;
     }
+
     .alarm {
         width: 100%;
         height: 278px;
     }
 }
 </style>
-  
-<script setup lang='ts'>
+
+<script setup lang="ts">
 import { ref } from "vue";
-import JianKong from "./components/jiankong.vue"
-import GaoJing from "./components/gaojing.vue"
+import JianKong from "./components/jiankong.vue";
+import GaoJing from "./components/gaojing.vue";
+import { storeExcelData } from "@/store/modules/excel";
+// 表格仓库 信息
+const { storeExcelDataMap } = storeExcelData();
+// 监控信息
+const monitor = storeExcelDataMap["安防管理"]["safeLeft1"];
 
 // 监控信息模拟数据
 const monitorInfo = ref({
-  png: "摄像头",
-  list: [
-    { tips: '监控总数', num: '111' },
-    { state: '在线', icon: 'online', num: '10' },
-    { state: '离线', icon: 'offline', num: '10' },
-  ]
-})
-
+    png: "摄像头",
+    list: [
+        { tips: monitor[0].value, num: monitor[2].value },
+        {
+            state: monitor[4].value,
+            icon: monitor[4].value === "在线" ? "online" : "offline",
+            num: monitor[6].value,
+        },
+        {
+            state: monitor[8].value,
+            icon: monitor[8].value === "离线" ? "offline" : "online",
+            num: monitor[10].value,
+        },
+    ],
+});
 </script>
-  
+
 <template>
-    <div class='outFactory-safe-left'>
+    <div class="outFactory-safe-left">
         <!-- 视频监控 -->
         <div class="monitor">
             <JianKong :monitorInfo="monitorInfo"></JianKong>

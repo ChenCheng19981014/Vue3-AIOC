@@ -189,7 +189,7 @@ const fillArrays = (data: string[] | number[] | any[]) => {
 
 // 读 excel
 const readerExcel = async () => {
-  
+
   const response = await axios.get("./excel/AIOC数据表单.xlsx", {
     responseType: "arraybuffer",
   });
@@ -197,7 +197,7 @@ const readerExcel = async () => {
   // const response = await axios.get("http://192.168.3.15:3001/AIOC数据表单.xlsx", {
   //   responseType: "arraybuffer",
   // });
-  
+
 
   const data = new Uint8Array(response.data);
 
@@ -274,7 +274,7 @@ const getExcelData = (exceMapList: string[], tabsModule: string) => {
       let value = getValueByPosition(exceMapList, tabsModule, position);
 
       // 处理 换行符
-      value = value?.replace(/\n/g, ''); 
+      value = value?.replace(/\n/g, '');
 
       // 修改这里的访问方式
       excelDataMap[tabsModule][type][index]['value'] = value;
@@ -291,19 +291,13 @@ const getExcelData = (exceMapList: string[], tabsModule: string) => {
 const processExcel = () => {
 
   excelDataMap['综合态势'].overflowLeft2 = sliceByLengthFn(excelDataMap['综合态势'].overflowLeft2, 9);
-
   excelDataMap['综合态势'].overflowRight1 = sliceByLengthFn(excelDataMap['综合态势'].overflowRight1, 4);
-
   excelDataMap['综合态势'].overflowRight2 = sliceByLengthFn(excelDataMap['综合态势'].overflowRight2, 4);
-
   excelDataMap['综合态势'].overflowRight3 = sliceByLengthFn(excelDataMap['综合态势'].overflowRight3, 8);
 
   excelDataMap['安防管理'].safeLeft2 = sliceByLengthFn(excelDataMap['安防管理'].safeLeft2, 12);
-
   excelDataMap['安防管理'].safeLeft4 = sliceByLengthFn(excelDataMap['安防管理'].safeLeft4, 9);
-
   excelDataMap['安防管理'].safeRight2 = sliceByLengthFn(excelDataMap['安防管理'].safeRight2, 9);
-
   excelDataMap['安防管理'].safeRight6 = sliceByLengthFn(excelDataMap['安防管理'].safeRight6, 10);
 
   console.log('修改后的constant的值:', excelDataMap);
@@ -359,7 +353,7 @@ onMounted(() => {
   <!-- 外场 总组件 -->
   <div class="outFactory">
     <!-- loading -->
-    <load v-show="!loadingEnd"/>
+    <load v-show="!loadingEnd" />
 
     <!-- 场景 -->
     <Scene @loadOver="loadOver" />
@@ -391,7 +385,7 @@ onMounted(() => {
     </trans>
 
     <!-- 右弹窗 -->
-    <trans :showIndex="tabState" direction="right" :slotNumber="4" >
+    <trans :showIndex="tabState" direction="right" :slotNumber="4">
       <!-- 右1 -->
       <template v-slot:slot-0>
         <OverviewRight />
