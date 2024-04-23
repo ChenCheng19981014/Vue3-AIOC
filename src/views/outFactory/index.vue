@@ -12,6 +12,30 @@
     z-index: 2;
   }
 
+  .initial-btn {
+    width: 147.04001px;
+    height: 43.04px;
+    position: absolute;
+    top: 70px;
+    left: 486px;
+    background-image: url("@/assets/images/初始视角.png");
+    background-size: 100% 100%;
+    z-index: 10;
+    cursor: pointer;
+    &:hover {
+      width: 147.04001px;
+    height: 43.04px;
+    position: absolute;
+    top: 70px;
+    left: 486px;
+      background-image: url("@/assets/images/初始视角-悬停.png");
+      background-size: 100% 100%;
+      z-index: 10;
+      cursor: pointer;
+    }
+
+  }
+
   .tips {
     @include tips;
   }
@@ -348,6 +372,9 @@ watch(
   { deep: true }
 );
 
+// 初始视角回调
+const returnInitial = () => {}
+
 onMounted(() => {
   // 读 excel
   readerExcel();
@@ -365,6 +392,9 @@ onMounted(() => {
 
     <!-- 全局顶部 -->
     <global-header class="header" />
+
+    <!-- 初始视角按钮 -->
+    <div class="initial-btn" @click="returnInitial"></div>
 
     <!-- 左弹窗 -->
     <trans :showIndex="tabState" direction="left" :slotNumber="4">

@@ -1,0 +1,18 @@
+<template>
+    <div class="quyu-main">
+        <title-type-time :tips="'区域能耗'">
+            
+        </title-type-time>
+    </div>
+</template>
+
+<script setup lang="ts">
+
+</script>
+
+<style scoped lang="scss">
+.quyu-main {
+    width: 100%;
+    height: 182px;
+}
+</style>

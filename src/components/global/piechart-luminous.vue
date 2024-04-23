@@ -20,7 +20,7 @@ options.value = {
             '{c|%}' // 下部分文字样式为c
         ].join('\n'), // 使用换行符分隔上下两部分文本
         x: 'center',
-        y: 'center',
+        y: '28px',
         textStyle: {
             rich: {
                 a: {
