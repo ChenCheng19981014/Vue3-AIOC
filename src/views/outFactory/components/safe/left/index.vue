@@ -86,8 +86,6 @@ const videoInfo = ref({
     }),
 });
 
-console.log('顶部模块:',topTips.value);
-
 </script>
 
 <template>

@@ -231,7 +231,7 @@ const readerExcel = async () => {
   excelTitles.value = workbook.SheetNames;
 
   workbook.SheetNames.map((titleName: any, _) => {
-    if (_ >= 2) return;
+    // if (_ >= 2) return;
     // 读表
     const ws = XLSX.utils.sheet_to_json(workbook.Sheets[titleName], {
       header: 1,
@@ -322,12 +322,15 @@ const processExcel = () => {
   excelDataMap['安防管理'].safeLeft2 = sliceByLengthFn(excelDataMap['安防管理'].safeLeft2, 12);
   excelDataMap['安防管理'].safeLeft4 = sliceByLengthFn(excelDataMap['安防管理'].safeLeft4, 9);
   excelDataMap['安防管理'].safeRight2 = sliceByLengthFn(excelDataMap['安防管理'].safeRight2, 9);
-
   excelDataMap['安防管理'].safeRight3 = sliceByLengthFn(excelDataMap['安防管理'].safeRight3, 5);
-
-
   excelDataMap['安防管理'].safeRight5 = sliceByLengthFn(excelDataMap['安防管理'].safeRight5, 8);
   excelDataMap['安防管理'].safeRight6 = sliceByLengthFn(excelDataMap['安防管理'].safeRight6, 10);
+
+
+  excelDataMap['能源管理'].energyLeft1Day = sliceByLengthFn(excelDataMap['能源管理'].energyLeft1Day, 8);
+  excelDataMap['能源管理'].energyLeft1Month = sliceByLengthFn(excelDataMap['能源管理'].energyLeft1Month, 8);
+  excelDataMap['能源管理'].energyLeft1Year = sliceByLengthFn(excelDataMap['能源管理'].energyLeft1Year, 8);
+
 
   console.log('修改后的constant的值:', excelDataMap);
 }
@@ -337,13 +340,12 @@ watch(
   exceMapList,
   () => {
     const exceList = exceMapList.value;
-
     console.log("读的所有表:", exceMapList.value);
 
     // 获取 表格信息
     getExcelData(exceList, '综合态势');
-
     getExcelData(exceList, '安防管理');
+    getExcelData(exceList, '能源管理');
 
     // 表格数据二次处理数据
     processExcel();

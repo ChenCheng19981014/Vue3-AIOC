@@ -3,8 +3,8 @@ import { App } from "vue";
 // 分割 字符 fn
 const splitCharacterFn = (el: Element, binding: { [key: string]: any }) => {
   const { value } = binding;
-  const numStr = value.toString();
-  const num = Number(value);
+  const numStr = value + "";
+  const num = value * 1;
   let dealValue = "";
   if (num < 1000) {
     el.innerHTML = numStr;
