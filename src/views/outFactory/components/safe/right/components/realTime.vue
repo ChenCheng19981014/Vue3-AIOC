@@ -2,9 +2,7 @@
     <div class="outFactory-safe-realTime">
         <title-type-common :tips="title">
             <div class="safe-alarm">
-                <div style="width: 430px; height: 402px; padding-top: 16px;">
-                    <alarm-list :dataList="dataList"></alarm-list>
-                </div>
+                <alarm-list :dataList="dataList"></alarm-list>
             </div>
         </title-type-common>
     </div>
@@ -55,14 +53,14 @@ const dataList = ref(
 </script>
 
 <style scoped lang="scss">
-.alarm {
+.outFactory-safe-realTime {
     width: 430px;
-    height: 100%;
-
+    height: 456px;
     .safe-alarm {
         padding-top: 16px;
         width: 100%;
-        height: 402px;
+        height: 418px;
+        // height: 405px;
     }
 }
 </style>
