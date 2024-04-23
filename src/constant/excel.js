@@ -87,7 +87,22 @@ const excelDataMap = {
     safeRight6: getArrByPosition([66, 71], [0, 9]),
   },
 
-  能源管理: {},
+  能源管理: {
+    topTips: [
+      { position: [4, 0], value: null },
+      { position: [17, 0], value: null },
+      { position: [30, 0], value: null },
+      { position: [48, 0], value: null },
+      { position: [67, 0], value: null },
+      { position: [81, 0], value: null },
+    ],
+    energyLeft1Tips:[{ position: [4, 1], value: null }],
+    energyLeft1TipsInfo :getArrByPosition([4, 6], [2, 9]),
+    energyLeft1Day:getArrByPosition([9, 10], [1, 8]), // 日
+    energyLeft1Month:getArrByPosition([12, 13], [1, 8]), // 月
+    energyLeft1Year:getArrByPosition([15, 16], [1, 8]), // 年
+
+  },
 };
 
 export { excelDataMap, sliceByLengthFn };
