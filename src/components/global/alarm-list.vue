@@ -42,7 +42,8 @@ const props = defineProps({
 <style scoped lang="scss">
 .alarm-list {
     width: 100%;
-    height: 402px;
+    // height: 402px;
+    height: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;

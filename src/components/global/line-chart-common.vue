@@ -74,7 +74,7 @@ const updateChartOptions = () => {
                 // 循环处理数据，展示数据
                 return `<div class='${props.colors.tooltip}'>${params[0].value || ''}</div>`;
             },
-            position: function (point, params, dom, rect, size: any) {
+            position: function (point: any, params: any, dom, rect, size: any) {
                 // 计算 y 的坐标
                 const maxY = Math.max.apply(null, props.chartData.yAxis)
                 const pecentY = (size.viewSize[1] - 60 * 2) / maxY // 计算y轴的百分比
