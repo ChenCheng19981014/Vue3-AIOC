@@ -1,37 +1,65 @@
 <!-- 水能统计 -->
 <template>
     <div class="shuineng">
-        <title-type-time :tips="'水能统计'">
+        <title-type-time :tips="title" @delivery-date='deliveryDate'>
             <div class="shuineng-content-title">
                 <div class="icon">
-                    <img src="@/assets/images/energy-shui.png" alt="图标">
-                    <span>水能耗</span>
+                    <img src="@/assets/images/energy-dian.png" alt="图标">
+                    <span>{{ tips }}</span>
                 </div>
                 <div class="value">
-                    22,350<span>（kWh）</span>
+                    {{ currentTopsInfo[0] }}<span>{{ currentTopsInfo[1] }}</span>
                 </div>
                 <div class="rate">
-                    同比
-                    <img src="@/assets/images/上箭头.png" alt="">
-                    <span>4.5 <span>%</span> </span>
+                    {{ currentTopsInfo[2] }}
+                    <img :src="`${currentTopsInfo[3] == '上升'
+                        ? safeUp
+                        : safeDown
+                        }`" alt="" />
+                    <span>{{ currentTopsInfo[4] }} <span>{{ currentTopsInfo[5] }}</span> </span>
                 </div>
             </div>
             <div class="shuineng-content-echarts">
-                <line-chart-common :colors="colors" />
+                <line-chart-common :colors="colors" :chartData="chartData" />
             </div>
         </title-type-time>
     </div>
 </template>
 
 <script setup lang="ts">
-import { reactive } from 'vue'
+import safeUp from "@/assets/images/icon-上升.png";
+import safeDown from "@/assets/images/icon-下降.png";
+import { reactive, toRefs, ref,  computed } from 'vue'
+const props = defineProps(['title', 'tips', 'msg']);
+// 当前 时间
+const currentTime = ref('day')
+// 大标题 小标题 信息
+const { tips, title, msg } = toRefs(props);
 
-let colors = reactive({
+// 当前顶部 信息
+const currentTopsInfo = ref(computed(() => msg?.value.top[currentTime.value].map((item: { [key: string]: any }) => item.value)))
+
+
+// 表单 颜色 设置
+const colors = reactive({
     verticalLineColor: '#00FFE0', // 竖线颜色
     gradientBackground: 'rgba(1, 255, 133, 0.39)', // 渐变背景
     InflectionPoint: '#00FFE0',
     tooltip: 'CustomTooltip1'
 })
+
+// 表单 数据
+const chartData = ref({
+    // 使用 computed 属性计算 xAxis 和 yAxis
+    xAxis: computed(() => msg?.value[currentTime.value][0].map((item: { [key: string]: any }) => item.value)),
+    yAxis: computed(() => msg?.value[currentTime.value][1].map((item: { [key: string]: any }) => item.value)),
+});
+
+// 切换 日期
+const deliveryDate = (time: string) => {
+    currentTime.value = time;
+}
+
 
 </script>
 

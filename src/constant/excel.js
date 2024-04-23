@@ -88,20 +88,48 @@ const excelDataMap = {
   },
 
   能源管理: {
+
     topTips: [
       { position: [4, 0], value: null },
       { position: [17, 0], value: null },
       { position: [30, 0], value: null },
-      { position: [48, 0], value: null },
-      { position: [67, 0], value: null },
-      { position: [81, 0], value: null },
+      { position: [43, 0], value: null },
+      { position: [62, 0], value: null },
+      { position: [76, 0], value: null },
     ],
-    energyLeft1Tips:[{ position: [4, 1], value: null }],
-    energyLeft1TipsInfo :getArrByPosition([4, 6], [2, 9]),
-    energyLeft1Day:getArrByPosition([9, 10], [1, 8]), // 日
-    energyLeft1Month:getArrByPosition([12, 13], [1, 8]), // 月
-    energyLeft1Year:getArrByPosition([15, 16], [1, 8]), // 年
 
+    energyLeft1Tips: [{ position: [4, 1], value: null }],
+    energyLeft1TipsInfo: getArrByPosition([4, 6], [3, 8]),
+    energyLeft1Day: getArrByPosition([9, 10], [2, 8]), // 日
+    energyLeft1Month: getArrByPosition([12, 13], [2, 8]), // 月
+    energyLeft1Year: getArrByPosition([15, 16], [2, 8]), // 年
+
+
+    energyLeft2Tips: [{ position: [17, 1], value: null }],
+    energyLeft2TipsInfo: getArrByPosition([17, 19], [3, 8]),
+    energyLeft2Day: getArrByPosition([22, 23], [2, 8]), // 日
+    energyLeft2Month: getArrByPosition([25, 26], [2, 8]), // 月
+    energyLeft2Year: getArrByPosition([15, 16], [2, 8]), // 年
+
+    energyLeft3Tips: [{ position: [30, 1], value: null }],
+    energyLeft3TipsInfo: getArrByPosition([30, 32], [3, 8]),
+    energyLeft3Day: getArrByPosition([35, 36], [2, 8]), // 日
+    energyLeft3Month: getArrByPosition([38, 39], [2, 8]), // 月
+    energyLeft3Year: getArrByPosition([41, 42], [2, 8]), // 年
+
+
+    energyRight1Tips1: [
+      { position: [43, 1], value: null },
+      { position: [44, 1], value: null },
+      { position: [45, 1], value: null }],
+      energyRight1: getArrByPosition([43, 45], [2, 8]), // 日
+      energyRight1Day: getArrByPosition([48, 51], [2, 8]), // 日
+      energyRight1Month: getArrByPosition([53, 56], [2, 8]), // 月
+      energyRight1Year: getArrByPosition([58, 61], [2, 8]), // 年
+
+      energyRight2Tips:getArrByPosition([63, 63], [1, 9]),
+      energyRight2:getArrByPosition([64, 75], [1, 9]),
+      energyRight3:getArrByPosition([78, 89], [1, 8]),
   },
 };
 

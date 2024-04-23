@@ -6,7 +6,7 @@
 
 <script setup lang="ts">
 import * as echarts from "echarts";
-import { ref, onMounted, watch, toRefs } from "vue";
+import { ref, onMounted, watch } from "vue";
 let chartBase = ref();  // 图表实例
 
 const props = defineProps({
@@ -42,10 +42,10 @@ const getInterval = () => {
     return dividedMaxValue;
 }
 
-watch(toRefs(props), () => {
+watch(props, () => {
     updateChartOptions()
     getInterval()
-})
+}, {deep: true})
 
 let options = ref({})
 // 更新图表配置
@@ -129,7 +129,7 @@ const updateChartOptions = () => {
             },
             interval: getInterval(), //坐标轴刻度文字显示间隔
             axisLabel: { //坐标轴刻度文字的设置
-                
+
                 show: true, //是否显示
                 inside: false, //坐标轴刻度文字指向 (true表示向上   false表示向下)
                 rotate: 0, //坐标轴刻度文字的旋转角度
@@ -198,7 +198,6 @@ const updateChartOptions = () => {
     }
 }
 
-
 updateChartOptions()
 
 onMounted(() => {
@@ -236,6 +235,7 @@ onMounted(() => {
     font-weight: 700;
     line-height: normal;
 }
+
 .CustomTooltip1 {
     display: inline-flex;
     padding: 2px 8px;
@@ -253,5 +253,4 @@ onMounted(() => {
     font-weight: 700;
     line-height: normal;
 }
-
 </style>

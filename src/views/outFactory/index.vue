@@ -22,12 +22,13 @@
     background-size: 100% 100%;
     z-index: 10;
     cursor: pointer;
+
     &:hover {
       width: 147.04001px;
-    height: 43.04px;
-    position: absolute;
-    top: 70px;
-    left: 486px;
+      height: 43.04px;
+      position: absolute;
+      top: 70px;
+      left: 486px;
       background-image: url("@/assets/images/初始视角-悬停.png");
       background-size: 100% 100%;
       z-index: 10;
@@ -214,6 +215,11 @@ const fillArrays = (data: string[] | number[] | any[]) => {
 // 读 excel
 const readerExcel = async () => {
 
+
+  // const response = await axios.get("./excel/AIOC数据表单-公式测试.xlsx", {
+  //   responseType: "arraybuffer",
+  // });
+
   const response = await axios.get("./excel/AIOC数据表单.xlsx", {
     responseType: "arraybuffer",
   });
@@ -248,6 +254,8 @@ const readerExcel = async () => {
 
     // 列表
     exceMapList.value[titleName] = fillArrays(arr);
+
+    // console.log('表格数据:',exceMapList.value);
   });
 
   // 设置显示的标题
@@ -326,10 +334,25 @@ const processExcel = () => {
   excelDataMap['安防管理'].safeRight5 = sliceByLengthFn(excelDataMap['安防管理'].safeRight5, 8);
   excelDataMap['安防管理'].safeRight6 = sliceByLengthFn(excelDataMap['安防管理'].safeRight6, 10);
 
+  excelDataMap['能源管理'].energyLeft1TipsInfo = sliceByLengthFn(excelDataMap['能源管理'].energyLeft1TipsInfo, 6);
+  excelDataMap['能源管理'].energyLeft2TipsInfo = sliceByLengthFn(excelDataMap['能源管理'].energyLeft2TipsInfo, 6);
+  excelDataMap['能源管理'].energyLeft3TipsInfo = sliceByLengthFn(excelDataMap['能源管理'].energyLeft3TipsInfo, 6);
 
-  excelDataMap['能源管理'].energyLeft1Day = sliceByLengthFn(excelDataMap['能源管理'].energyLeft1Day, 8);
-  excelDataMap['能源管理'].energyLeft1Month = sliceByLengthFn(excelDataMap['能源管理'].energyLeft1Month, 8);
-  excelDataMap['能源管理'].energyLeft1Year = sliceByLengthFn(excelDataMap['能源管理'].energyLeft1Year, 8);
+  excelDataMap['能源管理'].energyLeft1Day = sliceByLengthFn(excelDataMap['能源管理'].energyLeft1Day, 7);
+  excelDataMap['能源管理'].energyLeft1Month = sliceByLengthFn(excelDataMap['能源管理'].energyLeft1Month, 7);
+  excelDataMap['能源管理'].energyLeft1Year = sliceByLengthFn(excelDataMap['能源管理'].energyLeft1Year, 7);
+  excelDataMap['能源管理'].energyLeft2Day = sliceByLengthFn(excelDataMap['能源管理'].energyLeft2Day, 7);
+  excelDataMap['能源管理'].energyLeft2Month = sliceByLengthFn(excelDataMap['能源管理'].energyLeft2Month, 7);
+  excelDataMap['能源管理'].energyLeft2Year = sliceByLengthFn(excelDataMap['能源管理'].energyLeft2Year, 7);
+
+  excelDataMap['能源管理'].energyRight1 = sliceByLengthFn(excelDataMap['能源管理'].energyRight1, 7);
+  excelDataMap['能源管理'].energyRight1Day = sliceByLengthFn(excelDataMap['能源管理'].energyRight1Day, 7);
+  excelDataMap['能源管理'].energyRight1Month = sliceByLengthFn(excelDataMap['能源管理'].energyRight1Month, 7);
+  excelDataMap['能源管理'].energyRight1Year = sliceByLengthFn(excelDataMap['能源管理'].energyRight1Year, 7);
+
+
+  excelDataMap['能源管理'].energyRight2 = sliceByLengthFn(excelDataMap['能源管理'].energyRight2, 9);
+  excelDataMap['能源管理'].energyRight3 = sliceByLengthFn(excelDataMap['能源管理'].energyRight3, 12);
 
 
   console.log('修改后的constant的值:', excelDataMap);
@@ -339,6 +362,7 @@ const processExcel = () => {
 watch(
   exceMapList,
   () => {
+
     const exceList = exceMapList.value;
     console.log("读的所有表:", exceMapList.value);
 
@@ -375,7 +399,7 @@ watch(
 );
 
 // 初始视角回调
-const returnInitial = () => {}
+const returnInitial = () => { }
 
 onMounted(() => {
   // 读 excel
