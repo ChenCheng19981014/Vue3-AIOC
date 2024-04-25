@@ -1,4 +1,4 @@
-<style scoped lang='scss'>
+<style scoped lang="scss">
 @import "@/design/hooks.scss";
 
 .outFactory-energy-right {
@@ -8,112 +8,133 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+
     .cost {
         width: 100%;
         height: 334px;
     }
+
     .quyu {
         width: 100%;
         height: 182px;
     }
+
     .alarm {
         width: 100%;
         height: 374px;
     }
 }
 </style>
-  
-<script setup lang='ts'>
-import { ref } from 'vue';
-import Cost from './components/cost.vue'
-import QuYu from './components/quyu.vue'
-import AlArm from './components/alarm.vue'
 
-
+<script setup lang="ts">
+import { ref } from "vue";
+import Cost from "./components/cost.vue";
+import QuYu from "./components/quyu.vue";
+import AlArm from "./components/alarm.vue";
 // 使用综合态势模拟数据，真实数据需要删除
 import { storeExcelData } from "@/store/modules/excel";
 // 表格仓库 信息
 const { storeExcelDataMap } = storeExcelData();
-// @ts-ignore
-const consumptionquyu = storeExcelDataMap["综合态势"]["overflowLeft2"]
-// @ts-ignore
-const consumptionquyuTitle = storeExcelDataMap["综合态势"]["overflowLeft2Tips"]
 
-// 处理区域能耗模块的数据
-// 处理表格的title数据
-const handleEnetgyTitle = () => {
-    const valuesArray = consumptionquyuTitle
-        .map((item: any) => item.value)
-        .filter((value: string) => value !== null && value !== undefined && value !== '');
+// 能源管理
+const energy = storeExcelDataMap["能源管理"];
 
-    // 去重操作
-    const uniqueValuesArray = [...new Set(valuesArray)];
-    return uniqueValuesArray;
-}
-// 处理表格的内容数据
-const handleEnetgyData = () => {
-    // 初始化处理后的数据结构
-    const result = {
-        day: [],
-        month: [],
-        year: []
-    };
-    consumptionquyu.forEach((dataItem: any) => {
-        // day数组中的元素数据
-        const dayData = dataItem.slice(0, 5);
-        // month数组中的元素数据
-        const monthData = dataItem.slice(0, 3).concat(dataItem[5], dataItem[6]);
-        // year数组中的元素数据
-        const yearData = dataItem.slice(0, 3).concat(dataItem[7], dataItem[8]);
+// 各顶部 标题
+const topTips = ref([...energy.topTips]);
 
-        // 过滤掉空值
-        const dayDataMap = dayData.map((item: any) => item.value).filter((value: any) => value !== null && value !== undefined && value !== '')
-        const monthDataMap = monthData.map((item: any) => item.value).filter((value: any) => value !== null && value !== undefined && value !== '')
-        const yearDataMap = yearData.map((item: any) => item.value).filter((value: any) => value !== null && value !== undefined && value !== '');
-        // 判断是否为空，如果为空则不放入数组中
-        if (dayDataMap.length > 0) {
-            result.day.push(dayData.map(item => item.value));
-        }
-        if (monthDataMap.length > 0) {
-            result.month.push(monthData.map(item => item.value));
-        }
-        if (yearDataMap.length > 0) {
-            result.year.push(yearData.map(item => item.value));
-        }
-    });
-    return result;
-}
+// 模块数据
+const modeData = ref({
+    cost: {
+        topTips: {
+            day: energy.energyRight1Tips1[0].value,
+            month: energy.energyRight1Tips1[1].value,
+            year: energy.energyRight1Tips1[2].value,
+        },
+        topMsg: {
+            day: energy.energyRight1[0],
+            month: energy.energyRight1[1],
+            year: energy.energyRight1[2],
+        },
+        content: {
+            day: energy.energyRight1Day,
+            month: energy.energyRight1Month,
+            year: energy.energyRight1Year,
+        },
+    },
+    quyu: {
+        menu: energy.energyRight2Tips.map(
+            (item: { [key: string]: any }) => item.value
+        ),
 
+        day: [...energy.energyRight2.map((everyItem: any[]) => {
+            return [
+                ...everyItem.map((_: { [key: string]: any }, index: number) => {
+                    if (index <= 2) {
+                        return _.value.replace(',', '').trim();
+                    }
+                }).filter((item: { [key: string]: any }) => item != undefined),
+                ...everyItem.map((_: { [key: string]: any }, index: number) => {
+                    if (index >= 3 && index <= 4) {
+                        return _.value.replace(',', '').trim();
+                    }
+                }).filter((item: { [key: string]: any }) => item != undefined),
+            ]
+        })
+        ].filter((item: { [key: string]: any }) => item != undefined),
 
-type SafeManage = {
-    [key: string]: any[]
-}
+        month: [...energy.energyRight2.map((everyItem: any[]) => {
+            return [
+                ...everyItem.map((_: { [key: string]: any }, index: number) => {
+                    if (index <= 2) {
+                        return _.value.replace(',', '').trim();
+                    }
+                }).filter((item: { [key: string]: any }) => item != undefined),
+                ...everyItem.map((_: { [key: string]: any }, index: number) => {
+                    if (index >= 5 && index <= 6) {
+                        return _.value.replace(',', '').trim();
+                    }
+                }).filter((item: { [key: string]: any }) => item != undefined),
+            ]
+        })
+        ].filter((item: { [key: string]: any }) => item != undefined),
 
-// 安防管理
-const safeManage: SafeManage = storeExcelDataMap['安防管理'] as { [key: string]: any[] };
-// 实时
-const realTime = safeManage.safeRight5.map((item: any[]) => Object.values(item)
-    .filter((msg) => msg.value).map((content) => content.value))
-    .filter((everyItem: any[]) => everyItem.length !== 0);
-// 实时告警
-const realTimeInfo = ref(realTime)
+        year: [...energy.energyRight2.map((everyItem: any[]) => {
+            return [
+                ...everyItem.map((_: { [key: string]: any }, index: number) => {
+                    if (index <= 2) {
+                        return _.value.replace(',', '').trim();
+                    }
+                }).filter((item: { [key: string]: any }) => item != undefined),
+                ...everyItem.map((_: { [key: string]: any }, index: number) => {
+                    if (index >= 7 && index <= 8) {
+                        return _.value.replace(',', '').trim();
+                    }
+                }).filter((item: { [key: string]: any }) => item != undefined),
+            ]
+        })
+        ].filter((item: { [key: string]: any }) => item != undefined),
+    },
+    alarm: energy.energyRight3,
+});
+
+console.log("energy:", energy, "\n 模块数据", modeData.value);
 
 
 </script>
-  
+
 <template>
-    <div class='outFactory-energy-right'>
+    <div class="outFactory-energy-right">
         <!-- 能耗费用趋势 -->
         <div class="cost">
-            <Cost></Cost>
+            <Cost :title="topTips[3].value" :msg="modeData.cost"></Cost>
         </div>
         <!-- 区域能耗 -->
         <div class="quyu">
-            <QuYu :storeExcelDataMap="handleEnetgyData()" :menu="handleEnetgyTitle()"></QuYu>
+            <QuYu :title="topTips[4].value" :msg="modeData.quyu" :menu="modeData.quyu.menu"></QuYu>
         </div>
         <!-- 实时告警 -->
         <div class="alarm">
-            <AlArm :alarmInfo="realTimeInfo"></AlArm>
+            <AlArm :title="topTips[5].value" :msg="modeData.alarm"></AlArm>
         </div>
     </div>
 </template>

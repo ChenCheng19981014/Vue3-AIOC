@@ -122,7 +122,7 @@ const excelDataMap = {
       { position: [43, 1], value: null },
       { position: [44, 1], value: null },
       { position: [45, 1], value: null }],
-      energyRight1: getArrByPosition([43, 45], [2, 8]), // 日
+      energyRight1: getArrByPosition([43, 45], [3, 8]), // 日
       energyRight1Day: getArrByPosition([48, 51], [2, 8]), // 日
       energyRight1Month: getArrByPosition([53, 56], [2, 8]), // 月
       energyRight1Year: getArrByPosition([58, 61], [2, 8]), // 年

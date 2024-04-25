@@ -345,14 +345,14 @@ const processExcel = () => {
   excelDataMap['能源管理'].energyLeft2Month = sliceByLengthFn(excelDataMap['能源管理'].energyLeft2Month, 7);
   excelDataMap['能源管理'].energyLeft2Year = sliceByLengthFn(excelDataMap['能源管理'].energyLeft2Year, 7);
 
-  excelDataMap['能源管理'].energyRight1 = sliceByLengthFn(excelDataMap['能源管理'].energyRight1, 7);
+  excelDataMap['能源管理'].energyRight1 = sliceByLengthFn(excelDataMap['能源管理'].energyRight1, 6);
   excelDataMap['能源管理'].energyRight1Day = sliceByLengthFn(excelDataMap['能源管理'].energyRight1Day, 7);
   excelDataMap['能源管理'].energyRight1Month = sliceByLengthFn(excelDataMap['能源管理'].energyRight1Month, 7);
   excelDataMap['能源管理'].energyRight1Year = sliceByLengthFn(excelDataMap['能源管理'].energyRight1Year, 7);
 
 
   excelDataMap['能源管理'].energyRight2 = sliceByLengthFn(excelDataMap['能源管理'].energyRight2, 9);
-  excelDataMap['能源管理'].energyRight3 = sliceByLengthFn(excelDataMap['能源管理'].energyRight3, 12);
+  excelDataMap['能源管理'].energyRight3 = sliceByLengthFn(excelDataMap['能源管理'].energyRight3, 8);
 
 
   console.log('修改后的constant的值:', excelDataMap);

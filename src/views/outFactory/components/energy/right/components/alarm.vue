@@ -1,10 +1,10 @@
 <template>
     <div class="alarm-main">
-        <title-type-time :tips="'实时告警'">
+        <title-type-common :tips="title">
             <div class="energy-alarm">
                 <alarm-list :dataList="dataList"></alarm-list>
             </div>
-        </title-type-time>
+        </title-type-common>
     </div>
 </template>
 
@@ -12,13 +12,17 @@
 import { ref, toRefs } from "vue";
 
 // props 值
-const props = defineProps(["alarmInfo", "title",]);
+const props = defineProps([ "title", "msg"]);
 
 // 视频监控 信息
-const { alarmInfo, title } = toRefs(props);
+const {  title, msg } = toRefs(props);
+
 
 // update
 const convertDateFormat = (dateString: string) => {
+
+    if (!dateString || dateString == 'undefined') return
+
     // 拆分日期字符串
     const parts = dateString.split('/');
 
@@ -36,15 +40,15 @@ const convertDateFormat = (dateString: string) => {
 
 // 列表数据
 const dataList = ref(
-    alarmInfo?.value.map((item: { [key: string]: string }) => {
+    msg?.value.map((item: { [key: string]: any }) => {
         return {
-            name: item[0],
-            area: item[1],
-            areaRegion: item[2],
-            grade: item[3],
-            machine: item[4],
-            date: `${convertDateFormat(item[5])} ${item[6]}`,
-            handle: item[7],
+            name: item[0]?.value,
+            area: item[1]?.value,
+            areaRegion: item[2]?.value,
+            grade: item[3]?.value,
+            machine: item[4]?.value,
+            date: `${convertDateFormat(item[5]?.value) || '123'} ${item[6]?.value}`,
+            handle: item[7]?.value,
         };
     })
 );
@@ -54,6 +58,7 @@ const dataList = ref(
 .alarm-main {
     width: 100%;
     height: 374px;
+
     .energy-alarm {
         width: 100%;
         height: 336px;

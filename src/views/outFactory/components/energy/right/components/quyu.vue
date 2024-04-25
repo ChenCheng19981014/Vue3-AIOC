@@ -2,7 +2,7 @@
     <div class="quyu-main">
         <title-type-time :tips="'区域能耗'" @delivery-date="handleData">
             <div class="table-list-energy-quyu">
-                <table-list :menu="tablelist.menu" :columns="filteredData" :currentHight="128"></table-list>
+                <table-list :menu="tablelist.menu" :flex="[1,1,1,1,2]" :columns="filteredData" :currentHight="128"></table-list>
             </div>
         </title-type-time>
     </div>
@@ -14,13 +14,12 @@ const props = defineProps({
     title: String,
     menu: Array,
     storeExcelDataMap: Array,
+    msg: Object
 })
-
-console.log(props.storeExcelDataMap)
 
 // 模拟数据
 const tablelist = reactive({
-    menu: props.menu,
+    menu: new Set([...props?.menu]),
 })
 
 // 传递过来的时间单位，默认是日
@@ -31,22 +30,7 @@ const handleData = (time: string) => {
 }
 // 计算属性，根据传递的字符串动态过滤数据
 const filteredData = computed(() => {
-    switch (timeUnit.value) {
-        case 'day':
-            return props.storeExcelDataMap.day.map(item => 
-                 [item[0], `${item[1]} ${item[2]}`, item[3], item[4]]
-            );
-        case 'month':
-            return props.storeExcelDataMap.month.map(item => 
-                [item[0], `${item[1]} ${item[2]}`, item[3], item[4]]
-            );
-        case 'year':
-            return props.storeExcelDataMap.year.map(item => 
-                [item[0], `${item[1]} ${item[2]}`, item[3], item[4]]
-            );
-        default:
-            return [];
-    }
+    return props?.msg[timeUnit.value]
 });
 
 watch(timeUnit, () => {
@@ -59,6 +43,7 @@ watch(timeUnit, () => {
 .quyu-main {
     width: 100%;
     height: 182px;
+
     .table-list-energy-quyu {
         width: 100%;
         height: 144px;

@@ -7,6 +7,9 @@
 <script setup lang="ts">
 import moment from "moment";
 import { ref, onMounted, watch, toRefs } from "vue";
+
+let options = ref({});
+
 let chartBase = ref();  // 图表实例
 
 const props = defineProps({
@@ -14,7 +17,7 @@ const props = defineProps({
         type: Object,
         default: () => ({
             xAxis: ["02.15", "02.16", "02.17", "02.18", "02.19", "02.20", "02.21", "02.22"],
-            yAxis1: [50, 330, 200, 218, 135, 47, 260, 150], // 第一折线数据 电费
+            yAxis1: ['50', '330', '200', '218', '135', '47', '260', '150'], // 第一折线数据 电费
             yAxis2: [150, 230, 124, 218, 135, 147, 260, 360], // 第二个折线数据 水费
             yAxis3: [150, 130, 200, 118, 135, 147, 260, 250], // 第三个折线数据 燃气费
         })
@@ -35,12 +38,7 @@ const getInterval = () => {
     return dividedMaxValue;
 }
 
-watch(toRefs(props), () => {
-    updateChartOptions()
-    getInterval()
-})
 
-let options = ref({})
 // 更新图表配置
 const updateChartOptions = () => {
     options.value = {
@@ -54,7 +52,7 @@ const updateChartOptions = () => {
             },
             className: "custom-tooltip-box",
             formatter: function (params: any) {
-                console.log(params)
+                // console.log(params)
                 // 获取 x 轴的数据
                 const xAxisData = params[0].axisValue;
                 // 通过模板字符串返回自定义的 Tooltip HTML
@@ -73,8 +71,8 @@ const updateChartOptions = () => {
                                     </div>
                                 </div>
                             </div>`
-                            
-                        ).join('')}
+
+                ).join('')}
                     </div>
                 `;
             }
@@ -114,7 +112,6 @@ const updateChartOptions = () => {
             },
             interval: getInterval(), //坐标轴刻度文字显示间隔
             axisLabel: { //坐标轴刻度文字的设置
-                
                 show: true, //是否显示
                 inside: false, //坐标轴刻度文字指向 (true表示向上   false表示向下)
                 rotate: 0, //坐标轴刻度文字的旋转角度
@@ -143,42 +140,42 @@ const updateChartOptions = () => {
             },
         },
         series: [
-        {
-            name: '电费',
-            type: 'line',
-            showSymbol: false,
-            color: '#00FFE0',
-            lineStyle: {
-                normal: {
-                    color: '#00FFE0',
+            {
+                name: '电费',
+                type: 'line',
+                showSymbol: false,
+                color: '#00FFE0',
+                lineStyle: {
+                    normal: {
+                        color: '#00FFE0',
+                    },
                 },
+                data: props.chartData.yAxis1, //data.values
             },
-            data: props.chartData.yAxis1, //data.values
-        },
-        {
-            name: '水费',
-            type: 'line',
-            showSymbol: false,
-            color: '#0066FF',
-            lineStyle: {
-                normal: {
-                    color: '#0066FF',
+            {
+                name: '水费',
+                type: 'line',
+                showSymbol: false,
+                color: '#0066FF',
+                lineStyle: {
+                    normal: {
+                        color: '#0066FF',
+                    },
                 },
+                data: props.chartData.yAxis2, //data.values
             },
-            data: props.chartData.yAxis2, //data.values
-        },
-        {
-            name: '燃气费',
-            type: 'line',
-            showSymbol: false,
-            color: '#FFBE5C',
-            lineStyle: {
-                normal: {
-                    color: '#FFBE5C',
+            {
+                name: '燃气费',
+                type: 'line',
+                showSymbol: false,
+                color: '#FFBE5C',
+                lineStyle: {
+                    normal: {
+                        color: '#FFBE5C',
+                    },
                 },
+                data: props.chartData.yAxis3, //data.values
             },
-            data: props.chartData.yAxis3, //data.values
-        },
         ],
         grid: {
             top: '5%',
@@ -189,6 +186,14 @@ const updateChartOptions = () => {
         },
     }
 }
+
+watch(props, () => {
+
+    updateChartOptions();
+
+    getInterval();
+
+}, { deep: true, immediate: true })
 
 
 updateChartOptions()
@@ -217,6 +222,7 @@ onMounted(() => {
     border: 1px solid var(--color-basic-white-white-10, rgba(255, 255, 255, 0.10));
     background: var(--color-basic-black-black-30, rgba(0, 0, 0, 0.30));
     backdrop-filter: blur(2px);
+
     .x-axis {
         color: var(--color-text-text-100, #FFF);
         font-family: "Source Han Sans CN";
@@ -225,19 +231,23 @@ onMounted(() => {
         font-weight: 500;
         line-height: normal;
     }
+
     .y-axis {
         width: 100%;
         display: flex;
         flex-direction: column;
         justify-content: space-between;
+
         .y-axis-item {
             width: 100%;
             display: flex;
             align-items: center;
             justify-content: space-between;
+
             .y-axis-item-title {
                 display: flex;
                 align-items: center;
+
                 .icon {
                     width: 6px;
                     height: 6px;
@@ -245,6 +255,7 @@ onMounted(() => {
                     margin-right: 4px;
                     background-color: red;
                 }
+
                 color: var(--color-text-text-100, #FFF);
                 font-family: "Source Han Sans CN";
                 font-size: 12px;
@@ -252,6 +263,7 @@ onMounted(() => {
                 font-weight: 400;
                 line-height: normal;
             }
+
             .y-axis-item-value {
                 color: var(--color-text-text-100, #FFF);
                 text-align: right;

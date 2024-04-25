@@ -8,15 +8,15 @@
                     <span>{{ tips }}</span>
                 </div>
                 <div class="value">
-                    {{ currentTopsInfo[0] }}<span>{{ currentTopsInfo[1] }}</span>
+                    {{ currentTopInfo[0] }}<span>{{ currentTopInfo[1] }}</span>
                 </div>
                 <div class="rate">
-                    {{ currentTopsInfo[2] }}
-                    <img :src="`${currentTopsInfo[3] == '上升'
+                    {{ currentTopInfo[2] }}
+                    <img :src="`${currentTopInfo[3] == '上升'
                         ? safeUp
                         : safeDown
                         }`" alt="" />
-                    <span>{{ currentTopsInfo[4] }} <span>{{ currentTopsInfo[5] }}</span> </span>
+                    <span>{{ currentTopInfo[4] }} <span>{{ currentTopInfo[5] }}</span> </span>
                 </div>
             </div>
             <div class="dianneng-content-echarts">
@@ -37,7 +37,7 @@ const currentTime = ref('day')
 const { tips, title, msg } = toRefs(props);
 
 // 当前顶部 信息
-const currentTopsInfo = ref(computed(() => msg?.value.top[currentTime.value].map((item: { [key: string]: any }) => item.value)))
+const currentTopInfo = ref(computed(() => msg?.value.top[currentTime.value].map((item: { [key: string]: any }) => item.value)))
 
 
 // 表单 颜色 设置
