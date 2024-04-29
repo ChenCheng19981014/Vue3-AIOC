@@ -1,11 +1,11 @@
 <template>
-    <div class="monitor" v-if="props.status === 'normal'">
+    <div class="monitor" v-if="status === 'normal' && isOpen">
         <div class="monitor-header">
             <div class="title">
                 <div class="icon"></div>
                 <div class="name">外围-001</div>
             </div>
-            <div class="close"></div>
+            <div class="close" @click="cloceMonitor"></div>
         </div>
         <div class="monitor-name">厂区西南角1</div>
         <div class="monitor-content">
@@ -13,21 +13,21 @@
             <div class="setLarge"></div>
         </div>
     </div>
-    <div class="monitor-warm" v-if="props.status === 'offline' || props.status === 'connecting'">
+    <div class="monitor-warm" v-if="status === 'offline' || status === 'connecting' && isOpen">
         <div class="monitor-header">
             <div class="title">
                 <div class="icon"></div>
                 <div class="name">外围-001</div>
             </div>
-            <div class="close"></div>
+            <div class="close" @click="cloceMonitor"></div>
         </div>
         <div class="monitor-name">厂区西南角1</div>
         <div class="monitor-content">
-            <div class="monitor-content-offline" v-show="props.status === 'offline'">
+            <div class="monitor-content-offline" v-show="status === 'offline'">
                 <div class="top">设备离线</div>
                 <div class="bottom">监控画面，显示错误</div>
             </div>
-            <div class="monitor-content-connecting" v-show="props.status === 'connecting'">
+            <div class="monitor-content-connecting" v-show="status === 'connecting'">
                 <div class="top"></div>
                 <div class="bottom">视频链接中...</div>
             </div>
@@ -36,6 +36,7 @@
 </template>
 
 <script setup lang="ts">
+import { ref, watch } from 'vue';
 const props = defineProps({
     status: {
         type: String,
@@ -43,7 +44,21 @@ const props = defineProps({
     }
 })
 
+// 标识当前状态
+let status = ref(props.status);
+// 标识是否打开监控
+let isOpen = ref(true);
 
+
+// 监控状态改变
+watch(() => props, () => {
+    status.value = props.status;
+}, { deep: true })
+
+// 关闭监控
+const cloceMonitor = () => {
+    isOpen.value = !isOpen.value;
+}
 </script>
 
 <style scoped lang="scss">
