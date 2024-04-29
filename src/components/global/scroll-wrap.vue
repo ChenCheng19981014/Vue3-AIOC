@@ -43,7 +43,7 @@
   
   // 处理滚动事件
   const handleScroll = () => {
-    if (scroll.value!.scrollTop === 0) {
+    if (scroll.value?.scrollTop === 0) {
       autoScroll();
     }
   };

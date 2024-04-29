@@ -14,7 +14,10 @@ import { ref, reactive, computed, watch } from 'vue'
 const props = defineProps({
     title: String,
     menu: Array,
-    storeExcelDataMap: Array,
+    storeExcelDataMap: {
+        type: Object,
+        required: true
+    },
 })
 
 // 模拟数据
@@ -32,15 +35,15 @@ const handleData = (time: string) => {
 const filteredData = computed(() => {
     switch (timeUnit.value) {
         case 'day':
-            return props.storeExcelDataMap.day.map(item => 
-                 [item[0], `${item[1]} ${item[2]}`, item[3], item[4]]
+            return props.storeExcelDataMap.day.map(item =>
+                [item[0], `${item[1]} ${item[2]}`, item[3], item[4]]
             );
         case 'month':
-            return props.storeExcelDataMap.month.map(item => 
+            return props.storeExcelDataMap.month.map(item =>
                 [item[0], `${item[1]} ${item[2]}`, item[3], item[4]]
             );
         case 'year':
-            return props.storeExcelDataMap.year.map(item => 
+            return props.storeExcelDataMap.year.map(item =>
                 [item[0], `${item[1]} ${item[2]}`, item[3], item[4]]
             );
         default:

@@ -215,7 +215,6 @@ const fillArrays = (data: string[] | number[] | any[]) => {
 // 读 excel
 const readerExcel = async () => {
 
-
   // const response = await axios.get("./excel/AIOC数据表单-公式测试.xlsx", {
   //   responseType: "arraybuffer",
   // });

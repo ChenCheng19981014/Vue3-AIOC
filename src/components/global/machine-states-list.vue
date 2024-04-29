@@ -6,7 +6,7 @@
     height: 100%;
     @include center;
     justify-content: flex-start;
-    padding: 8px 0px;
+    padding: 8px 8px;
     box-sizing: border-box;
 
     .img {

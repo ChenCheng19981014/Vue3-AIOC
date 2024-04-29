@@ -2,7 +2,8 @@
     <div class="quyu-main">
         <title-type-time :tips="'区域能耗'" @delivery-date="handleData">
             <div class="table-list-energy-quyu">
-                <table-list :menu="tablelist.menu" :flex="[1,1,1,1,2]" :columns="filteredData" :currentHight="128"></table-list>
+                <table-list :menu="tablelist.menu" :flex="[1, 1, 1, 1, 2]" :columns="filteredData"
+                    :currentHight="128"></table-list>
             </div>
         </title-type-time>
     </div>
@@ -13,7 +14,10 @@ import { ref, reactive, computed, watch } from 'vue'
 const props = defineProps({
     title: String,
     menu: Array,
-    storeExcelDataMap: Array,
+    storeExcelDataMap: {
+        type: Object,
+        required: true
+    },
     msg: Object
 })
 
