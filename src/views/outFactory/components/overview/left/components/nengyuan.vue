@@ -16,7 +16,7 @@
 <script setup lang="ts">
 import { ref, watch } from 'vue'
 const props = defineProps({
-    storeExcelDataMap: Array,
+    storeExcelDataMap: Array as any,
     title: String,
 })
 

@@ -12,7 +12,7 @@
 <script setup lang="ts">
 
 const props = defineProps({
-    tips: String,
+    tips: String,  
     num: Number
 })
 </script>
