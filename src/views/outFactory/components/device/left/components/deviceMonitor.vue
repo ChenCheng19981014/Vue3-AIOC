@@ -127,6 +127,9 @@ const currentTabsIndex = ref(0);
 // 选择 监控 列表数据
 const selectMonitor = (type: string, index: number) => {
    currentTabsIndex.value = index;
+
+   // 节流 持续触发一个功能 一段时间内只会执行一次
+   // 防抖 持续触发一个功能会清除之前的定时器 只执行一次
 };
 </script>
 
